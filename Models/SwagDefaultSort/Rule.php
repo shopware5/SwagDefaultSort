@@ -7,7 +7,7 @@ use Shopware\Models\Category\Category;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="s_plugin_default_sort_rule", indexes={@ORM\Index(name="s_plugin_default_sort_rule_sort_category", columns="category_id, sort"})
+ * @ORM\Table(name="s_plugin_default_sort_rule", indexes={@ORM\Index(name="s_plugin_default_sort_rule_sort_category", columns={"category_id", "sort"})})
  * @ORM\Entity(repositoryClass="Repository")
  */
 class Rule extends ModelEntity
@@ -24,24 +24,13 @@ class Rule extends ModelEntity
     private $id;
 
     /**
-     * @var string $name
-     *
-     * @Assert\NotBlank()
-     * @Assert\Type(type="string")
-     * @Assert\Length(max=255)
-     *
-     * @ORM\Column(name="name", type="string", nullable=false)
-     */
-    private $name;
-
-    /**
      * @var string
      *
      * @Assert\NotBlank()
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
      *
-     * @ORM\Column(name="table_name", type="string", length="255", nullable=false)
+     * @ORM\Column(name="table_name", type="string", length=255, nullable=false)
      */
     private $tableName;
 
@@ -52,7 +41,7 @@ class Rule extends ModelEntity
      * @Assert\Type(type="string")
      * @Assert\Length(max=255)
      *
-     * @ORM\Column(name="field_name", type="string", length="255", nullable=false)
+     * @ORM\Column(name="field_name", type="string", length=255, nullable=false)
      */
     private $fieldName;
 
@@ -62,7 +51,7 @@ class Rule extends ModelEntity
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
      *
-     * @ORM\Column(name="sort", type="int")
+     * @ORM\Column(name="sort", type="integer")
      */
     private $sortOrder;
 
@@ -71,9 +60,16 @@ class Rule extends ModelEntity
      *
      * @Assert\Type(type="bool")
      *
-     * @ORM\Column(name="descending", type="boolean", default="false", nullable=false)
+     * @ORM\Column(name="descending", type="boolean", nullable=false, options={"default"="0"})
      */
     private $descending;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="category_id", type="integer", nullable=false)
+     */
+    private $categoryId;
 
     /**
      * @var Category
@@ -81,12 +77,10 @@ class Rule extends ModelEntity
      * @Assert\NotBlank()
      * @Assert\Length(max=255)
      *
-     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\ManyToOne(targetEntity="Shopware\Models\Category\Category")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private $category;
-
-
 
     /**
      * @return int
@@ -94,25 +88,6 @@ class Rule extends ModelEntity
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param $name string
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -154,9 +129,9 @@ class Rule extends ModelEntity
     }
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getDescending()
+    public function isDescending()
     {
         return $this->descending;
     }
