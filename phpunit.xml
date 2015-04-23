@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./../../../../../../../tests/TestHelper.php">
+<phpunit colors="always" verbose="true" bootstrap="./tests/SwagDefaultSearchTestHelper.php">
 <testsuite name="SwagDefaultSort Test Suite">
     <directory>tests</directory>
 </testsuite>

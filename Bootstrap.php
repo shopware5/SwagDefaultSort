@@ -54,24 +54,26 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
 
     public function install()
     {
-        if (!$this->assertVersionGreaterThen('4.3.0')) {
-            throw new \RuntimeException('At least Shopware 4.3.0 is required');
+        if (!$this->assertVersionGreaterThen('5')) {
+            throw new \RuntimeException('At least Shopware 5.0.0 is required');
         }
 
 
         $this->createMenuItem(array(
-            'label' => 'SwagDefaultSort',
+            'label' => 'Kategorie Sortierung',
             'controller' => 'SwagDefaultSort',
             'class' => 'sprite-application-block',
             'action' => 'Index',
             'active' => 1,
-            'parent' => $this->Menu()->findOneBy('label', 'Marketing')
+            'parent' => $this->Menu()->findOneBy('label', 'Einstellungen')
         ));
 
         $this->subscribeEvent(
             'Enlight_Controller_Front_DispatchLoopStartup',
             'onStartDispatch'
         );
+
+        $this->Config()->isDirty();
 
 
         $this->updateSchema();
@@ -110,7 +112,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     public function onStartDispatch(Enlight_Event_EventArgs $args)
     {
         $this->registerMyComponents();
-                $this->registerCustomModels();        $this->registerApiComponent();
+        $this->registerCustomModels();
 
         $subscribers = array(
             new \Shopware\SwagDefaultSort\Subscriber\ControllerPath($this),
@@ -138,14 +140,6 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     {
         $this->Application()->Snippets()->addConfigDir(
             $this->Path() . 'Snippets/'
-        );
-    }
-
-    public function registerApiComponent()
-    {
-        $this->Application()->Loader()->registerNamespace(
-            'Shopware\Components',
-            $this->Path() . 'Components/'
         );
     }
 
