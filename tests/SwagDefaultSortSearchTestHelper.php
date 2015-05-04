@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../../../../../tests/Shopware/TestHelper.php';
 
-class SwagDefaultSearchTestHelper {
+class SwagDefaultSortSearchTestHelper {
 
     /**
      * @var Shopware
@@ -11,14 +11,19 @@ class SwagDefaultSearchTestHelper {
 
     public function __construct() {
         $this->helper = \TestHelper::Instance();
-        $this->initPluginComponentsNamespace();
+        $this->initPluginNamespaces();
         $this->initTestNamespace();
+        $this->initServiceContainerSubscriber();
     }
 
-    private function initPluginComponentsNamespace() {
+    private function initPluginNamespaces() {
         $this->helper->Loader()->registerNamespace(
             'Shopware\\SwagDefaultSort\\Components',
             $this->getPluginRoot() . '/Components/'
+        );
+        $this->helper->Loader()->registerNamespace(
+            'Shopware\\SwagDefaultSort\\Subscriber',
+            $this->getPluginRoot() . '/Subscriber/'
         );
     }
 
@@ -32,6 +37,13 @@ class SwagDefaultSearchTestHelper {
     private function getPluginRoot() {
         return  $pluginDir = __DIR__ . '/..';
     }
+
+    private function initServiceContainerSubscriber() {
+
+        Shopware()->Events()->addSubscriber(
+            new \Shopware\SwagDefaultSort\Subscriber\ServiceContainer(Shopware()->Container())
+        );
+    }
 }
 
-new SwagDefaultSearchTestHelper();
+new SwagDefaultSortSearchTestHelper();

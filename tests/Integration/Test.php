@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopware\SwagDefaultSort\Test;
+namespace Shopware\SwagDefaultSort\Test\Integration;
 
 class PluginTest extends \Shopware\Components\Test\Plugin\TestCase
 {
