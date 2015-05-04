@@ -75,6 +75,8 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
 
         $this->Config()->isDirty();
 
+        $this->addArticleAttributes();
+
 
         $this->updateSchema();
         return array('success' => true, 'invalidateCache' => array('frontend', 'backend'));
@@ -115,6 +117,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         $this->registerCustomModels();
 
         $subscribers = array(
+            new \Shopware\SwagDefaultSort\Subscriber\ServiceContainer(Shopware()->Container()),
             new \Shopware\SwagDefaultSort\Subscriber\ControllerPath($this),
             new \Shopware\SwagDefaultSort\Subscriber\Frontend($this)
 
@@ -148,6 +151,43 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         $this->Application()->Loader()->registerNamespace(
             'Shopware\SwagDefaultSort',
             $this->Path()
+        );
+    }
+
+    /**
+     * DEBUG ONLY!!!!!
+     */
+    public function addArticleAttributes() {
+        $metaDataCache = Shopware()->Models()->getConfiguration()->getMetadataCacheImpl();
+        $metaDataCache->deleteAll();
+
+        Shopware()->Models()->addAttribute(
+            's_articles_attributes',
+            'my',
+            'Additional_Attribute_One',
+            'varchar(255)'
+        );
+
+        Shopware()->Models()->addAttribute(
+            's_articles_attributes',
+            'my',
+            'Additional_Attribute_Two',
+            'int(11)'
+        );
+
+        Shopware()->Models()->addAttribute(
+            's_articles_attributes',
+            'my',
+            'Additional_Attribute_Three',
+            'blob'
+        );
+
+        $metaDataCache = Shopware()->Models()->getConfiguration()->getMetadataCacheImpl();
+        $metaDataCache->deleteAll();
+
+
+        Shopware()->Models()->generateAttributeModels(
+            array('s_articles_attributes')
         );
     }
 }

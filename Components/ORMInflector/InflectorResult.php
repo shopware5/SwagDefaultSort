@@ -4,7 +4,7 @@
 namespace Shopware\SwagDefaultSort\Components\ORMInflector;
 
 
-use Doctrine\ORM\Mapping\ClassMetadata;
+use \Doctrine\Common\Persistence\Mapping\ClassMetadata;
 
 /**
  * Class InflectorResult

@@ -125,9 +125,6 @@ class Map {
             $map[$this->getDbValue($ormValue)] = $ormValue;
         }
 
-        print_r($map);
-        die;
-
         return new ArrayIterator($map);
     }
 

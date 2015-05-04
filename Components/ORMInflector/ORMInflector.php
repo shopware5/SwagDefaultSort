@@ -2,7 +2,6 @@
 namespace Shopware\SwagDefaultSort\Components\ORMInflector;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
 
 class ORMInflector {
 
@@ -11,32 +10,46 @@ class ORMInflector {
      */
     private $em;
 
-    private $instances;
+    /**
+     * @var InflectorResult[]
+     */
+    private $instances = [];
 
+    /**
+     * @var LoaderAbstract[]
+     */
+    private $loaders = [];
+
+    /**
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em) {
         $this->em = $em;
+        $this->loaders = [
+            new MapLoader($em),
+            new MetadataFactoryLoader($em),
+        ];
     }
 
+    /**
+     * @param $dbTableName
+     * @return null|InflectorResult
+     */
     public function getTable($dbTableName) {
         if($this->instances[$dbTableName]) {
             return $this->instances[$dbTableName];
         }
 
-        $metadata = $this->em->getMetadataFactory()->getAllMetadata();
+        foreach($this->loaders as $loader) {
+            $instance = $loader->load($dbTableName);
 
-        /** @var ClassMetadata $tableMetadata */
-        foreach($metadata as $tableMetadata) {
-            if($dbTableName !== $tableMetadata->getTableName()) {
-                continue;
+            if($instance) {
+                return $this->instances[$dbTableName] = $instance;
             }
-
-            return $this->instances[$dbTableName] = $this->createInflectorResult($tableMetadata);
         }
 
         throw new \InvalidArgumentException('Could not create inflector result for "' . $dbTableName . '"');
     }
 
-    private function createInflectorResult(ClassMetadata $metadata) {
-        return new InflectorResult($metadata);
-    }
+
 }

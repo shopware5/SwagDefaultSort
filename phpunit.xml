@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit colors="always" verbose="true" bootstrap="./tests/SwagDefaultSearchTestHelper.php">
-<testsuite name="SwagDefaultSort Test Suite">
-    <directory>tests</directory>
-</testsuite>
+<phpunit colors="always" verbose="true" bootstrap="./tests/SwagDefaultSortSearchTestHelper.php">
+    <testsuites>
+        <testsuite name="SwagDefaultSort ORM Inflector">
+            <directory>tests/Components/ORMInflector</directory>
+        </testsuite>
+        <testsuite name="SwagDefaultSort SortDefinition">
+            <directory>tests/Components/SortDefinition</directory>
+        </testsuite>
+        <testsuite name="SwagDefaultSort ValueObject">
+            <directory>tests/Components/ValueObject</directory>
+        </testsuite>
+        <testsuite name="SwagDefaultSort Integration">
+            <directory>tests/Components/Integration</directory>
+            <directory>tests/Integration</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
