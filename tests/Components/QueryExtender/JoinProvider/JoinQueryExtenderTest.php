@@ -7,7 +7,7 @@ namespace Shopware\SwagDefaultSort\Test\Components\QueryExtender\JoinProvider;
 
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractJoinProvider;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProviderCollection;
-use Shopware\SwagDefaultSort\Test\Components\QueryExtender\AbstractSearchBundleDependantTest;
+use Shopware\SwagDefaultSort\Test\AbstractSearchBundleDependantTest;
 
 class JoinQueryExtenderTest extends AbstractSearchBundleDependantTest
 {

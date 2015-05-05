@@ -51,7 +51,7 @@ class QueryExtensionGateway
             $joinQueryExtender->setAddUniqueJoin(false);
         }
 
-        $alias = $joinQueryExtender->extendQuery($definition, $queryBuilder);
+        $alias = $joinQueryExtender->extendQuery($queryBuilder);
 
         if (!$alias) {
             throw new \UnexpectedValueException('Missing required return value $alias on "' . get_class($joinQueryExtender) . '"');
@@ -74,6 +74,12 @@ class QueryExtensionGateway
      * @return AbstractJoinProvider
      */
     private function getJoinProvider(AbstractSortDefinition $definition) {
-        return $this->joinProviderCollection->find($definition);
+        $provider = $this->joinProviderCollection->find($definition);
+
+        if(!$provider) {
+            throw new \InvalidArgumentException('Invalid $definition(' . $definition->getUniqueIdentifier() . ') provided, no join provider found');
+        }
+
+        return $provider;
     }
 }

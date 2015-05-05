@@ -8,6 +8,7 @@ use Enlight\Event\SubscriberInterface;
 use Shopware\SwagDefaultSort\Components\ORMInflector\ORMInflector;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProviderCollection;
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
+use Shopware\SwagDefaultSort\Components\QueryExtender\QueryExtensionGateway;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 use Shopware\SwagDefaultSort\Components\ValueObject\FieldVoHydrator;
 use Shopware\SwagDefaultSort\Components\ValueObject\TableVoHydrator;
@@ -43,6 +44,7 @@ class ServiceContainer implements SubscriberInterface
             'Enlight_Bootstrap_InitResource_swag_default_sort.field_vo_collection' => 'createFieldVos',
             'Enlight_Bootstrap_InitResource_swag_default_sort.query_extender_order_by_filter_chain' => 'createOrderByFilterChain',
             'Enlight_Bootstrap_InitResource_swag_default_sort.query_extender_join_provider_collection' => 'createJoinProvider',
+            'Enlight_Bootstrap_InitResource_swag_default_sort.query_extension_gateway' => 'createQueryExtensionGateway',
         ];
     }
 
@@ -88,5 +90,13 @@ class ServiceContainer implements SubscriberInterface
     public function createJoinProvider()
     {
         return new JoinProviderCollection();
+    }
+
+    public function createQueryExtensionGateway() {
+        return new QueryExtensionGateway(
+            $this->container->get('swag_default_sort.query_extender_definition_collection'),
+            $this->container->get('swag_default_sort.query_extender_join_provider_collection'),
+            $this->container->get('swag_default_sort.query_extender_order_by_filter_chain')
+        );
     }
 }

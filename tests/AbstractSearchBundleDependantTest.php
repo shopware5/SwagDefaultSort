@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Shopware\SwagDefaultSort\Test\Components\QueryExtender;
+namespace Shopware\SwagDefaultSort\Test;
 
 use Shopware\Bundle\SearchBundle\Criteria;
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;

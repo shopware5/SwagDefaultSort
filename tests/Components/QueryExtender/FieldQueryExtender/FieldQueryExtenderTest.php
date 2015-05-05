@@ -8,7 +8,7 @@ use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleName;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticlesAbstract;
 use Shopware\SwagDefaultSort\Components\SortDefinition\GroupExpressionConditionInterface;
 use Shopware\SwagDefaultSort\Components\ValueObject\RuleVo;
-use Shopware\SwagDefaultSort\Test\Components\QueryExtender\AbstractSearchBundleDependantTest;
+use Shopware\SwagDefaultSort\Test\AbstractSearchBundleDependantTest;
 
 class FieldQueryExtenderTest extends AbstractSearchBundleDependantTest
 {
