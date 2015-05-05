@@ -38,7 +38,9 @@ class FieldVoCollectionTest extends \PHPUnit_Framework_TestCase {
 
             $this->assertArrayHasKey('tableName', $array);
             $this->assertArrayHasKey('translation', $array);
-            $this->assertArrayHasKey('fieldName', $array);
+            $this->assertArrayHasKey('definitionUid', $array);
+            $this->assertEquals($array['tableName'], $definition->getTableName());
+            $this->assertEquals($array['definitionUid'], $definition->getUniqueIdentifier());
         }
     }
 

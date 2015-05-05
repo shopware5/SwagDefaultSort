@@ -7,10 +7,10 @@ use Shopware\Models\Category\Category;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="s_plugin_default_sort_rule", indexes={@ORM\Index(name="s_plugin_default_sort_rule_sort_category", columns={"category_id", "sort"})})
+ * @ORM\Table(name="s_plugin_swag_default_sort_rule", indexes={@ORM\Index(name="s_plugin_default_sort_rule_sort_category", columns={"category_id", "sort"})})
  * @ORM\Entity(repositoryClass="Repository")
  */
-class Rule extends ModelEntity
+class Rule extends ModelEntity implements \JsonSerializable
 {
     /**
      * Primary Key - autoincrement value
@@ -28,22 +28,10 @@ class Rule extends ModelEntity
      *
      * @Assert\NotBlank()
      * @Assert\Type(type="string")
-     * @Assert\Length(max=255)
      *
-     * @ORM\Column(name="table_name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="definition_uid", type="string", nullable=false)
      */
-    private $tableName;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank()
-     * @Assert\Type(type="string")
-     * @Assert\Length(max=255)
-     *
-     * @ORM\Column(name="field_name", type="string", length=255, nullable=false)
-     */
-    private $fieldName;
+    private $definitionUid;
 
     /**
      * @var string
@@ -60,7 +48,7 @@ class Rule extends ModelEntity
      *
      * @Assert\Type(type="bool")
      *
-     * @ORM\Column(name="descending", type="boolean", nullable=false, options={"default"="0"})
+     * @ORM\Column(name="descending", type="boolean", options={"default"="0"}, nullable=true)
      */
     private $descending;
 
@@ -75,7 +63,6 @@ class Rule extends ModelEntity
      * @var Category
      *
      * @Assert\NotBlank()
-     * @Assert\Length(max=255)
      *
      * @ORM\ManyToOne(targetEntity="Shopware\Models\Category\Category")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
@@ -88,25 +75,6 @@ class Rule extends ModelEntity
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTableName()
-    {
-        return $this->tableName;
-    }
-
-    /**
-     * @param string $tableName
-     * @return $this
-     */
-    public function setTableName($tableName)
-    {
-        $this->tableName = $tableName;
-
-        return $this;
     }
 
     /**
@@ -137,12 +105,12 @@ class Rule extends ModelEntity
     }
 
     /**
-     * @param int $descending
+     * @param bool $descending
      * @return $this
      */
-    public function setDescending($descending)
+    public function setDescending($descending = false)
     {
-        $this->descending = $descending;
+        $this->descending = (bool) $descending;
 
         return $this;
     }
@@ -169,21 +137,50 @@ class Rule extends ModelEntity
     /**
      * @return string
      */
-    public function getFieldName()
+    public function getDefinitionUid()
     {
-        return $this->fieldName;
+        return $this->definitionUid;
     }
 
     /**
-     * @param string $fieldName
+     * @param string $definitionUid
      * @return $this
      */
-    public function setFieldName($fieldName)
+    public function setDefinitionUid($definitionUid)
     {
-        $this->fieldName = $fieldName;
+        $this->definitionUid = $definitionUid;
 
         return $this;
     }
 
+    /**
+     * @param $id
+     */
+    public function setCategoryId($id) {
+        $this->categoryId = $id;
+    }
 
+    /**
+     * (PHP 5 &gt;= 5.4.0)<br/>
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     */
+    function jsonSerialize()
+    {
+        //internal PHP problem - no exceptions allowed
+        try {
+            return [
+                'id' => $this->getId(),
+                'definitionUid' => $this->getDefinitionUid(),
+                'sortOrder' => $this->getSortOrder(),
+                'descending' => $this->isDescending(),
+                'categoryId' => $this->categoryId,
+            ];
+        } catch(Exception $e) {
+            trigger_error($e->getMessage() . "\n" . $e->getTraceAsString(), E_USER_ERROR);
+            return [];
+        }
+    }
 }

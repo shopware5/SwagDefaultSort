@@ -22,10 +22,10 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.Rule', {
             defaultValue: 's_articles'
         },
         {
-            name : 'fieldName',
+            name : 'definitionUid',
             type: 'string',
             useNull: false,
-            defaultValue: 'id'
+            defaultValue: 's_articles::name'
         },
         {
             name : 'direction',

@@ -15,12 +15,6 @@ class FieldVO implements \JsonSerializable
     private $tableName;
 
     /**
-     * @var string
-     */
-    private $fieldName;
-
-
-    /**
      * @var TranslateFilter
      */
     private $translationFilter;
@@ -28,7 +22,7 @@ class FieldVO implements \JsonSerializable
     /**
      * @var string
      */
-    private $definitionIdentifier;
+    private $definitionUid;
 
     /**
      * @param AbstractSortDefinition $sortDefinition
@@ -36,10 +30,9 @@ class FieldVO implements \JsonSerializable
      */
     public function __construct(AbstractSortDefinition $sortDefinition, TranslateFilter $translationFilter)
     {
-        $this->tableName = (string)$sortDefinition->getTableName();
-        $this->fieldName = (string)$sortDefinition->getFieldName();
+        $this->tableName = (string) $sortDefinition->getTableName();
         $this->translationFilter = $translationFilter;
-        $this->definitionIdentifier = get_class($sortDefinition);
+        $this->definitionUid = $sortDefinition->getUniqueIdentifier();
     }
 
     /**
@@ -53,42 +46,29 @@ class FieldVO implements \JsonSerializable
     /**
      * @return mixed
      */
-    public function getFieldName()
-    {
-        return $this->fieldName;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getTranslation()
     {
-        return $this->translationFilter->filter($this->getTableName(), $this->getFieldName());
+        return $this->translationFilter->filter($this->getDefinitionUid());
     }
 
     /**
      * @return string
      */
-    public function getDefinitionIdentifier()
+    public function getDefinitionUid()
     {
-        return $this->definitionIdentifier;
+        return $this->definitionUid;
     }
 
 
     /**
-     * (PHP 5 &gt;= 5.4.0)<br/>
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
+     * {@inheritdoc}
      */
     function jsonSerialize()
     {
         return [
             'tableName' => $this->getTableName(),
-            'fieldName' => $this->getFieldName(),
             'translation' => $this->getTranslation(),
-            'definitionClassName' => $this->definitionIdentifier,
+            'definitionUid' => $this->definitionUid,
         ];
     }
 }

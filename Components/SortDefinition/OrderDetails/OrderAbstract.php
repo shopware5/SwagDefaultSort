@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Shopware\SwagDefaultSort\Components\SortDefinition\Order;
+namespace Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails;
 
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
@@ -13,6 +13,6 @@ abstract class OrderAbstract extends AbstractSortDefinition {
      */
     public function getTableName()
     {
-        return 's_order';
+        return 's_order_details';
     }
 }

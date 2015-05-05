@@ -8,7 +8,7 @@ use Shopware\SwagDefaultSort\Components\ValueObject\TableVO;
 use Shopware\SwagDefaultSort\Components\ValueObject\TranslateFilter;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 
-class TableVoCollectionTest extends \PHPUnit_Framework_TestCase {
+class TableVoTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @var DefinitionCollection
@@ -20,7 +20,7 @@ class TableVoCollectionTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testGetters() {
-        $filter = new TranslateFilter(Shopware()->Snippets()->getNamespace('backend/swwagdefaultsort/fields'));
+        $filter = new TranslateFilter(Shopware()->Snippets()->getNamespace('backend/swagdefaultsort/fields'));
 
         foreach($this->definitionCollection->getTableNames() as $tableName) {
             $tableVo = new TableVO($tableName, $filter);

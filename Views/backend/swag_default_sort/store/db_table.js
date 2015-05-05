@@ -4,41 +4,40 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.DbTable', {
 
     storeId: 'SwagDefaultSortDbTable',
 
-    //url: '{url action="listInflection"}',
+    /**
+     * If data is not specified, and if autoLoad is true or an Object,
+     * this store's load method is automatically called after creation.
+     * If the value of autoLoad is an Object, this Object will be passed to the store's load method.
+     */
+    autoLoad: true,
 
-    data: [
-        {
-            tableName: 's_articles',
-            translation: 'Artikel',
-            dbfields: [
-                {
-                    tableName: 's_articles',
-                    fieldName: 'id',
-                    translation: 'ID'
-                },
-                {
-                    tableName: 's_articles',
-                    fieldName: 'name',
-                    translation: 'Name'
-                }
-            ]
-        },
-        {
-            tableName: 's_articles_details',
-            translation: 'Artikel-Details',
-            dbfields: [
-                {
-                    tableName: 's_articles_details',
-                    fieldName: 'byid',
-                    translation: 'BYID'
-                }
-            ]
-        }
-    ],
+    /**
+     * True to defer any sorting operation to the server. If false, sorting is done locally on the client.
+     * @type { boolean }
+     */
+    remoteSort: false,
+
+    /**
+     * True to defer any filtering operation to the server. If false, filtering is done locally on the client.
+     * @type { boolean }
+     */
+    remoteFilter: false,
 
     configure: function() {
         return {
-            controller: 'SwagDefaultSort'
+            controller: 'SwagDefaultSort',
+            proxy: {
+                type: 'ajax',
+                getParams: Ext.emptyFn,
+                api: {
+                    read: '{url controller="SwagDefaultSort" action="listTables"}'
+                },
+                reader: {
+                    type: 'json',
+                    root: 'data',
+                    totalProperty: 'total'
+                }
+            }
         };
     },
 

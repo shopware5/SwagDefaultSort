@@ -14,7 +14,8 @@ namespace Shopware\SwagDefaultSort\Components\SortDefinition;
 interface GroupExpressionConditionInterface {
     const GROUPFKT_COUNT = 'count';
     const GROUPFKT_MAX = 'max';
-    const GROUPFKT_MIN = 'max';
+    const GROUPFKT_MIN = 'min';
+    const GROUPFKT_SUM = 'sum';
 
     /**
      * @return string

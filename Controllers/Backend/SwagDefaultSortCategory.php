@@ -27,7 +27,7 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
         if($this->addRuleConstraint) {
             $ids = Shopware()->Models()->getDBALQueryBuilder()
                 ->select('DISTINCT rule.category_id')
-                ->from('s_plugin_default_sort_rule', 'rule')
+                ->from('s_plugin_swag_default_sort_rule', 'rule')
                 ->execute()
                 ->fetchAll(PDO::FETCH_COLUMN, 0);
 

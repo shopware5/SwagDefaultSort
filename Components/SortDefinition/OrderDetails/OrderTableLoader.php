@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Shopware\SwagDefaultSort\Components\SortDefinition\Order;
+namespace Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails;
 
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
@@ -23,7 +23,7 @@ class OrderTableLoader implements TableLoaderInterface {
     public function createDefinitions()
     {
         return [
-            new MaxOrderCount()
+            new SumOrderAmount()
         ];
     }
 }

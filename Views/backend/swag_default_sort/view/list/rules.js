@@ -47,7 +47,14 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                             return '';
                         }
 
-                        return Ext.getStore('SwagDefaultSortDbTable').findRecord('tableName', value).get('translation');
+                        var record = Ext.getStore('SwagDefaultSortDbTable').findRecord('tableName', value);
+
+                        if(!record) {
+                            return value;
+                        }
+
+
+                        return record.get('translation');
                     },
                     editor: {
                         xtype: 'combo',
@@ -64,7 +71,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                         allowBlank: false,
                         listeners: {
                             select: function(comboBox, selection) {
-                                var fieldElement = comboBox.ownerCt.getForm().findField('fieldName');
+                                var fieldElement = comboBox.ownerCt.getForm().findField('definitionUid');
 
                                 fieldElement.suspendCheckChange++;
                                 fieldElement.clearValue();
@@ -73,7 +80,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                         }
                     }
                 },
-                fieldName: {
+                definitionUid: {
                     groupable: false,
                     renderer: function(value, metaData, record) {
                         if(!value) {
@@ -87,7 +94,15 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                             return fieldRecord.get('tableName') === record.get('tableName');
                         });
 
-                        return dbFieldStore.findRecord('fieldName', value).get('translation');
+                        var fieldRecord = dbFieldStore.findRecord('definitionUid', value);
+
+                        if(!fieldRecord) {
+                            return value;
+                        }
+
+                        console.log('value', value);
+
+                        return fieldRecord.get('translation');
                     },
                     editor: {
                         xtype: 'combo',
@@ -95,7 +110,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                         width: '100%',
                         anchor: '100%',
                         store: 'SwagDefaultSortDbField',
-                        valueField:'fieldName',
+                        valueField:'definitionUid',
                         displayField: 'translation',
                         queryMode: 'local',
                         editable: false,

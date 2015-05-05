@@ -14,7 +14,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.DbField', {
             useNull: false
         },
         {
-            name: 'fieldName',
+            name: 'definitionUid',
             type: 'string',
             useNull: false
         },

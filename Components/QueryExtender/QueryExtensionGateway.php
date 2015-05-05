@@ -1,0 +1,79 @@
+<?php
+
+
+namespace Shopware\SwagDefaultSort\Components\QueryExtender;
+
+
+use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
+use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractJoinProvider;
+use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
+use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
+use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
+use Shopware\SwagDefaultSort\Components\SortDefinition\GroupExpressionConditionInterface;
+use Shopware\SwagDefaultSort\Components\ValueObject\RuleVo;
+
+class QueryExtensionGateway
+{
+    /**
+     * @var DefinitionCollection
+     */
+    private $definitionCollection;
+
+    private $joinProviderCollection;
+
+    private $orderByFilterChain;
+
+    public function __construct(
+        DefinitionCollection $definitionCollection,
+        OrderByFilterChain $orderByFilterChain,
+        JoinProviderCollection $joinProviderCollection
+
+    )
+    {
+        $this->definitionCollection = $definitionCollection;
+        $this->orderByFilterChain = $orderByFilterChain;
+        $this->joinProviderCollection = $joinProviderCollection;
+    }
+
+    /**
+     * @param RuleVo $rule
+     * @param QueryBuilder $queryBuilder
+     */
+    public function addRule(RuleVo $rule, QueryBuilder $queryBuilder)
+    {
+        $definition = $this->loadDefinition($rule);
+
+        $joinQueryExtender = $this->getJoinProvider($definition);
+
+        if ($definition instanceof GroupExpressionConditionInterface) {
+            $joinQueryExtender->setAddUniqueJoin(true);
+        } else {
+            $joinQueryExtender->setAddUniqueJoin(false);
+        }
+
+        $alias = $joinQueryExtender->extendQuery($definition, $queryBuilder);
+
+        if (!$alias) {
+            throw new \UnexpectedValueException('Missing required return value $alias on "' . get_class($joinQueryExtender) . '"');
+        }
+
+        $this->orderByFilterChain->extendQuery($alias, $definition, $rule, $queryBuilder);
+    }
+
+    /**
+     * @param RuleVo $vo
+     * @return AbstractSortDefinition
+     */
+    private function loadDefinition(RuleVo $vo)
+    {
+        return $this->definitionCollection->getDefinition($vo->getDefinitionUid());
+    }
+
+    /**
+     * @param AbstractSortDefinition $definition
+     * @return AbstractJoinProvider
+     */
+    private function getJoinProvider(AbstractSortDefinition $definition) {
+        return $this->joinProviderCollection->find($definition);
+    }
+}

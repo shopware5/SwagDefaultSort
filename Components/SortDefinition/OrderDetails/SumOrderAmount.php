@@ -2,7 +2,7 @@
 
 
 
-namespace Shopware\SwagDefaultSort\Components\SortDefinition\Order;
+namespace Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails;
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\GroupExpressionConditionInterface;
 
@@ -11,14 +11,14 @@ use Shopware\SwagDefaultSort\Components\SortDefinition\GroupExpressionConditionI
  *
  * @package Shopware\Components\SortDefinition\Order
  */
-class MaxOrderCount extends OrderAbstract implements GroupExpressionConditionInterface {
+class SumOrderAmount extends OrderAbstract implements GroupExpressionConditionInterface {
 
     /**
      * @return string
      */
     public function getFieldName()
     {
-        return 'id';
+        return 'quantity';
     }
 
     /**
@@ -26,6 +26,6 @@ class MaxOrderCount extends OrderAbstract implements GroupExpressionConditionInt
      */
     public function getGroupingFunction()
     {
-        return self::GROUPFKT_COUNT;
+        return self::GROUPFKT_SUM;
     }
 }

@@ -12,20 +12,16 @@ class TranslateFilter
      */
     private $snippedNamespace;
 
-    /**
-     * @var null|string
-     */
-    private $prefix;
-
-    public function __construct(\Enlight_Components_Snippet_Namespace $snippetNamespace, $prefix = null)
+    public function __construct(\Enlight_Components_Snippet_Namespace $snippetNamespace)
     {
         $this->snippedNamespace = $snippetNamespace;
-        $this->prefix = (string)$prefix;
     }
 
     public function filter($value)
     {
-        return $this->snippedNamespace->get($this->prefix . $value);
+        $ret = $this->snippedNamespace->get($value);
+
+        return $ret ? $ret : $value;
     }
 
 }

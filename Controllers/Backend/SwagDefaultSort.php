@@ -75,54 +75,58 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
         );
     }
 
-    public function testAction() {
-        $details = Shopware()
-            ->Models()
-            ->getDBALQueryBuilder()
-            ->select('det.id')
-            ->from('s_articles_details', 'det')
-            ->execute()
-            ->fetchAll(\PDO::FETCH_COLUMN);
+    public function listTablesAction() {
+        try {
+            $tableVos = $this->getTableVos();
 
-        //prepareQuery
-//        $sql = $this->getTestQuery()->getSQL();
-//        $stmt = Shopware()->Models()->getConnection()->prepare($sql);
-//        $startPrepared = microtime(true);
-//        for($i = 0; $i < 50; $i++) {
-//            foreach ($details as $id) {
-//                $stmt->bindParam(':id', $id);
-//                $stmt->execute();
-//            }
-//        }
-//        $diff = microtime(true) - $startPrepared;
+            $this->View()->assign([
+                'success' => true,
+                'data' => $tableVos,
+            ]);
 
-        $startNotPrepared = microtime(true);
-        for($i = 0; $i < 50; $i++) {
-            foreach ($details as $id) {
-                $this->getTestQuery()
-                    ->setParameter(':id', $id)
-                    ->execute();
-            }
+        } catch (Exception $e) {
+            $this->View()->assign([
+                'success' => false,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
         }
-        $diff = microtime(true) - $startNotPrepared;
-
-        echo '<pre>';
-        echo $diff . "\n";
-        print_r($details);
-        die();
-
-
-
-
-
     }
 
-    private function getTestQuery() {
-        return Shopware()
-            ->Models()
-            ->getDBALQueryBuilder()
-            ->update('s_articles_details', 'det')
-            ->set('det.id', ':id')
-            ->where('det.id = :id');
+
+    public function listFieldsAction() {
+        try {
+            $fields = $this->getFieldVos();
+
+            $this->View()->assign([
+                'success' => true,
+                'data' => $fields,
+            ]);
+        } catch (Exception $e) {
+            $this->View()->assign([
+                'success' => false,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+        }
+    }
+
+
+    /**
+     * @return \Shopware\SwagDefaultSort\Components\ValueObject\TableVO[]
+     * @throws Exception
+     */
+    private function getTableVos() {
+        return Shopware()->Container()
+            ->get('swag_default_sort.table_vo_collection');
+    }
+
+    /**
+     * @return \Shopware\SwagDefaultSort\Components\ValueObject\FieldVO[]
+     * @throws Exception
+     */
+    private function getFieldVos() {
+        return Shopware()->Container()
+            ->get('swag_default_sort.field_vo_collection');
     }
 }
