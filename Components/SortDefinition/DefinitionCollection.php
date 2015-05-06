@@ -10,7 +10,9 @@ use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes\Attribu
 use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleDetails\DetailsTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails\OrderTableLoader;
+use Shopware\SwagDefaultSort\Components\SortDefinition\Prices\PricesTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\TableLoaderInterface;
+use Shopware\SwagDefaultSort\Components\SortDefinition\Votes\VotesTableLoader;
 use Traversable;
 
 /**
@@ -114,6 +116,8 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
            new DetailsTableLoader(),
            new AttributeTableLoader(Shopware()->Container()->get('swag_default_sort.orm_inflector')),
            new OrderTableLoader(),
+           new VotesTableLoader(),
+           new PricesTableLoader()
        ];
     }
 

@@ -4,9 +4,9 @@
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 
 
-use Shopware\SwagDefaultSort\Components\ValueObject\TableVoHydrator;
-use Shopware\SwagDefaultSort\Components\ValueObject\TableVO;
-use Shopware\SwagDefaultSort\Components\ValueObject\TranslateFilter;
+use Shopware\SwagDefaultSort\Components\DataAccess\TableVoHydrator;
+use Shopware\SwagDefaultSort\Components\DataAccess\TableVo;
+use Shopware\SwagDefaultSort\Components\DataAccess\TranslateFilter;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 
 class TableVoHydratorTest extends \PHPUnit_Framework_TestCase {
@@ -29,14 +29,11 @@ class TableVoHydratorTest extends \PHPUnit_Framework_TestCase {
     public function testGetters() {
         $tableVos = $this->tableVoHydrator->createTableVos($this->definitionCollection->getTableNames());
 
-        $this->assertContainsOnlyInstancesOf('Shopware\SwagDefaultSort\Components\ValueObject\TableVO', $tableVos);
+        $this->assertContainsOnlyInstancesOf('Shopware\SwagDefaultSort\Components\DataAccess\TableVo', $tableVos);
         $this->assertGreaterThan(0, count($tableVos));
 
         foreach($tableVos as $tableVo) {
             $this->assertNotEmpty($tableVo->getTableName());
-
-            //@todo inject / mock locale
-            //$this->assertNotEmpty($tableVo->getTranslation(), 'No translation for "' . $tableVo->getTableName() . '"');
         }
     }
 

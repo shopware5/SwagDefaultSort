@@ -40,6 +40,9 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
                 );
         }
 
+        $builder->orderBy('category.parentId')
+            ->addOrderBy('category.position');
+
         return $builder;
     }
 
@@ -118,8 +121,8 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
 
         $this->View()->assign(
             $this->getList(
-                $this->Request()->getParam('start', 0),
-                $this->Request()->getParam('limit', 20),
+                0,
+                null,
                 $this->Request()->getParam('sort', array()),
                 $this->Request()->getParam('filter', array()),
                 $this->Request()->getParams()

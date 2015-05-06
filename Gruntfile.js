@@ -1,4 +1,6 @@
 module.exports = function(grunt) {
+    'use strict';
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -13,8 +15,19 @@ module.exports = function(grunt) {
             }
         },
 
+        jslint: {
+            client: {
+                src: [
+                    'Views/**/*.js'
+                ],
+                directives: {
+                    browser: true
+                }
+            }
+        },
+
         jshint: {
-            files: ['Gruntfile.js', 'Views/**/*.js'],
+            files: ['Gruntfile.js', './Views/**/*.js'],
             options: {
                 globals: {
                     jQuery: true
@@ -22,14 +35,18 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            files: ['Views/**/*.js', './**/*.php'],
-            tasks: ['jshint', 'phpunit']
+            files: ['./**/*.js', './**/*.php'],
+            tasks: ['phpunit', 'jshint']
         }
     });
+
     // load up your plugins
+    grunt.loadNpmTasks('grunt-jslint');
     grunt.loadNpmTasks('grunt-phpunit');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+
     // register one or more task lists (you should ALWAYS have a "default" task list)
     grunt.registerTask('default', ['jshint']);
+    grunt.registerTask('alljs', ['jshint', 'jslint']);
 };

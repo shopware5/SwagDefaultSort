@@ -9,9 +9,16 @@ use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractJoinP
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
-use Shopware\SwagDefaultSort\Components\SortDefinition\GroupExpressionConditionInterface;
-use Shopware\SwagDefaultSort\Components\ValueObject\RuleVo;
+use Shopware\SwagDefaultSort\Components\SortDefinition\ExpressionConditionInterface;
+use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 
+/**
+ * Class QueryExtensionGateway
+ *
+ * Extends Shopware DBAL Querys
+ *
+ * @package Shopware\SwagDefaultSort\Components\QueryExtender
+ */
 class QueryExtensionGateway
 {
     /**
@@ -27,7 +34,6 @@ class QueryExtensionGateway
         DefinitionCollection $definitionCollection,
         OrderByFilterChain $orderByFilterChain,
         JoinProviderCollection $joinProviderCollection
-
     )
     {
         $this->definitionCollection = $definitionCollection;
@@ -45,13 +51,13 @@ class QueryExtensionGateway
 
         $joinQueryExtender = $this->getJoinProvider($definition);
 
-        if ($definition instanceof GroupExpressionConditionInterface) {
+        if ($definition instanceof ExpressionConditionInterface) {
             $joinQueryExtender->setAddUniqueJoin(true);
         } else {
             $joinQueryExtender->setAddUniqueJoin(false);
         }
 
-        $alias = $joinQueryExtender->extendQuery($queryBuilder);
+        $alias = $joinQueryExtender->extendQuery($queryBuilder, $definition);
 
         if (!$alias) {
             throw new \UnexpectedValueException('Missing required return value $alias on "' . get_class($joinQueryExtender) . '"');
@@ -73,10 +79,11 @@ class QueryExtensionGateway
      * @param AbstractSortDefinition $definition
      * @return AbstractJoinProvider
      */
-    private function getJoinProvider(AbstractSortDefinition $definition) {
+    private function getJoinProvider(AbstractSortDefinition $definition)
+    {
         $provider = $this->joinProviderCollection->find($definition);
 
-        if(!$provider) {
+        if (!$provider) {
             throw new \InvalidArgumentException('Invalid $definition(' . $definition->getUniqueIdentifier() . ') provided, no join provider found');
         }
 

@@ -4,7 +4,9 @@
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\Articles;
 
 
-class ArticleDate extends ArticlesAbstract {
+use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
+
+class ArticleDate extends AbstractSortDefinition {
 
     /**
      * @return string

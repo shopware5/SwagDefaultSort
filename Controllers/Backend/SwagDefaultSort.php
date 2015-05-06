@@ -113,7 +113,7 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
 
 
     /**
-     * @return \Shopware\SwagDefaultSort\Components\ValueObject\TableVO[]
+     * @return \Shopware\SwagDefaultSort\Components\DataAccess\TableVo[]
      * @throws Exception
      */
     private function getTableVos() {
@@ -122,7 +122,7 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
     }
 
     /**
-     * @return \Shopware\SwagDefaultSort\Components\ValueObject\FieldVO[]
+     * @return \Shopware\SwagDefaultSort\Components\DataAccess\FieldVo[]
      * @throws Exception
      */
     private function getFieldVos() {

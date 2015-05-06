@@ -1,3 +1,5 @@
+//{namespace name="backend/swagdefaultsort/main"}
+
 
 Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
     extend: 'Enlight.app.Window',
@@ -12,6 +14,8 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
         collapsible: true,
         split: true
     },
+
+    iconCls: 'sprite-sort',
 
     stores: {},
 
@@ -34,7 +38,11 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
     createStores: function() {
         return {
             listing: Ext.create('Shopware.apps.SwagDefaultSort.store.Rule').load(),
-            categories: Ext.create('Shopware.apps.SwagDefaultSort.store.CategoryPath').load()
+            categories: Ext.create('Shopware.apps.SwagDefaultSort.store.CategoryPath').load(),
+            directionOptions: Ext.create('Shopware.apps.SwagDefaultSort.store.DirectionOptions'),
+            table: Ext.create('Shopware.apps.SwagDefaultSort.store.DbTable').load(),
+            field: Ext.create('Shopware.apps.SwagDefaultSort.store.DbField').load(),
+            categoryPathSelect: Ext.create('Shopware.apps.SwagDefaultSort.store.CategoryPathSelect')
         };
     },
 
@@ -51,7 +59,8 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
         var me = this;
 
         me.gridPanels.listing = Ext.create('Shopware.apps.SwagDefaultSort.view.list.Rules', {
-            title: 'items',
+            title: '{s name=rules}{/s}',
+            iconCls: 'sprite-sort',
             region: 'center',
             store: me.stores.listing,
             flex: 1,
@@ -66,7 +75,8 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
         var me = this;
 
         me.gridPanels.categories = Ext.create('Shopware.apps.SwagDefaultSort.view.list.Categories', {
-            title: 'Katgorien',
+            title: '{s name=categories}{/s}',
+            iconCls: 'article--categories',
             region: 'west',
             store: me.stores.categories,
             flex: 1,

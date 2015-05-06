@@ -1,14 +1,10 @@
-
+/**
+ * Main Controller: ALL Handlers are here
+ */
 Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
     extend: 'Enlight.app.Controller',
 
     init: function() {
-        //init stores for storeId access
-        Ext.create('Shopware.apps.SwagDefaultSort.store.DirectionOptions');
-        Ext.create('Shopware.apps.SwagDefaultSort.store.DbTable');
-        Ext.create('Shopware.apps.SwagDefaultSort.store.DbField');
-        Ext.create('Shopware.apps.SwagDefaultSort.store.CategoryPathSelect');
-
         this.mainWindow = this.getView('list.Window').create({ }).show();
 
         this.registerEventHandlers();
@@ -23,6 +19,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
 
         return ruleGridQueryResult[0];
     },
+
     getCategoryGrid: function() {
         var categoryGridQueryResult = Ext.ComponentQuery.query('swag-default-sort-listing-grid-categories');
 
@@ -33,32 +30,60 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         return categoryGridQueryResult[0];
     },
 
+    getWindow: function() {
+        var windowQueryResult = Ext.ComponentQuery.query('swag-default-sort-list-window');
+
+        if(!windowQueryResult) {
+            return false;
+        }
+
+        return windowQueryResult[0];
+    },
+
+    /**
+     * Init controller listeners
+     */
     registerEventHandlers: function() {
         var me = this;
 
         this.control({
             'swag-default-sort-listing-grid-rules gridview': {
-                'drop': me.reorderStoredRules
+                'drop': me.onDropSteRuleOrder
             },
             'swag-default-sort-listing-grid-rules': {
-                'rule-add-item': me.onAddRule,
+                'rule-add-item': me.onAddRuleStartEditing,
                 'edit': me.syncRuleStore
             },
             'swag-default-sort-listing-grid-categories': {
-                'viewready': me.initSelection,
-                'catgeory-selection-change': me.filterSelection,
-                'categorypath-add-item': me.onAddCategory,
-                'edit': me.changeCategories
+                'viewready': me.onCategoryGridInitSelectFirstRow,
+                'catgeory-selection-change': me.onCategorySelectChangeRuleFilter,
+                'categorypath-add-item': me.onAddCategoryStartEditing,
+                'edit': me.onCategoryEditSyncRecordData
             }
         });
+
+        this.getWindow().stores.field.addListener('load', me.onLoadRepaintRuleGrid, me);
+        this.getWindow().stores.table.addListener('load', me.onLoadRepaintRuleGrid, me);
     },
 
-    onAddCategory: function(categoryGrid, record) {
+    onLoadRepaintRuleGrid: function(store, records) {
+        this.getRuleGrid().getView().refresh();
+    },
+
+    /**
+     * @param categoryGrid
+     * @param record
+     */
+    onAddCategoryStartEditing: function(categoryGrid, record) {
         categoryGrid.store.add(record);
         categoryGrid.getRowEditingPlugin().startEdit(record, 0);
     },
 
-    changeCategories: function(source, event) {
+    /**
+     * @param source
+     * @param event
+     */
+    onCategoryEditSyncRecordData: function(source, event) {
         var originalCatId = event.originalValues.catId;
         var newCatId = event.newValues.catId;
 
@@ -80,6 +105,8 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         displayedRecord.set('parentPathString', selectedRecord.get('catId'));
         displayedRecord.commit();
 
+        this.onCategorySelectChangeRuleFilter([displayedRecord]);
+
         //rewrite rules
         this.getRuleGrid().store.data.each(function() {
             this.set('categoryId', newCatId);
@@ -87,7 +114,11 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         this.syncRuleStore();
     },
 
-    onAddRule: function (ruleGrid, record) {
+    /**
+     * @param ruleGrid
+     * @param record
+     */
+    onAddRuleStartEditing: function (ruleGrid, record) {
         var categoryGrid = this.getCategoryGrid();
 
         if(!categoryGrid) {
@@ -107,7 +138,13 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         ruleGrid.getRowEditingPlugin().startEdit(record, 0);
     },
 
-    reorderStoredRules: function(node, data, overModel, dropPosition) {
+    /**
+     * @param node
+     * @param data
+     * @param overModel
+     * @param dropPosition
+     */
+    onDropSteRuleOrder: function(node, data, overModel, dropPosition) {
         var ruleGridView = this.getRuleGrid().getView();
         var records = ruleGridView.getRecords(ruleGridView.getNodes());
 
@@ -122,26 +159,32 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         this.getRuleGrid().store.sync();
     },
 
-    initSelection: function(categoryGrid){
+    onCategoryGridInitSelectFirstRow: function(categoryGrid){
+        var ruleAddButton = this.getRuleGrid().addButton;
+
+        ruleAddButton.enable();
         if(!categoryGrid.store.data.items.length) {
+            ruleAddButton.disable(true);
             return;
         }
 
         categoryGrid.selModel.doSelect(categoryGrid.store.data.items[0]);
     },
 
-    filterSelection: function(selection) {
+    /**
+     * Filter sules based on currently selected category
+     *
+     * @param selection
+     */
+    onCategorySelectChangeRuleFilter: function(selection) {
         var filterCatId = 0;
-        var ruleGridQueryResult = Ext.ComponentQuery.query('swag-default-sort-listing-grid-rules');
+        var ruleGrid = this.getRuleGrid();
+        var ruleAddButton = ruleGrid.addButton;
 
-        if(!ruleGridQueryResult) {
-            return;
-        }
-
-        var ruleGrid = ruleGridQueryResult[0];
-
-        if(selection.length === 1) {
+        ruleAddButton.disable(true);
+        if(selection.length === 1 && selection[0].get('catId')) {
             filterCatId = selection[0].get('catId');
+            ruleAddButton.enable();
         }
 
         ruleGrid.store.clearFilter(true);

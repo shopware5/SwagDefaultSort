@@ -23,8 +23,13 @@ class ArticleTableLoader implements TableLoaderInterface {
     public function createDefinitions()
     {
         return [
-            new ArticleName(),
-            new ArticleDate()
+            new ArticleName($this),
+            new ArticleDate($this),
+            new ArticleAvailableFrom($this),
+            new ArticleAvailableTo($this),
+            new ArticleChanged($this),
+            new ArticleHighlight($this),
+            new ArticlePseudosales($this),
         ];
     }
 }

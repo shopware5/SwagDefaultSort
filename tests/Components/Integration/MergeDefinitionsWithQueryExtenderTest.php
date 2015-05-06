@@ -9,7 +9,7 @@ use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFil
 use Shopware\SwagDefaultSort\Components\QueryExtender\QueryExtensionGateway;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
-use Shopware\SwagDefaultSort\Components\ValueObject\RuleVo;
+use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 use Shopware\SwagDefaultSort\Test\AbstractSearchBundleDependantTest;
 
 class MergeDefinitionsWithQueryExtenderTest extends AbstractSearchBundleDependantTest

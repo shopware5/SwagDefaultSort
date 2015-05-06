@@ -4,7 +4,7 @@
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes;
 
 
-use Shopware\SwagDefaultSort\Components\ORMInflector\ORMInflector;
+use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\TableLoaderInterface;
 
@@ -17,11 +17,11 @@ class AttributeTableLoader implements TableLoaderInterface {
     ];
 
     /**
-     * @var ORMInflector
+     * @var ORMReflector
      */
     private $inflector;
 
-    public function __construct(ORMInflector $inflector) {
+    public function __construct(ORMReflector $inflector) {
         $this->inflector = $inflector;
     }
 
@@ -46,7 +46,7 @@ class AttributeTableLoader implements TableLoaderInterface {
                 continue;
             }
 
-            $ret[] = new GenericDefinition($fieldName);
+            $ret[] = new GenericDefinition($fieldName, $this);
         }
 
         return $ret;

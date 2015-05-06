@@ -5,15 +5,16 @@ namespace Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider;
 
 
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
+use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
+/**
+ * Class ArticleAttributes
+ *
+ * Supports s_articles_attributes
+ *
+ * @package Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider
+ */
 class ArticleAttributes extends AbstractJoinProvider {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getType() {
-        return self::TYPE_TABLE;
-    }
 
     /**
      * @return string
@@ -29,7 +30,7 @@ class ArticleAttributes extends AbstractJoinProvider {
      * @param QueryBuilder $queryBuilder
      * @return string
      */
-    public function extendQuery(QueryBuilder $queryBuilder)
+    public function extendQuery(QueryBuilder $queryBuilder, AbstractSortDefinition $definition)
     {
         $alias = $this->createAlias('Attribute');
 

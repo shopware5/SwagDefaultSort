@@ -23,7 +23,18 @@ class DetailsTableLoader implements TableLoaderInterface {
     public function createDefinitions()
     {
         return [
-            new ArticleDetailsMinpurchase()
+            new ArticleDetailsHeight($this),
+            new ArticleDetailsKind($this),
+            new ArticleDetailsLength($this),
+            new ArticleDetailsMaxPurchase($this),
+            new ArticleDetailsMinPurchase($this),
+            new ArticleDetailsPosition($this),
+            new ArticleDetailsReleaseDate($this),
+            new ArticleDetailsSuppliernumber($this),
+            new ArticleDetailsNumber($this),
+            new ArticleDetailsShippingFree($this),
+            new ArticleDetailsWeight($this),
+            new ArticleDetailsWidth($this),
         ];
     }
 }

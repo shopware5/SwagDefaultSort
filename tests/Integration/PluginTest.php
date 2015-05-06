@@ -16,6 +16,4 @@ class PluginTest extends \Shopware\Components\Test\Plugin\TestCase
 
         $this->assertInstanceOf('Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap', $plugin);
     }
-
-
 }

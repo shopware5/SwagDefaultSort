@@ -2,7 +2,7 @@
 
 
 namespace Shopware\SwagDefaultSort\Test\Components\ValueObject;
-use Shopware\SwagDefaultSort\Components\ValueObject\DatabaseAdapter;
+use Shopware\SwagDefaultSort\Components\DataAccess\DatabaseAdapter;
 
 
 /**
@@ -20,7 +20,7 @@ class DatabaseAdapterTest extends \PHPUnit_Framework_TestCase {
     private $dbAdapter;
 
     public function setUp() {
-        $this->dbAdapter = new DatabaseAdapter(Shopware()->Models()->getDBALQueryBuilder());
+        $this->dbAdapter = new DatabaseAdapter(Shopware()->Container()->get('dbal_connection'));
     }
 
     public function testCategory() {

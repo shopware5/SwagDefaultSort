@@ -9,13 +9,34 @@ use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
 use Shopware\Bundle\SearchBundleDBAL\SortingHandlerInterface;
 use Shopware\Bundle\StoreFrontBundle\Struct\ShopContextInterface;
 use Shopware\SwagDefaultSort\Bundle\SearchBundle\Sorting\DefaultSorting;
+use Shopware\SwagDefaultSort\Components\QueryExtender\QueryExtensionGateway;
+use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 
-class DefaultSortingHandler implements SortingHandlerInterface {
+/**
+ * Class DefaultSortingHandler
+ *
+ * Handles query extension
+ *
+ * @package Shopware\SwagDefaultSort\Bundle\SearchBundleDBAL\SortingHandler
+ */
+class DefaultSortingHandler implements SortingHandlerInterface
+{
 
     /**
-     * Checks if the passed sorting can be handled by this class
-     * @param SortingInterface $sorting
-     * @return bool
+     * @var QueryExtensionGateway
+     */
+    private $gateway;
+
+    /**
+     * @param QueryExtensionGateway $gateway
+     */
+    public function __construct(QueryExtensionGateway $gateway)
+    {
+        $this->gateway = $gateway;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function supportsSorting(SortingInterface $sorting)
     {
@@ -23,14 +44,7 @@ class DefaultSortingHandler implements SortingHandlerInterface {
     }
 
     /**
-     * Handles the passed sorting object.
-     * Extends the passed query builder with the specify sorting.
-     * Should use the addOrderBy function, otherwise other sortings would be overwritten.
-     *
-     * @param SortingInterface $sorting
-     * @param QueryBuilder $query
-     * @param ShopContextInterface $context
-     * @return void
+     * {@inheritdoc}
      */
     public function generateSorting(
         SortingInterface $sorting,
@@ -38,6 +52,14 @@ class DefaultSortingHandler implements SortingHandlerInterface {
         ShopContextInterface $context
     )
     {
-        die('JUHEY!');
+        /** @var RuleVo[] $rules */
+        $rules = $sorting->getRules();
+
+        foreach ($rules as $rule) {
+            $this->gateway->addRule(
+                $rule,
+                $query
+            );
+        }
     }
 }

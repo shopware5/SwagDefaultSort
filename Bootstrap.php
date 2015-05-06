@@ -18,6 +18,10 @@
  */
 class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Components_Plugin_Bootstrap
 {
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public function getVersion() {
         $info = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR .'plugin.json'), true);
         if ($info) {
@@ -27,11 +31,17 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         }
     }
 
+    /**
+     * @return string
+     */
     public function getLabel()
     {
-        return 'SwagDefaultSort';
+        return 'Kategorie Sortierung';
     }
 
+    /**
+     * @return bool
+     */
     public function uninstall()
     {
         $this->registerCustomModels();
@@ -47,6 +57,45 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         return true;
     }
 
+    /**
+     * @return bool
+     */
+    public function secureUninstall()
+    {
+        try {
+            $this->storeMenuState(false);
+        } catch(BadMethodCallException $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Returns capabilities
+     */
+    public function getCapabilities()
+    {
+        return [
+            'install' => true,
+            'update' => true,
+            'enable' => true,
+            'secureUninstall' => true
+        ];
+    }
+
+    public function getInfo() {
+        return [
+            'version' => $this->getVersion(),
+            'label' => $this->getLabel(),
+            'description' => 'Change article listing sorting for certain categories',
+            'supplier' => 'shopware AG',
+            'support' => 'Shopware Forum',
+            'link' => 'http://www.shopware.com'
+        ];
+    }
+
     public function update($oldVersion)
     {
         return true;
@@ -54,7 +103,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
 
     public function install()
     {
-        if (!$this->assertVersionGreaterThen('5')) {
+        if (!$this->assertVersionGreaterThen('5.0.0')) {
             throw new \RuntimeException('At least Shopware 5.0.0 is required');
         }
 
@@ -62,9 +111,10 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         $this->createMenuItem(array(
             'label' => 'Kategorie Sortierung',
             'controller' => 'SwagDefaultSort',
-            'class' => 'sprite-application-block',
+            'class' => 'sprite-sort',
             'action' => 'Index',
-            'active' => 1,
+            'active' => 0,
+            'position' => -3,
             'parent' => $this->Menu()->findOneBy('label', 'Einstellungen')
         ));
 
@@ -75,11 +125,43 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
 
         $this->Config()->isDirty();
 
-        $this->addArticleAttributes();
-
-
         $this->updateSchema();
+
         return array('success' => true, 'invalidateCache' => array('frontend', 'backend'));
+    }
+
+    public function enable() {
+        try {
+            $this->storeMenuState(true);
+        } catch(BadMethodCallException $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function disable() {
+        try{
+            $this->storeMenuState(false);
+        } catch(BadMethodCallException $e) {
+            return false;
+        }
+
+
+        return true;
+    }
+
+    private function storeMenuState($isActive) {
+        $menuItem = $this->Menu()->findOneBy('label', 'Kategorie Sortierung');
+
+        if(!$menuItem) {
+            throw new BadMethodCallException('Unable to set Menu state - no item found');
+        }
+
+        $menuItem->setActive((bool) $isActive);
+
+        $this->getEntityManager()->persist($menuItem);
+        $this->getEntityManager()->flush();
     }
 
     /**
@@ -113,15 +195,15 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
      */
     public function onStartDispatch(Enlight_Event_EventArgs $args)
     {
-        $this->registerMyComponents();
         $this->registerCustomModels();
+        $this->registerPluginNamespace();
 
-        $subscribers = array(
+        $registrationService = new \Shopware\SwagDefaultSort\Components\RegistrationService();
+        $subscribers = [
             new \Shopware\SwagDefaultSort\Subscriber\ServiceContainer(Shopware()->Container()),
-            new \Shopware\SwagDefaultSort\Subscriber\ControllerPath($this),
-            new \Shopware\SwagDefaultSort\Subscriber\Frontend($this)
-
-        );
+            new \Shopware\SwagDefaultSort\Subscriber\Frontend(Shopware()->Container(), $registrationService),
+            new \Shopware\SwagDefaultSort\Subscriber\Backend($registrationService),
+        ];
 
         foreach ($subscribers as $subscriber) {
             $this->Application()->Events()->addSubscriber($subscriber);
@@ -129,65 +211,20 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     }
 
     /**
-     * Registers the template directory, needed for templates in frontend an backend
+     * Register namespaces
      */
-    public function registerMyTemplateDir()
+    private function registerPluginNamespace()
     {
-        Shopware()->Template()->addTemplateDir($this->Path() . 'Views');
-    }
-
-    /**
-     * Registers the snippet directory, needed for backend snippets
-     */
-    public function registerMySnippets()
-    {
-        $this->Application()->Snippets()->addConfigDir(
-            $this->Path() . 'Snippets/'
-        );
-    }
-
-    public function registerMyComponents()
-    {
-        $this->Application()->Loader()->registerNamespace(
+        Shopware()->Loader()->registerNamespace(
             'Shopware\SwagDefaultSort',
             $this->Path()
         );
     }
 
     /**
-     * DEBUG ONLY!!!!!
+     * @return \Shopware\Components\Model\ModelManager
      */
-    public function addArticleAttributes() {
-        $metaDataCache = Shopware()->Models()->getConfiguration()->getMetadataCacheImpl();
-        $metaDataCache->deleteAll();
-
-        Shopware()->Models()->addAttribute(
-            's_articles_attributes',
-            'my',
-            'Additional_Attribute_One',
-            'varchar(255)'
-        );
-
-        Shopware()->Models()->addAttribute(
-            's_articles_attributes',
-            'my',
-            'Additional_Attribute_Two',
-            'int(11)'
-        );
-
-        Shopware()->Models()->addAttribute(
-            's_articles_attributes',
-            'my',
-            'Additional_Attribute_Three',
-            'blob'
-        );
-
-        $metaDataCache = Shopware()->Models()->getConfiguration()->getMetadataCacheImpl();
-        $metaDataCache->deleteAll();
-
-
-        Shopware()->Models()->generateAttributeModels(
-            array('s_articles_attributes')
-        );
+    private function getEntityManager() {
+        return Shopware()->Models();
     }
 }

@@ -6,8 +6,15 @@ namespace Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider;
 
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
-use Shopware\SwagDefaultSort\Components\ValueObject\RuleVo;
+use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 
+/**
+ * Class OrderByFilterChain
+ *
+ * Extends the query with a collection of filters
+ *
+ * @package Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider
+ */
 class OrderByFilterChain {
 
     /**
@@ -57,7 +64,7 @@ class OrderByFilterChain {
 
         if(!$this->orderByFilter) {
             $this->orderByFilter =  [
-                new GroupExpressionConditionFilter()
+                new ExpressionConditionFilter()
             ];
         }
 

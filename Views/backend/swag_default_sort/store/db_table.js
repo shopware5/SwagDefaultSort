@@ -9,7 +9,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.DbTable', {
      * this store's load method is automatically called after creation.
      * If the value of autoLoad is an Object, this Object will be passed to the store's load method.
      */
-    autoLoad: true,
+    autoLoad: false,
 
     /**
      * True to defer any sorting operation to the server. If false, sorting is done locally on the client.

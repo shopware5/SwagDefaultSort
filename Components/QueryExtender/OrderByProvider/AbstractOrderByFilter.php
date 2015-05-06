@@ -5,9 +5,16 @@ namespace Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider;
 
 
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
-use Shopware\SwagDefaultSort\Components\ValueObject\RuleVo;
+use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
+/**
+ * Class AbstractOrderByFilter
+ *
+ * Filter the actual sort name, based on definition classes
+ *
+ * @package Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider
+ */
 abstract class AbstractOrderByFilter {
 
     /**

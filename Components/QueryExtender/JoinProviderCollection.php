@@ -4,27 +4,43 @@
 namespace Shopware\SwagDefaultSort\Components\QueryExtender;
 
 
+use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractExpressionJoinProvider;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\TableJoinProviderInterface;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractJoinProvider;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Traversable;
 
+/**
+ * Class JoinProviderCollection
+ *
+ * * Loads all JoinProviders
+ * * Matches providers with definitions
+ *
+ * @package Shopware\SwagDefaultSort\Components\QueryExtender
+ */
 class JoinProviderCollection implements \Countable, \IteratorAggregate
 {
 
+    /**
+     * @var AbstractJoinProvider[]
+     */
     private $tableJoinProviders = [];
 
-    private $uidJoinProviders = [];
+    /**
+     * @var AbstractExpressionJoinProvider[]
+     */
+    private $expressionJoinProviders = [];
 
     public function find(AbstractSortDefinition $sortDefinition)
     {
         $this->testLoadProviders();
 
-        foreach ($this->uidJoinProviders as $uidPrefix => $provider) {
-            if (0 === strpos($sortDefinition->getUniqueIdentifier(), $uidPrefix)) {
+        foreach ($this->expressionJoinProviders as $uidPrefix => $provider) {
+            if($provider->isSupportedInterface($sortDefinition)) {
                 return $provider;
             }
         }
+
 
         if (!isset($this->tableJoinProviders[$sortDefinition->getTableName()])) {
             throw new \InvalidArgumentException('Invalid definition provided - no join provider present.');
@@ -33,23 +49,24 @@ class JoinProviderCollection implements \Countable, \IteratorAggregate
         return $this->tableJoinProviders[$sortDefinition->getTableName()];
     }
 
+    /**
+     * helper function: call in each public function body!
+     */
     private function testLoadProviders()
     {
         if ($this->tableJoinProviders) {
             return;
         }
 
+        /** @var AbstractJoinProvider $provider */
         foreach ($this->loadJoinProviders() as $provider) {
-            switch ($provider->getType()) {
-                case AbstractJoinProvider::TYPE_TABLE:
-                    $this->tableJoinProviders[$provider->getTableName()] = $provider;
-                    break;
-                case AbstractJoinProvider::TYPE_UIDLIKE:
-                    $this->uidJoinProviders[$provider->getUidPrefix()] = $provider;
-                    break;
-                default:
-                    throw new \UnexpectedValueException('Provider without a sorting interface found!');
+            if($provider instanceof AbstractExpressionJoinProvider) {
+                $this->expressionJoinProviders[] = $provider;
+                continue;
             }
+
+            $this->tableJoinProviders[$provider->getTableName()] = $provider;
+
         }
     }
 
@@ -65,6 +82,9 @@ class JoinProviderCollection implements \Countable, \IteratorAggregate
             new JoinProvider\ArticleDetails(),
             new JoinProvider\Taxes(),
             new JoinProvider\Votes(),
+            new JoinProvider\Prices(),
+            new JoinProvider\OrderDetailsExpressionJoinProvider(),
+            new JoinProvider\VotesExpressionJoinProvider(),
         ];
     }
 
@@ -81,7 +101,7 @@ class JoinProviderCollection implements \Countable, \IteratorAggregate
 
         return new \ArrayIterator(array_merge(
             array_values($this->tableJoinProviders),
-            array_values($this->uidJoinProviders)
+            array_values($this->expressionJoinProviders)
         ));
     }
 
@@ -98,6 +118,6 @@ class JoinProviderCollection implements \Countable, \IteratorAggregate
     {
         $this->testLoadProviders();
 
-        return count($this->tableJoinProviders) + count($this->uidJoinProviders);
+        return count($this->tableJoinProviders) + count($this->expressionJoinProviders);
     }
 }

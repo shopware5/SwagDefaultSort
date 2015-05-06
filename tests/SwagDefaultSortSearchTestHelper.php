@@ -25,6 +25,10 @@ class SwagDefaultSortSearchTestHelper {
             'Shopware\\SwagDefaultSort\\Subscriber',
             $this->getPluginRoot() . '/Subscriber/'
         );
+        $this->helper->Loader()->registerNamespace(
+            'Shopware\\SwagDefaultSort\\Bundle',
+            $this->getPluginRoot() . '/Bundle/'
+        );
     }
 
     private function initTestNamespace() {

@@ -1,3 +1,5 @@
+//{namespace name="backend/swagdefaultsort/main"}
+
 Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
 
     extend: 'Shopware.grid.Panel',
@@ -16,7 +18,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                 ptype: 'gridviewdragdrop',
                 dragText: 'SORT'
             }
-        ],
+        ]
     },
 
     configure: function () {
@@ -35,12 +37,9 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                 $controllerId: id,
                 id: id
             }),
-            //rowEditing: true,
             columns: {
-                //sortOrder: {
-                //    groupable: false
-                //},
                 tableName: {
+                    header: '{s name=component_name}{/s}',
                     groupable: false,
                     renderer: function(value) {
                         if(!value) {
@@ -81,6 +80,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                     }
                 },
                 definitionUid: {
+                    header: '{s name=field_name}{/s}',
                     groupable: false,
                     renderer: function(value, metaData, record) {
                         if(!value) {
@@ -88,19 +88,13 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                         }
 
                         var dbFieldStore = Ext.getStore('SwagDefaultSortDbField');
-
                         dbFieldStore.clearFilter(true);
-                        dbFieldStore.filterBy(function(fieldRecord) {
-                            return fieldRecord.get('tableName') === record.get('tableName');
-                        });
 
                         var fieldRecord = dbFieldStore.findRecord('definitionUid', value);
 
                         if(!fieldRecord) {
                             return value;
                         }
-
-                        console.log('value', value);
 
                         return fieldRecord.get('translation');
                     },
@@ -146,6 +140,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                     }
                 },
                 direction: {
+                    header: '{s name=direction}{/s}',
                     groupable: false,
                     renderer: function(value) {
                         value = parseInt(value);

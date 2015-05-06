@@ -9,15 +9,25 @@ namespace Shopware\SwagDefaultSort\Components\SortDefinition;
  *
  * A single Type, for frontend performance we use plain sql
  *
- * @todo better naming!
  * @package Shopware\Swag\Components\Conditions
  */
-abstract class AbstractSortDefinition {
+abstract class AbstractSortDefinition
+{
+
+    private $tableLoader;
+
+    public function __construct(TableLoaderInterface $tableLoader)
+    {
+        $this->tableLoader = $tableLoader;
+    }
 
     /**
      * @return string
      */
-    abstract public function getTableName();
+    public function getTableName()
+    {
+        return $this->tableLoader->getTableName();
+    }
 
     /**
      * @return string
@@ -27,10 +37,11 @@ abstract class AbstractSortDefinition {
     /**
      * @return string
      */
-    public function getUniqueIdentifier() {
+    public function getUniqueIdentifier()
+    {
         $insertion = '';
 
-        if($this instanceof GroupExpressionConditionInterface) {
+        if ($this instanceof ExpressionConditionInterface) {
             $insertion = $this->getGroupingFunction() . '::';
         }
 

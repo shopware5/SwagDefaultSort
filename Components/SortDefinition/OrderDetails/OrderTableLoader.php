@@ -14,7 +14,7 @@ class OrderTableLoader implements TableLoaderInterface {
      */
     public function getTableName()
     {
-        return 's_order';
+        return 's_order_details';
     }
 
     /**
@@ -23,7 +23,7 @@ class OrderTableLoader implements TableLoaderInterface {
     public function createDefinitions()
     {
         return [
-            new SumOrderAmount()
+            new SumOrderAmount($this)
         ];
     }
 }

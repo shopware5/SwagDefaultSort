@@ -1,3 +1,5 @@
+//{namespace name="backend/swagdefaultsort/main"}
+
 Ext.define('Shopware.apps.SwagDefaultSort.view.list.Categories', {
     extend: 'Shopware.grid.Panel',
     alias: 'widget.swag-default-sort-listing-grid-categories',
@@ -17,14 +19,13 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Categories', {
             deleteButton: false,
             columns: {
                 catId: {
+                    header: '{s name=category_path}{/s}',
                     align: 'left',
                     editor: {
-                        xtype: 'comboboxselect',
+                        xtype: 'boxselect',
                         store: 'SwagDefaultSortCategoryPathSelect',
-                        triggerAction: 'all',
                         width: '100%',
                         anchor: '100%',
-                        queryMode: 'remote',
                         valueField:'catId',
                         displayField: 'parentPathString',
                         editable: false,
