@@ -36,10 +36,6 @@ class FieldVoTest extends \PHPUnit_Framework_TestCase {
                     $filter
                 );
 
-                //@todo mock the available locales to test whether everything is translated
-                $translationKey = str_replace('::', '_', $definition->getUniqueIdentifier());
-                $this->assertNotEquals($fieldVo->getTranslation(), $translationKey, 'Missing translation "' . $translationKey . '"');
-
                 $json = json_encode($fieldVo);
                 $array = json_decode($json, true);
 

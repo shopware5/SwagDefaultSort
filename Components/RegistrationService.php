@@ -34,4 +34,11 @@ class RegistrationService
     public function getPluginPath() {
         return __DIR__ . '/..';
     }
+
+    public function getBackendControllerPath($controllerName) {
+        return $this->getPluginPath() .
+            '/Controllers/Backend/' .
+            $controllerName .
+            '.php';
+    }
 }
