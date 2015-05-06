@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 
-
 use Shopware\SwagDefaultSort\Components\DataAccess\FieldVoHydrator;
-use Shopware\SwagDefaultSort\Components\DataAccess\TableVoHydrator;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 
-class FieldVoHydratorTest extends \PHPUnit_Framework_TestCase {
-
+class FieldVoHydratorTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var DefinitionCollection
      */
@@ -20,21 +17,22 @@ class FieldVoHydratorTest extends \PHPUnit_Framework_TestCase {
      */
     private $fieldVoHydrator;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->definitionCollection = new DefinitionCollection();
         $this->fieldVoHydrator = new FieldVoHydrator(Shopware()->Snippets());
     }
 
-    public function testGetters() {
+    public function testGetters()
+    {
         $fieldVos = $this->fieldVoHydrator->createFieldVos($this->definitionCollection);
 
         $this->assertContainsOnlyInstancesOf('Shopware\SwagDefaultSort\Components\DataAccess\FieldVo', $fieldVos);
         $this->assertGreaterThan(0, count($fieldVos));
 
-        foreach($fieldVos as $fieldVo) {
+        foreach ($fieldVos as $fieldVo) {
             $this->assertNotEmpty($fieldVo->getTableName());
             $this->assertNotEmpty($fieldVo->getDefinitionUid());
         }
     }
-
 }

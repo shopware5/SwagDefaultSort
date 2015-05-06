@@ -6,7 +6,7 @@ class PluginTest extends \Shopware\Components\Test\Plugin\TestCase
 {
     protected static $ensureLoadedPlugins = array(
         'SwagDefaultSort' => array(
-        )
+        ),
     );
 
     public function testCanCreateInstance()

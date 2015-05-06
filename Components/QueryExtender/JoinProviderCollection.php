@@ -1,26 +1,20 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\QueryExtender;
 
-
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractExpressionJoinProvider;
-use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\TableJoinProviderInterface;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractJoinProvider;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Traversable;
 
 /**
- * Class JoinProviderCollection
+ * Class JoinProviderCollection.
  *
  * * Loads all JoinProviders
  * * Matches providers with definitions
- *
- * @package Shopware\SwagDefaultSort\Components\QueryExtender
  */
 class JoinProviderCollection implements \Countable, \IteratorAggregate
 {
-
     /**
      * @var AbstractJoinProvider[]
      */
@@ -36,11 +30,10 @@ class JoinProviderCollection implements \Countable, \IteratorAggregate
         $this->testLoadProviders();
 
         foreach ($this->expressionJoinProviders as $uidPrefix => $provider) {
-            if($provider->isSupportedInterface($sortDefinition)) {
+            if ($provider->isSupportedInterface($sortDefinition)) {
                 return $provider;
             }
         }
-
 
         if (!isset($this->tableJoinProviders[$sortDefinition->getTableName()])) {
             throw new \InvalidArgumentException('Invalid definition provided - no join provider present.');
@@ -60,13 +53,12 @@ class JoinProviderCollection implements \Countable, \IteratorAggregate
 
         /** @var AbstractJoinProvider $provider */
         foreach ($this->loadJoinProviders() as $provider) {
-            if($provider instanceof AbstractExpressionJoinProvider) {
+            if ($provider instanceof AbstractExpressionJoinProvider) {
                 $this->expressionJoinProviders[] = $provider;
                 continue;
             }
 
             $this->tableJoinProviders[$provider->getTableName()] = $provider;
-
         }
     }
 
@@ -90,10 +82,12 @@ class JoinProviderCollection implements \Countable, \IteratorAggregate
 
     /**
      * (PHP 5 &gt;= 5.0.0)<br/>
-     * Retrieve an external iterator
+     * Retrieve an external iterator.
+     *
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+     *
      * @return Traversable An instance of an object implementing <b>Iterator</b> or
-     * <b>Traversable</b>
+     *                     <b>Traversable</b>
      */
     public function getIterator()
     {
@@ -107,12 +101,14 @@ class JoinProviderCollection implements \Countable, \IteratorAggregate
 
     /**
      * (PHP 5 &gt;= 5.1.0)<br/>
-     * Count elements of an object
+     * Count elements of an object.
+     *
      * @link http://php.net/manual/en/countable.count.php
+     *
      * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
+     *             </p>
+     *             <p>
+     *             The return value is cast to an integer.
      */
     public function count()
     {

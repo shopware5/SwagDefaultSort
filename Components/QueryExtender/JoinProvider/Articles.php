@@ -1,21 +1,17 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider;
-
 
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
 /**
- * Class Articles
+ * Class Articles.
  *
  * Supports s_articles
- *
- * @package Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider
  */
-class Articles extends AbstractJoinProvider {
-
+class Articles extends AbstractJoinProvider
+{
     /**
      * @return string
      */
@@ -25,9 +21,10 @@ class Articles extends AbstractJoinProvider {
     }
 
     /**
-     * Extends the query and returns the alias to bind the definitition to
+     * Extends the query and returns the alias to bind the definitition to.
      *
      * @param QueryBuilder $queryBuilder
+     *
      * @return string
      */
     public function extendQuery(QueryBuilder $queryBuilder, AbstractSortDefinition $definition)

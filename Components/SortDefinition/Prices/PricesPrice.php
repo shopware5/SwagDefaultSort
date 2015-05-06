@@ -1,13 +1,11 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\Prices;
-
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
-class PricesPrice extends AbstractSortDefinition {
-
+class PricesPrice extends AbstractSortDefinition
+{
     /**
      * @return string
      */

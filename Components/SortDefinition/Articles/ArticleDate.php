@@ -1,13 +1,11 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\Articles;
-
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
-class ArticleDate extends AbstractSortDefinition {
-
+class ArticleDate extends AbstractSortDefinition
+{
     /**
      * @return string
      */

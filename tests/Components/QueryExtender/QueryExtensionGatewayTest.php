@@ -1,12 +1,10 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Test\Components\QueryExtender;
 
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProviderCollection;
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
 use Shopware\SwagDefaultSort\Components\QueryExtender\QueryExtensionGateway;
-use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticlesAbstract;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 use Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails\OrderTableLoader;
@@ -15,7 +13,8 @@ use Shopware\SwagDefaultSort\Test\AbstractSearchBundleDependantTest;
 
 class QueryExtensionGatewayTest extends AbstractSearchBundleDependantTest
 {
-    private function createQueryExtensionGateway() {
+    private function createQueryExtensionGateway()
+    {
         return new QueryExtensionGateway(
             new DefinitionCollection(),
             new OrderByFilterChain(),
@@ -43,5 +42,4 @@ class QueryExtensionGatewayTest extends AbstractSearchBundleDependantTest
 
         $this->assertNotEquals($beforeSql, $afterSql);
     }
-
 }

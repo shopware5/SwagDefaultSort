@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\ORMReflector;
 
-
 use Doctrine\ORM\EntityManager;
-use \Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 
 abstract class LoaderAbstract
 {
-
     /**
      * @var EntityManager
      */
@@ -25,6 +22,7 @@ abstract class LoaderAbstract
 
     /**
      * @param string $dbTableName
+     *
      * @return InflectorResult|null
      */
     abstract public function load($dbTableName);

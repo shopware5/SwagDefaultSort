@@ -1,18 +1,14 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
 
 /**
- * Class RuleVo
+ * Class RuleVo.
  *
  * Representation of s_plugin_swag_default_sort_rule rows, used for frontend requests
- *
- * @package Shopware\SwagDefaultSort\Components\Frontend
  */
 class RuleVo
 {
-
     /**
      * @var int
      */
@@ -38,7 +34,7 @@ class RuleVo
      */
     public function __construct($id)
     {
-        $this->id = (int)$id;
+        $this->id = (int) $id;
     }
 
     /**
@@ -66,7 +62,7 @@ class RuleVo
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDescending()
     {
@@ -74,7 +70,7 @@ class RuleVo
     }
 
     /**
-     * @param boolean $descending
+     * @param bool $descending
      */
     public function setDescending($descending)
     {

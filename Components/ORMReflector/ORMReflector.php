@@ -1,19 +1,15 @@
 <?php
+
 namespace Shopware\SwagDefaultSort\Components\ORMReflector;
 
 use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 
 /**
- * Class ORMInflector
- *
- *
- *
- * @package Shopware\SwagDefaultSort\Components\ORMReflector
+ * Class ORMInflector.
  */
 class ORMReflector
 {
-
     /**
      * @var EntityManager
      */
@@ -43,6 +39,7 @@ class ORMReflector
 
     /**
      * @param $dbTableName
+     *
      * @return null|InflectorResult
      */
     public function getTable($dbTableName)
@@ -59,8 +56,6 @@ class ORMReflector
             }
         }
 
-        throw new InvalidArgumentException('Could not create inflector result for "' . $dbTableName . '"');
+        throw new InvalidArgumentException('Could not create inflector result for "'.$dbTableName.'"');
     }
-
-
 }

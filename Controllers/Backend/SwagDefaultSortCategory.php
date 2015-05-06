@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Backend controllers extending from Shopware_Controllers_Backend_Application do support the new backend components
- *
+ * Backend controllers extending from Shopware_Controllers_Backend_Application do support the new backend components.
  */
 class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Controllers_Backend_Application
 {
@@ -10,7 +9,7 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
     protected $alias = 'category';
 
     /**
-     * Realy dirty, but the structure provided by the parent does not leave me another option, when this controller gets refactored to multiple objects there will be better solutions
+     * Realy dirty, but the structure provided by the parent does not leave me another option, when this controller gets refactored to multiple objects there will be better solutions.
      *
      * @var bool
      */
@@ -21,10 +20,9 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
      */
     protected function getListQuery()
     {
-
         $builder = parent::getListQuery();
 
-        if($this->addRuleConstraint) {
+        if ($this->addRuleConstraint) {
             $ids = Shopware()->Models()->getDBALQueryBuilder()
                 ->select('DISTINCT rule.category_id')
                 ->from('s_plugin_swag_default_sort_rule', 'rule')
@@ -46,17 +44,18 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
         return $builder;
     }
 
-    private function addParentPath(array &$categories) {
+    private function addParentPath(array &$categories)
+    {
         $parentPathQuery = Shopware()->Models()->getDBALQueryBuilder()
             ->select('id, category.description AS name')
             ->from('s_categories', 'category', 'id')
             ->where('id IN (:categoryIds)');
 
-        foreach($categories as &$category) {
+        foreach ($categories as &$category) {
             $category['catId'] = $category['id'];
             $category['parentPath'] = [];
 
-            if(!$category['path']) {
+            if (!$category['path']) {
                 continue;
             }
 
@@ -72,11 +71,11 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
 
             $path = [];
 
-            foreach($categoriesRawNames as $row) {
+            foreach ($categoriesRawNames as $row) {
                 $path[$row['id']] = $row['name'];
             }
 
-            foreach($cleanParentIds as $id) {
+            foreach ($cleanParentIds as $id) {
                 $category['parentPath'][] = $path[$id];
             }
         }
@@ -129,6 +128,4 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
             )
         );
     }
-
-
 }

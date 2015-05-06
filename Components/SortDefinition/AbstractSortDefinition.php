@@ -1,19 +1,14 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition;
 
-
 /**
- * Interface ConditionInterface
+ * Interface ConditionInterface.
  *
  * A single Type, for frontend performance we use plain sql
- *
- * @package Shopware\Swag\Components\Conditions
  */
 abstract class AbstractSortDefinition
 {
-
     private $tableLoader;
 
     public function __construct(TableLoaderInterface $tableLoader)
@@ -42,9 +37,9 @@ abstract class AbstractSortDefinition
         $insertion = '';
 
         if ($this instanceof ExpressionConditionInterface) {
-            $insertion = $this->getGroupingFunction() . '::';
+            $insertion = $this->getGroupingFunction().'::';
         }
 
-        return $this->getTableName() . '::' . $insertion . $this->getFieldName();
+        return $this->getTableName().'::'.$insertion.$this->getFieldName();
     }
 }

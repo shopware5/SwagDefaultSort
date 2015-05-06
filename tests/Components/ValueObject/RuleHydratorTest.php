@@ -1,29 +1,28 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Test\Components\ValueObject;
 
 use Shopware\SwagDefaultSort\Components\DataAccess\RuleHydrator;
 
 /**
- * Class DatabaseAdapter
+ * Class DatabaseAdapter.
  *
  * Sorry no fixtures here, will only test if the querys are valid....
- *
- * @package Shopware\SwagDefaultSort\Test\Components\Frontend
  */
-class RuleHydratorTest extends \PHPUnit_Framework_TestCase {
-
+class RuleHydratorTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var RuleHydrator
      */
     private $ruleHydrator;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->ruleHydrator = new RuleHydrator();
     }
 
-    public function getFixtures() {
+    public function getFixtures()
+    {
         return [
             [
                 'id' => 1,
@@ -37,16 +36,18 @@ class RuleHydratorTest extends \PHPUnit_Framework_TestCase {
                 'definitionUid' => 's_articles::datum',
                 'descending' => false,
 
-            ]
+            ],
         ];
     }
 
-    public function testVoGenerate() {
+    public function testVoGenerate()
+    {
         $vos = $this->ruleHydrator->createRuleVos($this->getFixtures());
         $this->assertContainsOnlyInstancesOf('Shopware\SwagDefaultSort\Components\DataAccess\RuleVo', $vos);
     }
 
-    public function testVoDataComplete() {
+    public function testVoDataComplete()
+    {
         $vo = $this->ruleHydrator->createRuleVo([
                 'id' => 2,
                 'sortOrder' => 1,
@@ -60,6 +61,4 @@ class RuleHydratorTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('s_articles::datum', $vo->getDefinitionUid());
         $this->assertEquals(false, $vo->isDescending());
     }
-
-
 }

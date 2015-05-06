@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Components\Integration;
-
 
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProviderCollection;
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
@@ -14,7 +12,6 @@ use Shopware\SwagDefaultSort\Test\AbstractSearchBundleDependantTest;
 
 class MergeDefinitionsWithQueryExtenderTest extends AbstractSearchBundleDependantTest
 {
-
     /**
      * @var QueryExtensionGateway
      */
@@ -60,7 +57,7 @@ class MergeDefinitionsWithQueryExtenderTest extends AbstractSearchBundleDependan
     }
 
     /**
-     * triggers: Memory allocation error: 1038 Out of sort memory, consider increasing server sort buffer size
+     * triggers: Memory allocation error: 1038 Out of sort memory, consider increasing server sort buffer size.
      *
      * so no ->execute()
      */
@@ -82,6 +79,4 @@ class MergeDefinitionsWithQueryExtenderTest extends AbstractSearchBundleDependan
             $this->assertContains($definition->getTableName(), $qb->getSql());
         }
     }
-
-
 }

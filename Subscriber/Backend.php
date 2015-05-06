@@ -29,10 +29,11 @@ class Backend implements SubscriberInterface
     }
 
     /**
-     * Register the backend controller
+     * Register the backend controller.
      *
-     * @param   \Enlight_Event_EventArgs $args
-     * @return  string
+     * @param \Enlight_Event_EventArgs $args
+     *
+     * @return string
      * @Enlight\Event Enlight_Controller_Dispatcher_ControllerPath_Backend_SwagDefaultSort
      */
     public function onGetControllerPathBackend(\Enlight_Event_EventArgs $args)
@@ -45,14 +46,15 @@ class Backend implements SubscriberInterface
 
     /**
      * @param \Enlight_Event_EventArgs $args
+     *
      * @return string
      * @Enlight\Event Enlight_Controller_Dispatcher_ControllerPath_Backend_SwagDefaultSortCategory
      */
-    public function onGetControllerCategoryPathBackend(\Enlight_Event_EventArgs $args) {
+    public function onGetControllerCategoryPathBackend(\Enlight_Event_EventArgs $args)
+    {
         $this->registrationService->registerTemplateDir();
         $this->registrationService->registerSnippets();
 
         return $this->registrationService->getBackendControllerPath('SwagDefaultSortCategory');
     }
-
 }

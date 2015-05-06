@@ -1,18 +1,14 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\ORMReflector;
 
-
-use \Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 
 /**
- * Class InflectorResult
- * @package Shopware\SwagDefaultSort\Components\ORMInflector
+ * Class InflectorResult.
  */
 class InflectorResult
 {
-
     /**
      * @var ClassMetadata
      */

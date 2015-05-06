@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Bundle\SearchBundleDBAL\SortingHandler;
-
 
 use Shopware\Bundle\SearchBundle\SortingInterface;
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
@@ -13,15 +11,12 @@ use Shopware\SwagDefaultSort\Components\QueryExtender\QueryExtensionGateway;
 use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 
 /**
- * Class DefaultSortingHandler
+ * Class DefaultSortingHandler.
  *
  * Handles query extension
- *
- * @package Shopware\SwagDefaultSort\Bundle\SearchBundleDBAL\SortingHandler
  */
 class DefaultSortingHandler implements SortingHandlerInterface
 {
-
     /**
      * @var QueryExtensionGateway
      */
@@ -50,8 +45,7 @@ class DefaultSortingHandler implements SortingHandlerInterface
         SortingInterface $sorting,
         QueryBuilder $query,
         ShopContextInterface $context
-    )
-    {
+    ) {
         /** @var RuleVo[] $rules */
         $rules = $sorting->getRules();
 

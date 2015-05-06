@@ -1,22 +1,17 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider;
 
-
-use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
 use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
 /**
- * Class AbstractOrderByFilter
+ * Class AbstractOrderByFilter.
  *
  * Filter the actual sort name, based on definition classes
- *
- * @package Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider
  */
-abstract class AbstractOrderByFilter {
-
+abstract class AbstractOrderByFilter
+{
     /**
      * @var string
      */
@@ -44,12 +39,14 @@ abstract class AbstractOrderByFilter {
 
     /**
      * @param string $currentValue
+     *
      * @return string filtered value
      */
     abstract public function filterSort($currentValue);
 
     /**
      * @param string $currentValue
+     *
      * @return string filtered value
      */
     abstract public function filterOrder($currentValue);
@@ -59,7 +56,7 @@ abstract class AbstractOrderByFilter {
      */
     protected function getAlias()
     {
-        if(!$this->alias) {
+        if (!$this->alias) {
             throw new \BadMethodCallException('missing property $alias');
         }
 
@@ -71,7 +68,7 @@ abstract class AbstractOrderByFilter {
      */
     protected function getDefinition()
     {
-        if(!$this->definition) {
+        if (!$this->definition) {
             throw new \BadMethodCallException('missing property $definition');
         }
 
@@ -83,12 +80,10 @@ abstract class AbstractOrderByFilter {
      */
     protected function getRule()
     {
-        if(!$this->rule) {
+        if (!$this->rule) {
             throw new \BadMethodCallException('missing property $rule');
         }
 
         return $this->rule;
     }
-
-
 }

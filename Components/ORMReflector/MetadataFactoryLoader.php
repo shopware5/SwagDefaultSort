@@ -1,18 +1,14 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\ORMReflector;
 
 /**
- * Class MetadataFactoryLoader
+ * Class MetadataFactoryLoader.
  *
  * Slow fallback searches all registered models
- *
- * @package Shopware\Components\ORMReflector
  */
 class MetadataFactoryLoader extends LoaderAbstract
 {
-
     /**
      * @inheritdoc
      */
@@ -29,6 +25,6 @@ class MetadataFactoryLoader extends LoaderAbstract
             return $this->createInflectorResult($tableMetadata);
         }
 
-        return null;
+        return;
     }
 }

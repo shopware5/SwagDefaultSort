@@ -1,22 +1,18 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider;
-
 
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ExpressionConditionInterface;
 
 /**
- * Class OrderDetailsExpressionJoinProvider
+ * Class OrderDetailsExpressionJoinProvider.
  *
  * Supports s_order_details + ExpressionConditionInterface
- *
- * @package Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider
  */
-class OrderDetailsExpressionJoinProvider extends AbstractExpressionJoinProvider {
-
+class OrderDetailsExpressionJoinProvider extends AbstractExpressionJoinProvider
+{
     public function isSupportedInterface(AbstractSortDefinition $sortDefinition)
     {
         return $sortDefinition instanceof ExpressionConditionInterface && $sortDefinition->getTableName() == $this->getTableName();
@@ -31,17 +27,18 @@ class OrderDetailsExpressionJoinProvider extends AbstractExpressionJoinProvider 
     }
 
     /**
-     * Extends the query and returns the alias to bind the definition to
+     * Extends the query and returns the alias to bind the definition to.
      *
-     * @param QueryBuilder $queryBuilder
+     * @param QueryBuilder           $queryBuilder
      * @param AbstractSortDefinition $definition
+     *
      * @return string join alias
      */
     public function extendQuery(QueryBuilder $queryBuilder, AbstractSortDefinition $definition)
     {
         $alias = $this->createAlias('Select');
 
-        if($queryBuilder->hasState($alias)) {
+        if ($queryBuilder->hasState($alias)) {
             return $alias;
         }
 
@@ -51,9 +48,9 @@ class OrderDetailsExpressionJoinProvider extends AbstractExpressionJoinProvider 
 
         $subQueryBuilder->select($this->getSelectWithExpression($definition, $subQueryAlias))
             ->from($this->getTableName(), $subQueryAlias)
-            ->where('product.id = ' . $subQueryAlias . '.articleID');
+            ->where('product.id = '.$subQueryAlias.'.articleID');
 
-        $queryBuilder->addSelect('(' . $subQueryBuilder->getSQL() . ') AS ' . $alias . '_' . $definition->getFieldName());
+        $queryBuilder->addSelect('('.$subQueryBuilder->getSQL().') AS '.$alias.'_'.$definition->getFieldName());
 
         return $alias;
     }

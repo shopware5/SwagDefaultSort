@@ -1,15 +1,13 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes;
-
 
 use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\TableLoaderInterface;
 
-class AttributeTableLoader implements TableLoaderInterface {
-
+class AttributeTableLoader implements TableLoaderInterface
+{
     private $blacklist = [
         'id',
         'articleID',
@@ -21,7 +19,8 @@ class AttributeTableLoader implements TableLoaderInterface {
      */
     private $inflector;
 
-    public function __construct(ORMReflector $inflector) {
+    public function __construct(ORMReflector $inflector)
+    {
         $this->inflector = $inflector;
     }
 
@@ -41,8 +40,8 @@ class AttributeTableLoader implements TableLoaderInterface {
         $inflectionResult = $this->inflector->getTable($this->getTableName());
         $ret = [];
 
-        foreach($inflectionResult->getFieldNames() as $fieldName) {
-            if(in_array($fieldName, $this->blacklist)) {
+        foreach ($inflectionResult->getFieldNames() as $fieldName) {
+            if (in_array($fieldName, $this->blacklist)) {
                 continue;
             }
 

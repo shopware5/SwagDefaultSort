@@ -1,21 +1,17 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\ORMReflector;
 
 use ArrayIterator;
 use InvalidArgumentException;
 
 /**
- * Class Map
+ * Class Map.
  *
  * Map + reverse map for orm field <-> db field mapping
- *
- * @package Shopware\SwagDefaultSort\Components\ORMReflector
  */
 class Map
 {
-
     /**
      * @var string
      */
@@ -64,6 +60,7 @@ class Map
     /**
      * @param $dbValue
      * @param $ormValue
+     *
      * @return $this
      */
     public function add($dbValue, $ormValue)
@@ -90,12 +87,13 @@ class Map
 
     /**
      * @param $dbValue
+     *
      * @return mixed
      */
     public function getOrmValue($dbValue)
     {
         if (!isset($this->ormMap[$dbValue])) {
-            throw new InvalidArgumentException('"' . $dbValue . '" not mapped');
+            throw new InvalidArgumentException('"'.$dbValue.'" not mapped');
         }
 
         return $this->ormValues[$this->ormMap[$dbValue]];
@@ -103,12 +101,13 @@ class Map
 
     /**
      * @param $ormValue
+     *
      * @return mixed
      */
     public function getDbValue($ormValue)
     {
         if (!isset($this->dbMap[$ormValue])) {
-            throw new InvalidArgumentException('"' . $ormValue . '" not mapped');
+            throw new InvalidArgumentException('"'.$ormValue.'" not mapped');
         }
 
         return $this->dbValues[$this->dbMap[$ormValue]];
@@ -117,7 +116,7 @@ class Map
     /**
      * [
      *  $dbValue => $ormValue
-     * ]
+     * ].
      *
      * @return ArrayIterator
      */
@@ -135,7 +134,7 @@ class Map
     /**
      * [
      *  $ormValue => $dbValue
-     * ]
+     * ].
      *
      * @return ArrayIterator
      */
@@ -149,6 +148,4 @@ class Map
 
         return new ArrayIterator($map);
     }
-
-
 }

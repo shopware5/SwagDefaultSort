@@ -1,14 +1,12 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\Votes;
-
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ExpressionConditionInterface;
 
-class SumPoints extends AbstractSortDefinition implements ExpressionConditionInterface {
-
+class SumPoints extends AbstractSortDefinition implements ExpressionConditionInterface
+{
     /**
      * @return string
      */
@@ -16,7 +14,6 @@ class SumPoints extends AbstractSortDefinition implements ExpressionConditionInt
     {
         return 'points';
     }
-
 
     /**
      * @return string

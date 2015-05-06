@@ -1,19 +1,15 @@
 <?php
 
-
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails;
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ExpressionConditionInterface;
 
 /**
- * Class MaxOrderCount
- *
- * @package Shopware\Components\SortDefinition\Order
+ * Class MaxOrderCount.
  */
-class SumOrderAmount extends AbstractSortDefinition implements ExpressionConditionInterface {
-
+class SumOrderAmount extends AbstractSortDefinition implements ExpressionConditionInterface
+{
     /**
      * @return string
      */

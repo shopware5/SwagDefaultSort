@@ -1,14 +1,12 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\ArticleDetails;
-
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\TableLoaderInterface;
 
-class DetailsTableLoader implements TableLoaderInterface {
-
+class DetailsTableLoader implements TableLoaderInterface
+{
     /**
      * @return string
      */

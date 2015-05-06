@@ -1,14 +1,12 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\Votes;
-
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\TableLoaderInterface;
 
-class VotesTableLoader implements TableLoaderInterface {
-
+class VotesTableLoader implements TableLoaderInterface
+{
     /**
      * @return string
      */

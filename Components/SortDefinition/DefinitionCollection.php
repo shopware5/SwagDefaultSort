@@ -1,30 +1,23 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition;
 
-
 use Behat\Behat\Definition\DefinitionInterface;
-use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes\AttributeTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleDetails\DetailsTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails\OrderTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Prices\PricesTableLoader;
-use Shopware\SwagDefaultSort\Components\SortDefinition\TableLoaderInterface;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Votes\VotesTableLoader;
 use Traversable;
 
 /**
- * Class DefaultSortLoader
+ * Class DefaultSortLoader.
  *
  * Simple Loader class, don't forget to register your Definitions here!
- *
- * @package Shopware\Components
  */
 class DefinitionCollection implements \IteratorAggregate, \Countable
 {
-
     /**
      * @var TableLoaderInterface[]
      */
@@ -39,7 +32,6 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
      * @var string[][]
      */
     private $tableMap;
-
 
     /**
      * @return array
@@ -57,50 +49,53 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
 
     /**
      * @param $definitionUid
+     *
      * @return AbstractSortDefinition
      */
     public function getDefinition($definitionUid)
     {
         $definitions = $this->getDefinitions();
 
-        if(!isset($definitions[$definitionUid])) {
-            throw new \InvalidArgumentException('Unable to fetch definition, definitionUid "' . $definitionUid . '" not found"');
+        if (!isset($definitions[$definitionUid])) {
+            throw new \InvalidArgumentException('Unable to fetch definition, definitionUid "'.$definitionUid.'" not found"');
         }
 
         return $definitions[$definitionUid];
     }
 
-
-
     /**
-     * Return a subset for a specific table
+     * Return a subset for a specific table.
      *
      * @param $tableName
+     *
      * @return \ArrayIterator
      */
-    public function getTableIterator($tableName) {
+    public function getTableIterator($tableName)
+    {
         //trigger loading
         $definitions = $this->getDefinitions();
 
-        if(!isset($this->tableMap[$tableName])) {
-            throw new \InvalidArgumentException('Missing or invalid $tableName ("' . $tableName . '")');
+        if (!isset($this->tableMap[$tableName])) {
+            throw new \InvalidArgumentException('Missing or invalid $tableName ("'.$tableName.'")');
         }
 
         return new \ArrayIterator($this->tableMap[$tableName]);
     }
 
-    public function getTableNames() {
+    public function getTableNames()
+    {
         $ret = [];
 
-        foreach($this->getTableLoaders() as $tableLoader) {
+        foreach ($this->getTableLoaders() as $tableLoader) {
             $ret[] = $tableLoader->getTableName();
         }
 
         return $ret;
     }
 
-    private function getTableLoaders() {
-        if(!$this->tableLoaders) {
+    private function getTableLoaders()
+    {
+        if (!$this->tableLoaders) {
             $this->loadTableLoaders();
         }
 
@@ -110,18 +105,20 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
     /**
      *
      */
-    private function loadTableLoaders() {
-       $this->tableLoaders = [
+    private function loadTableLoaders()
+    {
+        $this->tableLoaders = [
            new ArticleTableLoader(),
            new DetailsTableLoader(),
            new AttributeTableLoader(Shopware()->Container()->get('swag_default_sort.orm_inflector')),
            new OrderTableLoader(),
            new VotesTableLoader(),
-           new PricesTableLoader()
+           new PricesTableLoader(),
        ];
     }
 
-    private function loadDefinitions() {
+    private function loadDefinitions()
+    {
         $this->definitions = [];
 
         foreach ($this->tableLoaders as $loader) {
@@ -129,11 +126,11 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
 
             $this->tableMap[$currentTable] = [];
 
-            foreach($loader->createDefinitions() as $definition) {
+            foreach ($loader->createDefinitions() as $definition) {
                 $definitionUid = $definition->getUniqueIdentifier();
 
-                if(array_key_exists($definitionUid, $this->definitions)) {
-                    throw new \LogicException('Unable to continue - a unique identifier is not unique - found "' . $definitionUid . '" twice');
+                if (array_key_exists($definitionUid, $this->definitions)) {
+                    throw new \LogicException('Unable to continue - a unique identifier is not unique - found "'.$definitionUid.'" twice');
                 }
 
                 $this->tableMap[$currentTable][] = $definition;
@@ -144,10 +141,12 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
 
     /**
      * (PHP 5 &gt;= 5.0.0)<br/>
-     * Retrieve an external iterator
+     * Retrieve an external iterator.
+     *
      * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+     *
      * @return Traversable An instance of an object implementing <b>Iterator</b> or
-     * <b>Traversable</b>
+     *                     <b>Traversable</b>
      */
     public function getIterator()
     {
@@ -156,12 +155,14 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
 
     /**
      * (PHP 5 &gt;= 5.1.0)<br/>
-     * Count elements of an object
+     * Count elements of an object.
+     *
      * @link http://php.net/manual/en/countable.count.php
+     *
      * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
+     *             </p>
+     *             <p>
+     *             The return value is cast to an integer.
      */
     public function count()
     {

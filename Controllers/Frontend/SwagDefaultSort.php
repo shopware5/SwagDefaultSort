@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Frontend controller
+ * Frontend controller.
  */
 class Shopware_Controllers_Frontend_SwagDefaultSort extends Enlight_Controller_Action
 {

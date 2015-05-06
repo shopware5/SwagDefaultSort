@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\SortDefinition;
-
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
@@ -10,7 +8,6 @@ use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 
 class InflectDefinitionsTest extends \Shopware\Components\Test\Plugin\TestCase
 {
-
     /**
      * @var ORMReflector
      */
@@ -36,8 +33,7 @@ class InflectDefinitionsTest extends \Shopware\Components\Test\Plugin\TestCase
                 ->getTable($definition->getTableName())
                 ->getMap();
 
-
-            $this->assertNotEmpty($map->getOrmValue($definition->getFieldName()), $definition->getUniqueIdentifier() . ' - not mapped');
+            $this->assertNotEmpty($map->getOrmValue($definition->getFieldName()), $definition->getUniqueIdentifier().' - not mapped');
         }
     }
 }

@@ -1,19 +1,16 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
+
 use JsonSerializable;
 
 /**
- * Class TableVo
+ * Class TableVo.
  *
  * ValueObject containing the different table names and translations
- *
- * @package Shopware\SwagDefaultSort\Components\DataAccess
  */
 class TableVo implements JsonSerializable
 {
-
     /**
      * @var string
      */
@@ -46,11 +43,10 @@ class TableVo implements JsonSerializable
         return $this->filter->filter($this->getTableName());
     }
 
-
     /**
      * {@inheritdoc}
      */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return [
             'tableName' => $this->getTableName(),

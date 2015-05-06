@@ -1,15 +1,14 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Test;
 
 use Shopware\Bundle\SearchBundle\Criteria;
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilderFactoryInterface;
 use Shopware\Bundle\StoreFrontBundle\Struct\ShopContextInterface;
-use \Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 
-abstract class AbstractSearchBundleDependantTest extends \Shopware\Components\Test\Plugin\TestCase {
+abstract class AbstractSearchBundleDependantTest extends \Shopware\Components\Test\Plugin\TestCase
+{
     /**
      * @var QueryBuilderFactoryInterface
      */
@@ -33,14 +32,15 @@ abstract class AbstractSearchBundleDependantTest extends \Shopware\Components\Te
     public function setUp()
     {
         $this->context = Shopware()->Container()->get('shopware_storefront.context_service')->getShopContext();
-        $this->queryBuilderFactory = Shopware()->Container()->get('shopware_searchdbal.dbal_query_builder_factory');;
+        $this->queryBuilderFactory = Shopware()->Container()->get('shopware_searchdbal.dbal_query_builder_factory');
         $this->criteria = new Criteria();
     }
 
     /**
      * @return QueryBuilder
      */
-    protected function getQueryBuilder() {
+    protected function getQueryBuilder()
+    {
         return $this->queryBuilderFactory->createQuery($this->criteria, $this->context);
     }
 }

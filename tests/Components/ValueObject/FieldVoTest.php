@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 
 use Shopware\SwagDefaultSort\Components\DataAccess\FieldVo;
@@ -8,20 +7,20 @@ use Shopware\SwagDefaultSort\Components\DataAccess\TranslateFilter;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
-class FieldVoTest extends \PHPUnit_Framework_TestCase {
-
+class FieldVoTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var DefinitionCollection
      */
     private $definitionCollection;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->definitionCollection = new DefinitionCollection();
     }
 
     public function testGetters()
     {
-
         $shops = Shopware()->Models()->getRepository('Shopware\Models\Shop\Shop')->findAll();
 
         foreach ($shops as $shop) {
@@ -47,5 +46,4 @@ class FieldVoTest extends \PHPUnit_Framework_TestCase {
             }
         }
     }
-
 }

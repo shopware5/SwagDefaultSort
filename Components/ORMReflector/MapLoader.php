@@ -1,18 +1,14 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\ORMReflector;
 
 /**
- * Class MapLoader
+ * Class MapLoader.
  *
  * Performance-Tuning load metadata via a static table <-> entity mapping
- *
- * @package Shopware\SwagDefaultSort\Components\ORMReflector
  */
 class MapLoader extends LoaderAbstract
 {
-
     const MAIN_SW_MODEL_NAMEAPSCE_PREFIX = 'Shopware\Models';
 
     /**
@@ -21,23 +17,24 @@ class MapLoader extends LoaderAbstract
     private $map = [
         's_articles_details' => 'Article\Detail',
         's_articles' => 'Article\Article',
-        's_articles_attributes' => 'Attribute\Article'
+        's_articles_attributes' => 'Attribute\Article',
     ];
 
     /**
      * @param string $dbTableName
+     *
      * @return InflectorResult|null
      */
     public function load($dbTableName)
     {
         if (!isset($this->map[$dbTableName])) {
-            return null;
+            return;
         }
 
         return $this
             ->createInflectorResult(
                 $this->entityManager->getMetadataFactory()->getMetadataFor(
-                    self::MAIN_SW_MODEL_NAMEAPSCE_PREFIX . '\\' . $this->map[$dbTableName]
+                    self::MAIN_SW_MODEL_NAMEAPSCE_PREFIX.'\\'.$this->map[$dbTableName]
                 )
             );
     }

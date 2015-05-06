@@ -1,12 +1,11 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\ArticleDetails;
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
-class ArticleDetailsWeight extends AbstractSortDefinition {
-
+class ArticleDetailsWeight extends AbstractSortDefinition
+{
     /**
      * @return string
      */

@@ -20,10 +20,12 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
 {
     /**
      * @return mixed
+     *
      * @throws Exception
      */
-    public function getVersion() {
-        $info = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR .'plugin.json'), true);
+    public function getVersion()
+    {
+        $info = json_decode(file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'plugin.json'), true);
         if ($info) {
             return $info['currentVersion'];
         } else {
@@ -50,7 +52,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 
         $classes = array(
-            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule')
+            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule'),
         );
         $tool->dropSchema($classes);
 
@@ -64,16 +66,15 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     {
         try {
             $this->storeMenuState(false);
-        } catch(BadMethodCallException $e) {
+        } catch (BadMethodCallException $e) {
             return false;
         }
 
         return true;
     }
 
-
     /**
-     * Returns capabilities
+     * Returns capabilities.
      */
     public function getCapabilities()
     {
@@ -81,18 +82,19 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
             'install' => true,
             'update' => true,
             'enable' => true,
-            'secureUninstall' => true
+            'secureUninstall' => true,
         ];
     }
 
-    public function getInfo() {
+    public function getInfo()
+    {
         return [
             'version' => $this->getVersion(),
             'label' => $this->getLabel(),
             'description' => 'Change article listing sorting for certain categories',
             'supplier' => 'shopware AG',
             'support' => 'Shopware Forum',
-            'link' => 'http://www.shopware.com'
+            'link' => 'http://www.shopware.com',
         ];
     }
 
@@ -107,7 +109,6 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
             throw new \RuntimeException('At least Shopware 5.0.0 is required');
         }
 
-
         $this->createMenuItem(array(
             'label' => 'Kategorie Sortierung',
             'controller' => 'SwagDefaultSort',
@@ -115,7 +116,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
             'action' => 'Index',
             'active' => 0,
             'position' => -3,
-            'parent' => $this->Menu()->findOneBy('label', 'Einstellungen')
+            'parent' => $this->Menu()->findOneBy('label', 'Einstellungen'),
         ));
 
         $this->subscribeEvent(
@@ -130,31 +131,33 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         return array('success' => true, 'invalidateCache' => array('frontend', 'backend'));
     }
 
-    public function enable() {
+    public function enable()
+    {
         try {
             $this->storeMenuState(true);
-        } catch(BadMethodCallException $e) {
+        } catch (BadMethodCallException $e) {
             return false;
         }
 
         return true;
     }
 
-    public function disable() {
-        try{
+    public function disable()
+    {
+        try {
             $this->storeMenuState(false);
-        } catch(BadMethodCallException $e) {
+        } catch (BadMethodCallException $e) {
             return false;
         }
-
 
         return true;
     }
 
-    private function storeMenuState($isActive) {
+    private function storeMenuState($isActive)
+    {
         $menuItem = $this->Menu()->findOneBy('label', 'Kategorie Sortierung');
 
-        if(!$menuItem) {
+        if (!$menuItem) {
             throw new BadMethodCallException('Unable to set Menu state - no item found');
         }
 
@@ -177,7 +180,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 
         $classes = array(
-            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule')
+            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule'),
         );
 
         try {
@@ -191,7 +194,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     /**
      * This callback function is triggered at the very beginning of the dispatch process and allows
      * us to register additional events on the fly. This way you won't ever need to reinstall you
-     * plugin for new events - any event and hook can simply be registerend in the event subscribers
+     * plugin for new events - any event and hook can simply be registerend in the event subscribers.
      */
     public function onStartDispatch(Enlight_Event_EventArgs $args)
     {
@@ -211,7 +214,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     }
 
     /**
-     * Register namespaces
+     * Register namespaces.
      */
     private function registerPluginNamespace()
     {
@@ -224,7 +227,8 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     /**
      * @return \Shopware\Components\Model\ModelManager
      */
-    private function getEntityManager() {
+    private function getEntityManager()
+    {
         return Shopware()->Models();
     }
 }

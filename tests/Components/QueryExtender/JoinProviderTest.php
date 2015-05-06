@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Test\Components\QueryExtender;
-
 
 use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractExpressionJoinProvider;
@@ -17,7 +15,6 @@ use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleTableLoad
 use Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails\OrderTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails\SumOrderAmount;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Prices\PricesPrice;
-use Shopware\SwagDefaultSort\Components\SortDefinition\Prices\PricesPseudoprice;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Prices\PricesTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Votes\SumPoints;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Votes\VotesTableLoader;
@@ -42,7 +39,6 @@ class JoinProviderTest extends AbstractSearchBundleDependantTest
         $this->interfaceDefinitions['s_order_details'] = new SumOrderAmount(new OrderTableLoader());
         $this->interfaceDefinitions['s_articles_vote'] = new SumPoints(new VotesTableLoader());
     }
-
 
     private function createJoinCollection()
     {
@@ -103,7 +99,6 @@ class JoinProviderTest extends AbstractSearchBundleDependantTest
         $qb = $this->getQueryBuilder();
         $qb->select('*');
 
-
         /** @var AbstractJoinProvider $joinProvider */
         foreach ($this->createJoinCollection() as $joinProvider) {
             $def = $this->getDefinition($joinProvider);
@@ -118,12 +113,12 @@ class JoinProviderTest extends AbstractSearchBundleDependantTest
         }
     }
 
-    private function getDefinition(AbstractJoinProvider $joinProvider) {
+    private function getDefinition(AbstractJoinProvider $joinProvider)
+    {
         if ($joinProvider instanceof AbstractExpressionJoinProvider) {
             return $this->interfaceDefinitions[$joinProvider->getTableName()];
         }
 
         return $this->tableDefinitions[$joinProvider->getTableName()];
     }
-
 }

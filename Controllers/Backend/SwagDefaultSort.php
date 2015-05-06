@@ -1,23 +1,27 @@
 <?php
 
 /**
- * Backend controllers extending from Shopware_Controllers_Backend_Application do support the new backend components
+ * Backend controllers extending from Shopware_Controllers_Backend_Application do support the new backend components.
  */
 class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_Backend_Application
 {
     protected $model = 'Shopware\CustomModels\SwagDefaultSort\Rule';
     protected $alias = 'rule';
 
-    public function listInflectionTablesAction() {}
+    public function listInflectionTablesAction()
+    {
+    }
 
     /**
-     * Extend so the foreign key is correctly flagged
+     * Extend so the foreign key is correctly flagged.
      *
      * @param string $model
-     * @param null $alias
+     * @param null   $alias
+     *
      * @return array
      */
-    protected function getModelFields($model, $alias = null) {
+    protected function getModelFields($model, $alias = null)
+    {
         $fields = parent::getModelFields($model, $alias);
 
         $fields['categoryId']['type'] = 'foreignKey';
@@ -26,15 +30,16 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
     }
 
     /**
-     * Adds a pseudo format, tp prevent 'LIKE' search for a foreign key
+     * Adds a pseudo format, tp prevent 'LIKE' search for a foreign key.
      *
      * @param string $value
-     * @param array $field
+     * @param array  $field
+     *
      * @return int|string
      */
     protected function formatSearchValue($value, array $field)
     {
-        if($field['type'] == 'foreignKey') {
+        if ($field['type'] == 'foreignKey') {
             return (int) $value;
         }
 
@@ -42,24 +47,24 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
     }
 
     /**
-     * Extended so multi edit is possible
+     * Extended so multi edit is possible.
      */
     public function updateAction()
     {
         $params = $this->Request()->getParams();
 
-        if(isset($params['id'])) {
+        if (isset($params['id'])) {
             $params = [$params];
         }
 
         $assignment = [];
 
-        foreach($params as $index => $possibleRecord) {
-            if(!is_numeric($index)) {
+        foreach ($params as $index => $possibleRecord) {
+            if (!is_numeric($index)) {
                 continue;
             }
 
-            if(!isset($possibleRecord['id'])) {
+            if (!isset($possibleRecord['id'])) {
                 continue;
             }
 
@@ -67,7 +72,6 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
                 $assignment,
                 $this->save($possibleRecord)
             );
-
         }
 
         $this->View()->assign(
@@ -75,7 +79,8 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
         );
     }
 
-    public function listTablesAction() {
+    public function listTablesAction()
+    {
         try {
             $tableVos = $this->getTableVos();
 
@@ -83,7 +88,6 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
                 'success' => true,
                 'data' => $tableVos,
             ]);
-
         } catch (Exception $e) {
             $this->View()->assign([
                 'success' => false,
@@ -93,8 +97,8 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
         }
     }
 
-
-    public function listFieldsAction() {
+    public function listFieldsAction()
+    {
         try {
             $fields = $this->getFieldVos();
 
@@ -111,21 +115,24 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
         }
     }
 
-
     /**
      * @return \Shopware\SwagDefaultSort\Components\DataAccess\TableVo[]
+     *
      * @throws Exception
      */
-    private function getTableVos() {
+    private function getTableVos()
+    {
         return Shopware()->Container()
             ->get('swag_default_sort.table_vo_collection');
     }
 
     /**
      * @return \Shopware\SwagDefaultSort\Components\DataAccess\FieldVo[]
+     *
      * @throws Exception
      */
-    private function getFieldVos() {
+    private function getFieldVos()
+    {
         return Shopware()->Container()
             ->get('swag_default_sort.field_vo_collection');
     }

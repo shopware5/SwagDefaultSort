@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Bundle\SearchBundle;
-
 
 use Enlight_Controller_Request_RequestHttp as Request;
 use Shopware\Bundle\SearchBundle\Criteria;
@@ -13,15 +11,12 @@ use Shopware\SwagDefaultSort\Components\DataAccess\DatabaseAdapter;
 use Shopware\SwagDefaultSort\Components\DataAccess\RuleHydrator;
 
 /**
- * Class DefaultSortRequestHandler
+ * Class DefaultSortRequestHandler.
  *
  * Main entry point Search bundle
- *
- * @package Shopware\SwagDefaultSort\Bundle\SearchBundle
  */
 class DefaultSortRequestHandler implements CriteriaRequestHandlerInterface
 {
-
     const REQUEST_VALUE = 'swag_default_sort';
 
     private $enabled = false;
@@ -39,23 +34,21 @@ class DefaultSortRequestHandler implements CriteriaRequestHandlerInterface
     public function __construct(
         DatabaseAdapter $databaseAdapater,
         RuleHydrator $ruleHydrator
-    )
-    {
+    ) {
         $this->databaseAdapter = $databaseAdapater;
         $this->ruleHydrator = $ruleHydrator;
     }
 
     /**
-     * @param Request $request
-     * @param Criteria $criteria
+     * @param Request              $request
+     * @param Criteria             $criteria
      * @param ShopContextInterface $context
      */
     public function handleRequest(
         Request $request,
         Criteria $criteria,
         ShopContextInterface $context
-    )
-    {
+    ) {
         $requestedCategoryId = $request->sCategory;
 
         if (!$requestedCategoryId) {

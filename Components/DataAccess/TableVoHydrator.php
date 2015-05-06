@@ -1,18 +1,14 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
 
 /**
- * Class TableHydrator
+ * Class TableHydrator.
  *
  * TableVO factory
- *
- * @package Shopware\SwagDefaultSort\Components\DataAccess
  */
 class TableVoHydrator
 {
-
     const SNIPPET_NAMESPACE = 'backend/swagdefaultsort/tables';
 
     /**
@@ -35,6 +31,7 @@ class TableVoHydrator
 
     /**
      * @param array $tableNames
+     *
      * @return TableVo[]
      */
     public function createTableVos(array $tableNames)
@@ -50,6 +47,7 @@ class TableVoHydrator
 
     /**
      * @param $tableName
+     *
      * @return TableVo
      */
     public function createTableVo($tableName)

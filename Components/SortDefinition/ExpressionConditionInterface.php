@@ -1,15 +1,11 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition;
 
-
 /**
- * Interface GroupExpressionConditionInterface
+ * Interface GroupExpressionConditionInterface.
  *
  * Optional: Implement this so that the field will use a method
- *
- * @package Shopware\SwagDefaultSort\Components\SortDefinition
  */
 interface ExpressionConditionInterface
 {
@@ -22,5 +18,4 @@ interface ExpressionConditionInterface
      * @return string
      */
     public function getGroupingFunction();
-
 }

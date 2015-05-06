@@ -1,23 +1,18 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
-
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 use Shopware_Components_Snippet_Manager;
 
 /**
- * Class FieldVoHydrator
+ * Class FieldVoHydrator.
  *
  * Factory creating ValueObjects from a DefinitionCollection, or SortDefinition
- *
- * @package Shopware\SwagDefaultSort\Components\DataAccess
  */
 class FieldVoHydrator
 {
-
     const SNIPPET_NAMESPACE = 'backend/swagdefaultsort/fields';
 
     /**
@@ -38,9 +33,9 @@ class FieldVoHydrator
         $this->snippetManager = $snippetManager;
     }
 
-
     /**
      * @param DefinitionCollection $definitions
+     *
      * @return FieldVo[]
      */
     public function createFieldVos(DefinitionCollection $definitions)
@@ -55,6 +50,7 @@ class FieldVoHydrator
 
     /**
      * @param AbstractSortDefinition $definition
+     *
      * @return FieldVo
      */
     public function createFieldVo(AbstractSortDefinition $definition)

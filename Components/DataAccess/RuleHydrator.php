@@ -1,22 +1,21 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
+
 use InvalidArgumentException;
 
-
 /**
- * Class RuleHydrator
+ * Class RuleHydrator.
  *
  * Factory creating RuleValueObjects from result-sets of DatabaseAdapter
  *
  * @see DatabaseAdapter
- * @package Shopware\SwagDefaultSort\Components\DataAccess
  */
 class RuleHydrator
 {
     /**
      * @param array $data
+     *
      * @return array
      */
     public function createRuleVos(array $data)
@@ -32,6 +31,7 @@ class RuleHydrator
 
     /**
      * @param array $rawData
+     *
      * @return RuleVo
      */
     public function createRuleVo(array $rawData)
@@ -40,7 +40,7 @@ class RuleHydrator
             'id',
             'sortOrder',
             'definitionUid',
-            'descending'
+            'descending',
         ]);
 
         $vo = new RuleVo($rawData['id']);
@@ -62,7 +62,7 @@ class RuleHydrator
                 continue;
             }
 
-            throw new InvalidArgumentException('Required key "' . $keyName . '" not found in array');
+            throw new InvalidArgumentException('Required key "'.$keyName.'" not found in array');
         }
     }
 }

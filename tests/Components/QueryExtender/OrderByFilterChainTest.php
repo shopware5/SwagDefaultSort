@@ -1,12 +1,10 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Test\Components\QueryExtender;
 
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleName;
-use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticlesAbstract;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ExpressionConditionInterface;
 use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
@@ -14,7 +12,6 @@ use Shopware\SwagDefaultSort\Test\AbstractSearchBundleDependantTest;
 
 class OrderByFilterChainTest extends AbstractSearchBundleDependantTest
 {
-
     public function testDefaultFieldQueryExtender()
     {
         $defaultFieldQueryExtender = new OrderByFilterChain();
@@ -38,7 +35,8 @@ class OrderByFilterChainTest extends AbstractSearchBundleDependantTest
         $this->assertContains('product.name DESC', $qb->getSQL());
     }
 
-    public function testDefaultFieldQueryExtenderWithGroupExpressionCondition() {
+    public function testDefaultFieldQueryExtenderWithGroupExpressionCondition()
+    {
         $defaultFieldQueryExtender = new OrderByFilterChain();
 
         $ruleVo = new RuleVo(1);
@@ -61,8 +59,8 @@ class OrderByFilterChainTest extends AbstractSearchBundleDependantTest
     }
 }
 
-class MockArticleNameDefinition extends AbstractSortDefinition implements ExpressionConditionInterface {
-
+class MockArticleNameDefinition extends AbstractSortDefinition implements ExpressionConditionInterface
+{
     /**
      * @return string
      */

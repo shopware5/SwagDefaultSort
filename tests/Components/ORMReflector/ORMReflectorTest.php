@@ -2,27 +2,30 @@
 
 namespace Shopware\SwagDefaultSort\Test\Components\ORMInflector;
 
-use \Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
+use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 
-class ORMReflectorTest extends \Shopware\Components\Test\Plugin\TestCase {
-
+class ORMReflectorTest extends \Shopware\Components\Test\Plugin\TestCase
+{
     /**
      * @var ORMReflector
      */
     private $ormInflector;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->ormInflector = new ORMReflector(Shopware()->Models());
     }
 
-    public function testReverseMapper() {
+    public function testReverseMapper()
+    {
         $this->assertInstanceOf(
             'Shopware\SwagDefaultSort\Components\ORMReflector\InflectorResult',
             $this->ormInflector->getTable('s_articles')
         );
     }
 
-    public function testResult() {
+    public function testResult()
+    {
         $result = $this->ormInflector->getTable('s_articles');
 
         $this->assertEquals(
@@ -46,7 +49,8 @@ class ORMReflectorTest extends \Shopware\Components\Test\Plugin\TestCase {
         );
     }
 
-    public function testMap() {
+    public function testMap()
+    {
         $map = $this->ormInflector->getTable('s_articles')->getMap();
 
         $this->assertInstanceOf('Shopware\SwagDefaultSort\Components\ORMReflector\Map', $map);
@@ -71,5 +75,4 @@ class ORMReflectorTest extends \Shopware\Components\Test\Plugin\TestCase {
             $map->getDbIterator()
         );
     }
-
 }

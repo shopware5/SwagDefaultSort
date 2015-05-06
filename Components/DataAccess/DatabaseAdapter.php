@@ -1,16 +1,13 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
 
 use Doctrine\DBAL\Connection;
 
 /**
- * Class DatabaseAdapter
+ * Class DatabaseAdapter.
  *
  * All DB-Queries go here!
- *
- * @package Shopware\SwagDefaultSort\Components\DataAccess
  */
 class DatabaseAdapter
 {
@@ -30,9 +27,10 @@ class DatabaseAdapter
     }
 
     /**
-     * Warning: This may not be the fastest query depending on the current database layout
+     * Warning: This may not be the fastest query depending on the current database layout.
      *
      * @param $categoryId
+     *
      * @return int|null
      */
     public function fetchClosestCategoryIdWithRule($categoryId)
@@ -41,7 +39,7 @@ class DatabaseAdapter
             $result = $this->connection
                 ->createQueryBuilder()
                 ->addSelect('category.parent')
-                ->addSelect('(SELECT COUNT(*) FROM ' . self::PLUGIN_TABLE_NAME . ' WHERE category_id = category.id) AS hasRules')
+                ->addSelect('(SELECT COUNT(*) FROM '.self::PLUGIN_TABLE_NAME.' WHERE category_id = category.id) AS hasRules')
                 ->from('s_categories', 'category')
                 ->where('category.id = :categoryId')
                 ->setParameter(':categoryId', $categoryId)
@@ -53,18 +51,19 @@ class DatabaseAdapter
             }
 
             $categoryId = $result['parent'];
-
         } while ($categoryId);
 
-        return null;
+        return;
     }
 
     /**
-     * Selects data, according to the hydrator to create ValueObjects
+     * Selects data, according to the hydrator to create ValueObjects.
      *
      * @see RuleVo
      * @see FieldVoHydrator
+     *
      * @param $categoryId
+     *
      * @return array assoc data
      */
     public function fetchRawData($categoryId)
@@ -87,5 +86,4 @@ class DatabaseAdapter
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
-
 }

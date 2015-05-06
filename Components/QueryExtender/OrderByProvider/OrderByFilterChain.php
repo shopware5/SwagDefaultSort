@@ -1,22 +1,18 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider;
-
 
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 
 /**
- * Class OrderByFilterChain
+ * Class OrderByFilterChain.
  *
  * Extends the query with a collection of filters
- *
- * @package Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider
  */
-class OrderByFilterChain {
-
+class OrderByFilterChain
+{
     /**
      * @var OrderByProvider
      */
@@ -27,9 +23,8 @@ class OrderByFilterChain {
      */
     private $orderByFilter;
 
-
-    public function __construct() {
-
+    public function __construct()
+    {
     }
 
     public function extendQuery(
@@ -38,11 +33,10 @@ class OrderByFilterChain {
         RuleVo $rule,
         QueryBuilder $queryBuilder
     ) {
-
         $sort = $this->getOrderByProvider()->getSort($alias, $definition);
         $order = $this->getOrderByProvider()->getOrder($rule);
 
-        foreach($this->getDataFilters() as $filter) {
+        foreach ($this->getDataFilters() as $filter) {
             $filter->setUp($alias, $definition, $rule);
 
             $sort = $filter->filterSort($sort);
@@ -52,23 +46,23 @@ class OrderByFilterChain {
         $queryBuilder->addOrderBy($sort, $order);
     }
 
-    public function getOrderByProvider() {
-        if(!$this->orderByProvider) {
+    public function getOrderByProvider()
+    {
+        if (!$this->orderByProvider) {
             $this->orderByProvider = new OrderByProvider();
         }
 
         return $this->orderByProvider;
     }
 
-    public function getDataFilters() {
-
-        if(!$this->orderByFilter) {
+    public function getDataFilters()
+    {
+        if (!$this->orderByFilter) {
             $this->orderByFilter =  [
-                new ExpressionConditionFilter()
+                new ExpressionConditionFilter(),
             ];
         }
 
         return $this->orderByFilter;
-
     }
 }

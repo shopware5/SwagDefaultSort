@@ -25,7 +25,8 @@ class Frontend implements SubscriberInterface
      */
     private $registrationService;
 
-    public function __construct(Container $container, RegistrationService $registrationService) {
+    public function __construct(Container $container, RegistrationService $registrationService)
+    {
         $this->container = $container;
         $this->registrationService = $registrationService;
     }
@@ -44,14 +45,16 @@ class Frontend implements SubscriberInterface
         return $this->getSortRequestHandler();
     }
 
-    public function onSortingHandlerCollect(\Enlight_Event_EventArgs $args) {
+    public function onSortingHandlerCollect(\Enlight_Event_EventArgs $args)
+    {
         return new DefaultSortingHandler(
             $this->container->get('swag_default_sort.query_extension_gateway')
         );
     }
 
-    public function registerView(\Enlight_Event_EventArgs $args) {
-        if(!$this->getSortRequestHandler()->isEnabled()) {
+    public function registerView(\Enlight_Event_EventArgs $args)
+    {
+        if (!$this->getSortRequestHandler()->isEnabled()) {
             return;
         }
 
@@ -62,8 +65,9 @@ class Frontend implements SubscriberInterface
     /**
      * @return DefaultSortRequestHandler
      */
-    private function getSortRequestHandler() {
-        if(!$this->sortRequestHandler) {
+    private function getSortRequestHandler()
+    {
+        if (!$this->sortRequestHandler) {
             $this->sortRequestHandler = new DefaultSortRequestHandler(
                 $this->container->get('swag_default_sort.database_adapter'),
                 $this->container->get('swag_default_sort.rule_vo_hydrator')

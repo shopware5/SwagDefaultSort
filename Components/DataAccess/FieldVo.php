@@ -1,22 +1,17 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
-
 
 use JsonSerializable;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
 /**
- * Class FieldVo
+ * Class FieldVo.
  *
  * ValueObject for backend SortDefinition select.
- *
- * @package Shopware\SwagDefaultSort\Components\DataAccess
  */
 class FieldVo implements JsonSerializable
 {
-
     /**
      * @var string
      */
@@ -34,7 +29,7 @@ class FieldVo implements JsonSerializable
 
     /**
      * @param AbstractSortDefinition $sortDefinition
-     * @param TranslateFilter $translationFilter
+     * @param TranslateFilter        $translationFilter
      */
     public function __construct(AbstractSortDefinition $sortDefinition, TranslateFilter $translationFilter)
     {
@@ -67,11 +62,10 @@ class FieldVo implements JsonSerializable
         return $this->definitionUid;
     }
 
-
     /**
      * {@inheritdoc}
      */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return [
             'tableName' => $this->getTableName(),

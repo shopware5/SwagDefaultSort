@@ -1,21 +1,17 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider;
-
 
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
 /**
- * Class Taxes
+ * Class Taxes.
  *
  * Supports s_core_tax
- *
- * @package Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider
  */
-class Taxes extends AbstractJoinProvider {
-
+class Taxes extends AbstractJoinProvider
+{
     /**
      * @return string
      */
@@ -25,16 +21,17 @@ class Taxes extends AbstractJoinProvider {
     }
 
     /**
-     * Extends the query and returns the alias to bind the definitition to
+     * Extends the query and returns the alias to bind the definitition to.
      *
      * @param QueryBuilder $queryBuilder
+     *
      * @return string
      */
     public function extendQuery(QueryBuilder $queryBuilder, AbstractSortDefinition $definition)
     {
         $alias = $this->createAlias('Tax');
 
-        if($queryBuilder->hasState($alias)) {
+        if ($queryBuilder->hasState($alias)) {
             return $alias;
         }
 
@@ -42,7 +39,7 @@ class Taxes extends AbstractJoinProvider {
             'product',
             $this->getTableName(),
             $alias,
-            $alias . '.id = product.taxID'
+            $alias.'.id = product.taxID'
         );
 
         $queryBuilder->addState($alias);

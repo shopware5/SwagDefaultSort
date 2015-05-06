@@ -1,16 +1,12 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 
-
 use Shopware\SwagDefaultSort\Components\DataAccess\TableVoHydrator;
-use Shopware\SwagDefaultSort\Components\DataAccess\TableVo;
-use Shopware\SwagDefaultSort\Components\DataAccess\TranslateFilter;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 
-class TableVoHydratorTest extends \PHPUnit_Framework_TestCase {
-
+class TableVoHydratorTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var DefinitionCollection
      */
@@ -21,20 +17,21 @@ class TableVoHydratorTest extends \PHPUnit_Framework_TestCase {
      */
     private $tableVoHydrator;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->definitionCollection = new DefinitionCollection();
         $this->tableVoHydrator = new TableVoHydrator(Shopware()->Snippets());
     }
 
-    public function testGetters() {
+    public function testGetters()
+    {
         $tableVos = $this->tableVoHydrator->createTableVos($this->definitionCollection->getTableNames());
 
         $this->assertContainsOnlyInstancesOf('Shopware\SwagDefaultSort\Components\DataAccess\TableVo', $tableVos);
         $this->assertGreaterThan(0, count($tableVos));
 
-        foreach($tableVos as $tableVo) {
+        foreach ($tableVos as $tableVo) {
             $this->assertNotEmpty($tableVo->getTableName());
         }
     }
-
 }

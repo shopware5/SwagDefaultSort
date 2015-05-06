@@ -1,18 +1,14 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
 
 /**
- * Class TranslateFilter
+ * Class TranslateFilter.
  *
  * From configUid -> readable string
- *
- * @package Shopware\SwagDefaultSort\Components\DataAccess
  */
 class TranslateFilter
 {
-
     /**
      * @var \Enlight_Components_Snippet_Namespace
      */
@@ -25,6 +21,7 @@ class TranslateFilter
 
     /**
      * @param $value
+     *
      * @return mixed
      */
     public function filter($value)
@@ -42,6 +39,7 @@ class TranslateFilter
 
     /**
      * @param string $value
+     *
      * @return string
      */
     private function getSanitizedValue($value)
@@ -51,12 +49,13 @@ class TranslateFilter
 
     /**
      * @param string $value
+     *
      * @return string
      */
-    private function getFallbackLabel($value) {
+    private function getFallbackLabel($value)
+    {
         $parts = explode('::', $value);
 
         return end($parts);
     }
-
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Subscriber;
-
 
 use Enlight\Event\SubscriberInterface;
 use Shopware\SwagDefaultSort\Components\DataAccess\FieldVo;
@@ -11,7 +9,6 @@ use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProviderCollection;
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
 use Shopware\SwagDefaultSort\Components\QueryExtender\QueryExtensionGateway;
-use Shopware\SwagdefaultSort\Components\RegistrationService;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 use Shopware\SwagDefaultSort\Components\DataAccess\DatabaseAdapter;
 use Shopware\SwagDefaultSort\Components\DataAccess\FieldVoHydrator;
@@ -20,15 +17,12 @@ use Shopware\SwagDefaultSort\Components\DataAccess\TableVoHydrator;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
- * Class ServiceContainer
+ * Class ServiceContainer.
  *
  * Contains all service definitions of this plugin
- *
- * @package Shopware\SwagDefaultSort\Subscriber
  */
 class ServiceContainer implements SubscriberInterface
 {
-
     /**
      * @var Container
      */

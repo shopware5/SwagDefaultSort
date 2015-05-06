@@ -1,14 +1,12 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails;
-
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\TableLoaderInterface;
 
-class OrderTableLoader implements TableLoaderInterface {
-
+class OrderTableLoader implements TableLoaderInterface
+{
     /**
      * @return string
      */
@@ -23,7 +21,7 @@ class OrderTableLoader implements TableLoaderInterface {
     public function createDefinitions()
     {
         return [
-            new SumOrderAmount($this)
+            new SumOrderAmount($this),
         ];
     }
 }

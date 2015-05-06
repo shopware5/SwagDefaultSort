@@ -1,18 +1,14 @@
 <?php
 
-
 namespace Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider;
-
 
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
 /**
- * Class AbstractJoinProvider
+ * Class AbstractJoinProvider.
  *
  * Provides a interface for join extension. These classes do not have a 1:1 relation to SortDefinitions
- *
- * @package Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider
  */
 abstract class AbstractJoinProvider
 {
@@ -32,26 +28,30 @@ abstract class AbstractJoinProvider
     abstract public function getTableName();
 
     /**
-     * Extends the query and returns the alias to bind the definition to
+     * Extends the query and returns the alias to bind the definition to.
      *
-     * @param QueryBuilder $queryBuilder
+     * @param QueryBuilder           $queryBuilder
      * @param AbstractSortDefinition $definition
+     *
      * @return string join alias
      */
     abstract public function extendQuery(QueryBuilder $queryBuilder, AbstractSortDefinition $definition);
 
     /**
      * @param bool $set
+     *
      * @return $this
      */
     public function setAddUniqueJoin($set = true)
     {
-        $this->generateUniqueJoin = (bool)$set;
+        $this->generateUniqueJoin = (bool) $set;
+
         return $this;
     }
 
     /**
      * @param string $suffix
+     *
      * @return string
      */
     protected function createAlias($suffix = '')
@@ -68,10 +68,9 @@ abstract class AbstractJoinProvider
         $realClassName .= $suffix;
 
         if ($this->generateUniqueJoin) {
-            $realClassName .= '_' . $this->uniqueCount++;
+            $realClassName .= '_'.$this->uniqueCount++;
         }
 
-        return 'swagDefaultSort' . $realClassName;
+        return 'swagDefaultSort'.$realClassName;
     }
-
 }
