@@ -2,20 +2,24 @@
 
 namespace Shopware\SwagDefaultSort\Subscriber;
 
+use Enlight\Event\SubscriberInterface;
 use Shopware\SwagdefaultSort\Components\RegistrationService;
 
-class Backend implements \Enlight\Event\SubscriberInterface
+class Backend implements SubscriberInterface
 {
     /**
      * @var RegistrationService
      */
     protected $registrationService;
 
+    /**
+     * @inheritdoc
+     */
     public static function getSubscribedEvents()
     {
         return [
             'Enlight_Controller_Dispatcher_ControllerPath_Backend_SwagDefaultSort' => 'onGetControllerPathBackend',
-            'Enlight_Controller_Dispatcher_ControllerPath_Backend_SwagDefaultSortCategory' => 'onGetControllerPathBackend',
+            'Enlight_Controller_Dispatcher_ControllerPath_Backend_SwagDefaultSortCategory' => 'onGetControllerCategoryPathBackend',
         ];
     }
 
@@ -30,18 +34,25 @@ class Backend implements \Enlight\Event\SubscriberInterface
      * @param   \Enlight_Event_EventArgs $args
      * @return  string
      * @Enlight\Event Enlight_Controller_Dispatcher_ControllerPath_Backend_SwagDefaultSort
-     * @todo remove injection security bug
      */
     public function onGetControllerPathBackend(\Enlight_Event_EventArgs $args)
     {
         $this->registrationService->registerTemplateDir();
         $this->registrationService->registerSnippets();
 
-        $controllerName = Shopware()->Front()->Request()->getControllerName();
-
-        return $this->registrationService->getPluginPath() .
-            '/Controllers/Backend/' .
-            $controllerName .
-            '.php';
+        return $this->registrationService->getBackendControllerPath('SwagDefaultSort');
     }
+
+    /**
+     * @param \Enlight_Event_EventArgs $args
+     * @return string
+     * @Enlight\Event Enlight_Controller_Dispatcher_ControllerPath_Backend_SwagDefaultSortCategory
+     */
+    public function onGetControllerCategoryPathBackend(\Enlight_Event_EventArgs $args) {
+        $this->registrationService->registerTemplateDir();
+        $this->registrationService->registerSnippets();
+
+        return $this->registrationService->getBackendControllerPath('SwagDefaultSortCategory');
+    }
+
 }
