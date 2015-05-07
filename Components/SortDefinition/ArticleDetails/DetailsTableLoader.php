@@ -2,10 +2,9 @@
 
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\ArticleDetails;
 
-use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
-use Shopware\SwagDefaultSort\Components\SortDefinition\TableLoaderInterface;
+use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractGenericTableLoader;
 
-class DetailsTableLoader implements TableLoaderInterface
+class DetailsTableLoader extends AbstractGenericTableLoader
 {
     /**
      * @return string
@@ -16,23 +15,23 @@ class DetailsTableLoader implements TableLoaderInterface
     }
 
     /**
-     * @return AbstractSortDefinition[]
+     * @return array mapped field names
      */
-    public function createDefinitions()
+    public function getMappedFieldNames()
     {
         return [
-            new ArticleDetailsHeight($this),
-            new ArticleDetailsKind($this),
-            new ArticleDetailsLength($this),
-            new ArticleDetailsMaxPurchase($this),
-            new ArticleDetailsMinPurchase($this),
-            new ArticleDetailsPosition($this),
-            new ArticleDetailsReleaseDate($this),
-            new ArticleDetailsSuppliernumber($this),
-            new ArticleDetailsNumber($this),
-            new ArticleDetailsShippingFree($this),
-            new ArticleDetailsWeight($this),
-            new ArticleDetailsWidth($this),
+            'kind',
+            'length',
+            'maxpurchase',
+            'minpurchase',
+            'ordernumber',
+            'position',
+            'releasedate',
+            'shippingfree',
+            'suppliernumber',
+            'weight',
+            'height',
+            'width',
         ];
     }
 }

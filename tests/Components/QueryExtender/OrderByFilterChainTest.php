@@ -4,10 +4,10 @@ namespace Shopware\SwagDefaultSort\Test\Components\QueryExtender;
 
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
-use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleName;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ExpressionConditionInterface;
 use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
+use Shopware\SwagDefaultSort\Components\SortDefinition\GenericDefinition;
 use Shopware\SwagDefaultSort\Test\AbstractSearchBundleDependantTest;
 
 class OrderByFilterChainTest extends AbstractSearchBundleDependantTest
@@ -21,7 +21,7 @@ class OrderByFilterChainTest extends AbstractSearchBundleDependantTest
         $ruleVo->setDescending(true);
         $ruleVo->setOrder(0);
 
-        $sortDefinition = new ArticleName(new ArticleTableLoader());
+        $sortDefinition = new GenericDefinition('name', new ArticleTableLoader());
 
         $qb = $this->getQueryBuilder();
 

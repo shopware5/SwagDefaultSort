@@ -31,8 +31,9 @@ class DefinitionCollectionTest extends \Shopware\Components\Test\Plugin\TestCase
 
     public function testSubCollections()
     {
-        $iterator = $this->collection->getTableIterator('s_articles');
-
-        $this->assertNotEmpty($iterator);
+        foreach ($this->collection->getTableNames() as $tableName) {
+            $iterator = $this->collection->getTableIterator($tableName);
+            $this->assertNotEmpty($iterator, $tableName);
+        }
     }
 }

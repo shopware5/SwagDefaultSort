@@ -4,6 +4,7 @@ namespace Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes;
 
 use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
+use Shopware\SwagDefaultSort\Components\SortDefinition\GenericDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\TableLoaderInterface;
 
 class AttributeTableLoader implements TableLoaderInterface

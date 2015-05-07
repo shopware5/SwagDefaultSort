@@ -2,29 +2,27 @@
 
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\Prices;
 
-use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
-use Shopware\SwagDefaultSort\Components\SortDefinition\TableLoaderInterface;
+use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractGenericTableLoader;
 
-class PricesTableLoader implements TableLoaderInterface
+class PricesTableLoader extends AbstractGenericTableLoader
 {
+    /**
+     * @return array mapped field names
+     */
+    public function getMappedFieldNames()
+    {
+        return [
+            'price',
+            'pseudoprice',
+            'baseprice',
+            'percent',
+        ];
+    }
     /**
      * @return string
      */
     public function getTableName()
     {
         return 's_articles_prices';
-    }
-
-    /**
-     * @return AbstractSortDefinition[]
-     */
-    public function createDefinitions()
-    {
-        return [
-            new PricesPrice($this),
-            new PricesBaseprice($this),
-            new PricesPseudoprice($this),
-            new PricesPercent($this),
-        ];
     }
 }

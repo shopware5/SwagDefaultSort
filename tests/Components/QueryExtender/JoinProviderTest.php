@@ -7,14 +7,11 @@ use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractExpre
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractJoinProvider;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProviderCollection;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes\AttributeTableLoader;
-use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes\GenericDefinition;
-use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleDetails\ArticleDetailsHeight;
+use Shopware\SwagDefaultSort\Components\SortDefinition\GenericDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleDetails\DetailsTableLoader;
-use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleName;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails\OrderTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails\SumOrderAmount;
-use Shopware\SwagDefaultSort\Components\SortDefinition\Prices\PricesPrice;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Prices\PricesTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Votes\SumPoints;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Votes\VotesTableLoader;
@@ -30,11 +27,11 @@ class JoinProviderTest extends AbstractSearchBundleDependantTest
     {
         parent::setUp();
 
-        $this->tableDefinitions['s_articles'] = new ArticleName(new ArticleTableLoader());
+        $this->tableDefinitions['s_articles'] = new GenericDefinition('name', new ArticleTableLoader());
         $this->tableDefinitions['s_articles_attribute'] = new GenericDefinition('attr1', new AttributeTableLoader(new ORMReflector(Shopware()->Models())));
-        $this->tableDefinitions['s_articles_details'] = new ArticleDetailsHeight(new DetailsTableLoader());
+        $this->tableDefinitions['s_articles_details'] = new GenericDefinition('height', new DetailsTableLoader());
         $this->tableDefinitions['s_order_details'] = $this->getMockBuilder('Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition');
-        $this->tableDefinitions['s_articles_prices'] = new PricesPrice(new PricesTableLoader());
+        $this->tableDefinitions['s_articles_prices'] = new GenericDefinition('price', new PricesTableLoader());
 
         $this->interfaceDefinitions['s_order_details'] = new SumOrderAmount(new OrderTableLoader());
         $this->interfaceDefinitions['s_articles_vote'] = new SumPoints(new VotesTableLoader());

@@ -1,9 +1,6 @@
 <?php
 
-namespace Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes;
-
-use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
-use Shopware\SwagDefaultSort\Components\SortDefinition\TableLoaderInterface;
+namespace Shopware\SwagDefaultSort\Components\SortDefinition;
 
 class GenericDefinition extends AbstractSortDefinition
 {
@@ -21,14 +18,6 @@ class GenericDefinition extends AbstractSortDefinition
         parent::__construct($tableLoader);
 
         $this->fieldName = (string) $fieldName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTableName()
-    {
-        return 's_articles_attributes';
     }
 
     /**
