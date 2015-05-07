@@ -18,6 +18,8 @@
  */
 class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Components_Plugin_Bootstrap
 {
+    const MENU_ITEM_IDENTIFIER = 'SwagDefaultSort';
+
     /**
      * @return mixed
      *
@@ -67,7 +69,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         try {
             $this->storeMenuState(false);
         } catch (BadMethodCallException $e) {
-            return false;
+
         }
 
         return true;
@@ -109,15 +111,15 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
             throw new \RuntimeException('At least Shopware 5.0.0 is required');
         }
 
-        $this->createMenuItem(array(
-            'label' => 'Kategorie Sortierung',
+        $this->createMenuItem([
+            'label' => self::MENU_ITEM_IDENTIFIER,
             'controller' => 'SwagDefaultSort',
             'class' => 'sprite-sort',
             'action' => 'Index',
-            'active' => 0,
+            'active' => 1,
             'position' => -3,
-            'parent' => $this->Menu()->findOneBy('label', 'Einstellungen'),
-        ));
+            'parent' => $this->Menu()->findOneBy('label', 'Einstellungen')
+        ]);
 
         $this->subscribeEvent(
             'Enlight_Controller_Front_DispatchLoopStartup',
@@ -128,7 +130,10 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
 
         $this->updateSchema();
 
-        return array('success' => true, 'invalidateCache' => array('frontend', 'backend'));
+        return [
+            'success' => true,
+            'invalidateCache' => ['frontend', 'backend']
+        ];
     }
 
     public function enable()
@@ -155,7 +160,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
 
     private function storeMenuState($isActive)
     {
-        $menuItem = $this->Menu()->findOneBy('label', 'Kategorie Sortierung');
+        $menuItem = $this->Menu()->findOneBy('label', self::MENU_ITEM_IDENTIFIER);
 
         if (!$menuItem) {
             throw new BadMethodCallException('Unable to set Menu state - no item found');
