@@ -9,19 +9,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPath', {
 
     configure: function() {
         return {
-            controller: 'SwagDefaultSort',
-
-            proxy: {
-                type: 'ajax',
-                api: {
-                    read: '{url controller="SwagDefaultSortCategory" action="list"}'
-                },
-                reader: {
-                    type: 'json',
-                    root: 'data',
-                    totalProperty: 'total'
-                }
-            }
+            controller: 'SwagDefaultSortCategory'
         };
     },
 

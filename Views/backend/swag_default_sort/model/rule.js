@@ -4,8 +4,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.Rule', {
 
     configure: function() {
         return {
-            controller: 'SwagDefaultSort'//,
-            //detail: 'Shopware.apps.SwagDefaultSort.view.detail.Container'
+            controller: 'SwagDefaultSort'
         };
     },
 

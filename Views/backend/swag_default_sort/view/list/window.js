@@ -86,12 +86,5 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
             }
         });
         return me.gridPanels.categories;
-    },
-
-    getRulesPanel: function() {
-        return this.gridPanels.listing;
     }
-
-
-
 });

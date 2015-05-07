@@ -6,7 +6,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPathSelect', {
 
     configure: function() {
         return {
-            controller: 'SwagDefaultSort',
+            controller: 'SwagDefaultSortCategory',
             /**
              * Model proxy which defines
              * the urls for the CRUD actions.
