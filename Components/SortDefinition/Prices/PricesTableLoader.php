@@ -3,8 +3,9 @@
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\Prices;
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractGenericTableLoader;
+use Shopware\SwagDefaultSort\Components\SortDefinition\TranslateTableInterface;
 
-class PricesTableLoader extends AbstractGenericTableLoader
+class PricesTableLoader extends AbstractGenericTableLoader implements TranslateTableInterface
 {
     /**
      * @return array mapped field names
@@ -13,9 +14,6 @@ class PricesTableLoader extends AbstractGenericTableLoader
     {
         return [
             'price',
-            'pseudoprice',
-            'baseprice',
-            'percent',
         ];
     }
     /**
@@ -24,5 +22,21 @@ class PricesTableLoader extends AbstractGenericTableLoader
     public function getTableName()
     {
         return 's_articles_prices';
+    }
+
+    /**
+     * @return string
+     */
+    public function getSnippetNamespace()
+    {
+        return 'backend/article_list/main';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSnippetPrefix()
+    {
+        return 'columns/product/Price_';
     }
 }

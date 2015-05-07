@@ -2,12 +2,13 @@
 
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 
-use Shopware\SwagDefaultSort\Components\DataAccess\FieldVo;
+use Shopware\SwagDefaultSort\Components\DataAccess\TableVo;
+use Shopware\SwagDefaultSort\Components\DataAccess\Translate\SimpleFilter;
+use Shopware\SwagDefaultSort\Components\DataAccess\Translate\TranslateFilterChain;
 use Shopware\SwagDefaultSort\Components\DataAccess\TranslateFilter;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
-use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
-class FieldVoTest extends \PHPUnit_Framework_TestCase
+class TableVoTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var DefinitionCollection
@@ -26,23 +27,22 @@ class FieldVoTest extends \PHPUnit_Framework_TestCase
         foreach ($shops as $shop) {
             Shopware()->Snippets()->setShop($shop);
 
-            $filter = new TranslateFilter(Shopware()->Snippets()->getNamespace('backend/swwagdefaultsort/tables'));
+            $filter = new TranslateFilterChain([
+                new SimpleFilter(
+                    Shopware()->Snippets()->getNamespace('backend/swagdefaultsort/tables')
+                )
+            ]);
 
-            /** @var AbstractSortDefinition $definition */
-            foreach ($this->definitionCollection as $definition) {
-                $fieldVo = new FieldVo(
-                    $definition,
-                    $filter
-                );
+            foreach ($this->definitionCollection->getTableNames() as $tableName) {
+                $tableVo = new TableVo($tableName, $filter);
 
-                $json = json_encode($fieldVo);
+                $this->assertEquals($tableVo->getTableName(), $tableName);
+
+                $json = json_encode($tableVo);
                 $array = json_decode($json, true);
 
                 $this->assertArrayHasKey('tableName', $array);
                 $this->assertArrayHasKey('translation', $array);
-                $this->assertArrayHasKey('definitionUid', $array);
-                $this->assertEquals($array['tableName'], $definition->getTableName());
-                $this->assertEquals($array['definitionUid'], $definition->getUniqueIdentifier());
             }
         }
     }

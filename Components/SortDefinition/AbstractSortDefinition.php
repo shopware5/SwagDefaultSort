@@ -9,11 +9,11 @@ namespace Shopware\SwagDefaultSort\Components\SortDefinition;
  */
 abstract class AbstractSortDefinition
 {
-    private $tableLoader;
+    private $table;
 
-    public function __construct(TableLoaderInterface $tableLoader)
+    public function __construct(TableLoaderInterface $table)
     {
-        $this->tableLoader = $tableLoader;
+        $this->table = $table;
     }
 
     /**
@@ -21,7 +21,12 @@ abstract class AbstractSortDefinition
      */
     public function getTableName()
     {
-        return $this->tableLoader->getTableName();
+        return $this->getTable()->getTableName();
+    }
+
+    public function getTable()
+    {
+        return $this->table;
     }
 
     /**

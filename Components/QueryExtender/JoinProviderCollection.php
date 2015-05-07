@@ -5,7 +5,6 @@ namespace Shopware\SwagDefaultSort\Components\QueryExtender;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractExpressionJoinProvider;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractJoinProvider;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
-use Traversable;
 
 /**
  * Class JoinProviderCollection.

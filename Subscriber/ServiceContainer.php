@@ -3,8 +3,13 @@
 namespace Shopware\SwagDefaultSort\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
+use Shopware\SwagDefaultSort\Components\DataAccess\Translate\SimpleFilter;
 use Shopware\SwagDefaultSort\Components\DataAccess\FieldVo;
 use Shopware\SwagDefaultSort\Components\DataAccess\TableVo;
+use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FallbackDefinitionTranslateFilter;
+use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FromDefinitionUidFilter;
+use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FromTableDefinitionFilter;
+use Shopware\SwagDefaultSort\Components\DataAccess\Translate\TranslateFilterChain;
 use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProviderCollection;
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
@@ -53,6 +58,8 @@ class ServiceContainer implements SubscriberInterface
             'Enlight_Bootstrap_InitResource_swag_default_sort.query_extender_order_by_filter_chain' => 'createOrderByFilterChain',
             'Enlight_Bootstrap_InitResource_swag_default_sort.query_extender_join_provider_collection' => 'createJoinProvider',
             'Enlight_Bootstrap_InitResource_swag_default_sort.query_extension_gateway' => 'createQueryExtensionGateway',
+            'Enlight_Bootstrap_InitResource_swag_default_sort.field_vo_translate' => 'createFieldVoTranslate',
+            'Enlight_Bootstrap_InitResource_swag_default_sort.table_vo_translate' => 'createTableVoTranslate',
         ];
     }
 
@@ -77,7 +84,9 @@ class ServiceContainer implements SubscriberInterface
      */
     public function createTableVoHydrator()
     {
-        return new TableVoHydrator(Shopware()->Snippets());
+        return new TableVoHydrator(
+            $this->container->get('swag_default_sort.table_vo_translate')
+        );
     }
 
     /**
@@ -95,7 +104,9 @@ class ServiceContainer implements SubscriberInterface
      */
     public function createFieldVoHydrator()
     {
-        return new FieldVoHydrator(Shopware()->Snippets());
+        return new FieldVoHydrator(
+            $this->container->get('swag_default_sort.field_vo_translate')
+        );
     }
 
     /**
@@ -152,5 +163,28 @@ class ServiceContainer implements SubscriberInterface
             $this->container->get('swag_default_sort.query_extender_order_by_filter_chain'),
             $this->container->get('swag_default_sort.query_extender_join_provider_collection')
         );
+    }
+
+    public function createFieldVoTranslate()
+    {
+        return new TranslateFilterChain([
+            new FromTableDefinitionFilter(
+                Shopware()->Snippets(),
+                $this->container->get('swag_default_sort.orm_inflector')
+            ),
+            new FromDefinitionUidFilter(
+                Shopware()->Snippets()->getNamespace('backend/swagdefaultsort/fields')
+            ),
+            new FallbackDefinitionTranslateFilter(),
+        ]);
+    }
+
+    public function createTableVoTranslate()
+    {
+        return new TranslateFilterChain([
+            new SimpleFilter(
+                Shopware()->Snippets()->getNamespace('backend/swagdefaultsort/tables')
+            ),
+        ]);
     }
 }

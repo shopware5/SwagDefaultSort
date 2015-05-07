@@ -9,7 +9,6 @@ use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleDetails\DetailsTab
 use Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails\OrderTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Prices\PricesTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Votes\VotesTableLoader;
-use Traversable;
 
 /**
  * Class DefaultSortLoader.
@@ -73,7 +72,7 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
     public function getTableIterator($tableName)
     {
         //trigger loading
-        $definitions = $this->getDefinitions();
+        $this->getDefinitions();
 
         if (!isset($this->tableMap[$tableName])) {
             throw new \InvalidArgumentException('Missing or invalid $tableName ("'.$tableName.'")');

@@ -3,8 +3,9 @@
 namespace Shopware\SwagDefaultSort\Components\SortDefinition\Articles;
 
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractGenericTableLoader;
+use Shopware\SwagDefaultSort\Components\SortDefinition\TranslateTableInterface;
 
-class ArticleTableLoader extends AbstractGenericTableLoader
+class ArticleTableLoader extends AbstractGenericTableLoader implements TranslateTableInterface
 {
     /**
      * @return string
@@ -28,5 +29,21 @@ class ArticleTableLoader extends AbstractGenericTableLoader
             'datum',
             'topseller',
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getSnippetNamespace()
+    {
+        return 'backend/article_list/main';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSnippetPrefix()
+    {
+        return 'columns/product/Article_';
     }
 }

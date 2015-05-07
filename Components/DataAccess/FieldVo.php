@@ -3,6 +3,7 @@
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
 
 use JsonSerializable;
+use Shopware\SwagDefaultSort\Components\DataAccess\Translate\TranslateFilterChain;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 
 /**
@@ -13,29 +14,23 @@ use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 class FieldVo implements JsonSerializable
 {
     /**
-     * @var string
+     * @var AbstractSortDefinition
      */
-    private $tableName;
+    private $definition;
 
     /**
-     * @var TranslateFilter
+     * @var TranslateFilterChain
      */
     private $translationFilter;
 
     /**
-     * @var string
-     */
-    private $definitionUid;
-
-    /**
      * @param AbstractSortDefinition $sortDefinition
-     * @param TranslateFilter        $translationFilter
+     * @param TranslateFilterChain   $translationFilter
      */
-    public function __construct(AbstractSortDefinition $sortDefinition, TranslateFilter $translationFilter)
+    public function __construct(AbstractSortDefinition $sortDefinition, TranslateFilterChain $translationFilter)
     {
-        $this->tableName = (string) $sortDefinition->getTableName();
+        $this->definition = $sortDefinition;
         $this->translationFilter = $translationFilter;
-        $this->definitionUid = (string) $sortDefinition->getUniqueIdentifier();
     }
 
     /**
@@ -43,7 +38,7 @@ class FieldVo implements JsonSerializable
      */
     public function getTableName()
     {
-        return $this->tableName;
+        return  (string) $this->definition->getTableName();
     }
 
     /**
@@ -51,7 +46,7 @@ class FieldVo implements JsonSerializable
      */
     public function getTranslation()
     {
-        return $this->translationFilter->filter($this->getDefinitionUid());
+        return $this->translationFilter->filter($this->definition);
     }
 
     /**
@@ -59,7 +54,7 @@ class FieldVo implements JsonSerializable
      */
     public function getDefinitionUid()
     {
-        return $this->definitionUid;
+        return (string) $this->definition->getUniqueIdentifier();
     }
 
     /**
@@ -67,10 +62,14 @@ class FieldVo implements JsonSerializable
      */
     public function jsonSerialize()
     {
-        return [
-            'tableName' => $this->getTableName(),
-            'translation' => $this->getTranslation(),
-            'definitionUid' => $this->definitionUid,
-        ];
+        try {
+            return [
+                'tableName' => $this->getTableName(),
+                'translation' => $this->getTranslation(),
+                'definitionUid' => $this->getDefinitionUid(),
+            ];
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 }

@@ -56,7 +56,6 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         try {
             $this->storeMenuState(false);
         } catch (BadMethodCallException $e) {
-
         }
 
         return true;
@@ -105,7 +104,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
             'action' => 'Index',
             'active' => 1,
             'position' => -3,
-            'parent' => $this->Menu()->findOneBy('label', 'Einstellungen')
+            'parent' => $this->Menu()->findOneBy('label', 'Einstellungen'),
         ]);
 
         $this->subscribeEvent(
@@ -119,7 +118,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
 
         return [
             'success' => true,
-            'invalidateCache' => ['frontend', 'backend']
+            'invalidateCache' => ['frontend', 'backend'],
         ];
     }
 

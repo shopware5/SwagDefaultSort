@@ -2,6 +2,8 @@
 
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
 
+use Shopware\SwagDefaultSort\Components\DataAccess\Translate\TranslateFilterChain;
+
 /**
  * Class TableHydrator.
  *
@@ -12,21 +14,16 @@ class TableVoHydrator
     const SNIPPET_NAMESPACE = 'backend/swagdefaultsort/tables';
 
     /**
-     * @var TranslateFilter
+     * @var TranslateFilterChain
      */
     private $translateFilter;
 
     /**
-     * @var \Shopware_Components_Snippet_Manager
+     * @param \TranslateFilterChain $translateFilter
      */
-    private $snippetManager;
-
-    /**
-     * @param \Shopware_Components_Snippet_Manager $snippetManager
-     */
-    public function __construct(\Shopware_Components_Snippet_Manager $snippetManager)
+    public function __construct(TranslateFilterChain $translateFilter)
     {
-        $this->snippetManager = $snippetManager;
+        $this->translateFilter = $translateFilter;
     }
 
     /**
@@ -52,20 +49,6 @@ class TableVoHydrator
      */
     public function createTableVo($tableName)
     {
-        return new TableVo($tableName, $this->getTranslateFilter());
-    }
-
-    /**
-     * @return TranslateFilter
-     */
-    private function getTranslateFilter()
-    {
-        if (!$this->translateFilter) {
-            $this->translateFilter = new TranslateFilter(
-                $this->snippetManager->getNamespace(self::SNIPPET_NAMESPACE)
-            );
-        }
-
-        return $this->translateFilter;
+        return new TableVo($tableName, $this->translateFilter);
     }
 }

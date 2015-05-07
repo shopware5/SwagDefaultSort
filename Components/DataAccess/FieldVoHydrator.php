@@ -2,9 +2,9 @@
 
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
 
+use Shopware\SwagDefaultSort\Components\DataAccess\Translate\TranslateFilterChain;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
-use Shopware_Components_Snippet_Manager;
 
 /**
  * Class FieldVoHydrator.
@@ -13,24 +13,17 @@ use Shopware_Components_Snippet_Manager;
  */
 class FieldVoHydrator
 {
-    const SNIPPET_NAMESPACE = 'backend/swagdefaultsort/fields';
-
     /**
-     * @var TranslateFilter
+     * @var TranslateFilterChain
      */
     private $translateFilter;
 
     /**
-     * @var Shopware_Components_Snippet_Manager
+     * @param TranslateFilterChain $translateFilter
      */
-    private $snippetManager;
-
-    /**
-     * @param Shopware_Components_Snippet_Manager $snippetManager
-     */
-    public function __construct(Shopware_Components_Snippet_Manager $snippetManager)
+    public function __construct(TranslateFilterChain $translateFilter)
     {
-        $this->snippetManager = $snippetManager;
+        $this->translateFilter = $translateFilter;
     }
 
     /**
@@ -57,21 +50,7 @@ class FieldVoHydrator
     {
         return new FieldVo(
             $definition,
-            $this->getTranslateFilter()
+            $this->translateFilter
         );
-    }
-
-    /**
-     * @return TranslateFilter
-     */
-    private function getTranslateFilter()
-    {
-        if (!$this->translateFilter) {
-            $this->translateFilter = new TranslateFilter(
-                $this->snippetManager->getNamespace(self::SNIPPET_NAMESPACE)
-            );
-        }
-
-        return $this->translateFilter;
     }
 }
