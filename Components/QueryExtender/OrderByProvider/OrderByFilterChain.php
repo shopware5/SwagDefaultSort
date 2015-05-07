@@ -23,10 +23,6 @@ class OrderByFilterChain
      */
     private $orderByFilter;
 
-    public function __construct()
-    {
-    }
-
     public function extendQuery(
         $alias,
         AbstractSortDefinition $definition,
