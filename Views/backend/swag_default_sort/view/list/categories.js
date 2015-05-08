@@ -1,5 +1,6 @@
 //{namespace name="backend/swagdefaultsort/main"}
 
+//{block name="backend/swag_default_sort/view/list/categories"}
 Ext.define('Shopware.apps.SwagDefaultSort.view.list.Categories', {
     extend: 'Shopware.grid.Panel',
     alias: 'widget.swag-default-sort-listing-grid-categories',
@@ -22,7 +23,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Categories', {
                     header: '{s name=category_path}{/s}',
                     align: 'left',
                     editor: {
-                        xtype: 'boxselect',
+                        xtype: 'combobox',
                         store: 'SwagDefaultSortCategoryPathSelect',
                         width: '100%',
                         anchor: '100%',
@@ -71,6 +72,6 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Categories', {
     },
     getRowEditingPlugin: function() {
         return this.rowEditor;
-    },
-
+    }
 });
+//{/block}

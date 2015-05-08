@@ -1,5 +1,6 @@
 //{namespace name="backend/swagdefaultsort/main"}
 
+//{block name="backend/swag_default_sort/store/direction_options"}
 Ext.define('Shopware.apps.SwagDefaultSort.store.DirectionOptions', {
 
     extend:'Shopware.store.Listing',
@@ -22,3 +23,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.DirectionOptions', {
         };
     }
 });
+//{/block}

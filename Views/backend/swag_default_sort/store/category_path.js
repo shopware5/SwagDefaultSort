@@ -1,6 +1,6 @@
 
-window['swag-default-sort-store-in-memory'] = {};
 
+//{block name="backend/swag_default_sort/store/category_path"}
 Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPath', {
     extend:'Shopware.store.Listing',
 
@@ -15,3 +15,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPath', {
 
     model: 'Shopware.apps.SwagDefaultSort.model.CategoryPath'
 });
+//{/block}

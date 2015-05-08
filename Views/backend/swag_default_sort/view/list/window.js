@@ -1,6 +1,6 @@
 //{namespace name="backend/swagdefaultsort/main"}
 
-
+//{block name="backend/swag_default_sort/view/list/window"}
 Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
     extend: 'Enlight.app.Window',
 
@@ -88,3 +88,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
         return me.gridPanels.categories;
     }
 });
+//{/block}

@@ -1,4 +1,5 @@
 
+//{block name="backend/swag_default_sort/model/rule"}
 Ext.define('Shopware.apps.SwagDefaultSort.model.Rule', {
     extend: 'Shopware.data.Model',
 
@@ -9,6 +10,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.Rule', {
     },
 
     fields: [
+        //{block name="backend/swag_default_sort/model/rule/fields"}{/block}
         {
             name : 'id',
             type: 'int',
@@ -41,4 +43,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.Rule', {
         },
     ]
 });
-
+//{/block}

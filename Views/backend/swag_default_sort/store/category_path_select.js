@@ -1,4 +1,5 @@
 
+//{block name="backend/swag_default_sort/store/category_path_select"}
 Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPathSelect', {
     extend:'Shopware.store.Listing',
 
@@ -27,3 +28,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPathSelect', {
 
     model: 'Shopware.apps.SwagDefaultSort.model.CategoryPath'
 });
+//{/block}

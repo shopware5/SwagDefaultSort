@@ -1,4 +1,4 @@
-
+//{block name="backend/swag_default_sort/controller/category_listing"}
 Ext.define('Shopware.apps.SwagDefaultSort.controller.CategoryListing', {
     extend: 'Shopware.grid.Controller',
 
@@ -12,3 +12,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.CategoryListing', {
     }
 
 });
+//{/block}

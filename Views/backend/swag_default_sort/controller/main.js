@@ -1,3 +1,5 @@
+
+//{block name="backend/swag_default_sort/controller/main"}
 /**
  * Main Controller: ALL Handlers are here
  */
@@ -196,3 +198,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         }]);
     }
 });
+//{/block}

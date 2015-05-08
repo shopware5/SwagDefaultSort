@@ -1,4 +1,5 @@
 
+//{block name="backend/swag_default_sort/model/category_path"}
 Ext.define('Shopware.apps.SwagDefaultSort.model.CategoryPath', {
     extend: 'Shopware.data.Model',
 
@@ -9,6 +10,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.CategoryPath', {
     },
 
     fields: [
+        //{block name="backend/swag_default_sort/model/category_path/fields"}{/block}
         {
             name : 'id',
             type: 'int',
@@ -46,4 +48,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.CategoryPath', {
         }
     ]
 });
-
+//{/block}

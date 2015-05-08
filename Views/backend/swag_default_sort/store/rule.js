@@ -1,4 +1,5 @@
 
+//{block name="backend/swag_default_sort/store/rule"}
 Ext.define('Shopware.apps.SwagDefaultSort.store.Rule', {
     extend:'Shopware.store.Listing',
 
@@ -30,3 +31,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.Rule', {
 
     model: 'Shopware.apps.SwagDefaultSort.model.Rule'
 });
+//{/block}

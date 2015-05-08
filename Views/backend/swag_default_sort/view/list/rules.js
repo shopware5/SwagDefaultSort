@@ -1,5 +1,6 @@
 //{namespace name="backend/swagdefaultsort/main"}
 
+//{block name="backend/swag_default_sort/view/list/rules"}
 Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
 
     extend: 'Shopware.grid.Panel',
@@ -127,6 +128,8 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                                     me.store.filterBy(function() {
                                         return false;
                                     });
+
+                                    me.suspendCheckChange--;
                                     return;
                                 }
 
@@ -177,3 +180,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
     }
 
 });
+//{/block}
