@@ -14,7 +14,7 @@ use Shopware\SwagDefaultSort\Components\SortDefinition\TranslateTableInterface;
 class FromTableDefinitionFilter implements FilterInterface
 {
     /**
-     * @var \Enlight_Components_Snippet_Namespace
+     * @var \Enlight_Components_Snippet_Manager
      */
     private $snippedManager;
 
@@ -25,6 +25,7 @@ class FromTableDefinitionFilter implements FilterInterface
 
     /**
      * @param \Enlight_Components_Snippet_Manager $snippetManager
+     * @param ORMReflector $ormReflector
      */
     public function __construct(\Enlight_Components_Snippet_Manager $snippetManager, ORMReflector $ormReflector)
     {
