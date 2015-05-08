@@ -102,7 +102,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
             'controller' => 'SwagDefaultSort',
             'class' => 'sprite-sort',
             'action' => 'Index',
-            'active' => 1,
+            'active' => 0,
             'position' => -3,
             'parent' => $this->Menu()->findOneBy('label', 'Einstellungen'),
         ]);
