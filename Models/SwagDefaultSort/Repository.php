@@ -1,17 +1,19 @@
 <?php
 
 namespace   Shopware\CustomModels\SwagDefaultSort;
-use         Shopware\Components\Model\ModelRepository;
+
+use Shopware\Components\Model\ModelRepository;
 
 class Repository extends ModelRepository
 {
-
     /**
-     * Returns an instance of the \Doctrine\ORM\Query object which selects a list of Rule     *
+     * Returns an instance of the \Doctrine\ORM\Query object which selects a list of Rule     *.
+     *
      * @param null $filter
      * @param null $orderBy
      * @param      $offset
      * @param      $limit
+     *
      * @return \Doctrine\ORM\Query
      */
     public function getListQuery($filter = null, $orderBy = null, $offset, $limit)
@@ -19,6 +21,7 @@ class Repository extends ModelRepository
         $builder = $this->getListQueryBuilder($filter, $orderBy);
         $builder->setFirstResult($offset)
             ->setMaxResults($limit);
+
         return $builder->getQuery();
     }
 
@@ -28,6 +31,7 @@ class Repository extends ModelRepository
      *
      * @param null $filter
      * @param null $orderBy
+     *
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getListQueryBuilder($filter = null, $orderBy = null)
@@ -42,5 +46,4 @@ class Repository extends ModelRepository
 
         return $builder;
     }
-
 }

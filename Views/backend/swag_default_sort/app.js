@@ -1,4 +1,5 @@
 
+//{block name="backend/swag_default_sort/app"}
 Ext.define('Shopware.apps.SwagDefaultSort', {
     extend: 'Enlight.app.SubApplication',
 
@@ -7,20 +8,35 @@ Ext.define('Shopware.apps.SwagDefaultSort', {
     loadPath: '{url action=load}',
     bulkLoad: true,
 
-    controllers: [ 'Main' ],
+    controllers: [
+        'Main',
+        'RuleListing',
+        'CategoryListing'
+    ],
 
     views: [
         'list.Window',
-        'list.List',
-
-        'detail.Container',
-        'detail.Window'
+        'list.Rules',
+        'list.Categories'
     ],
 
-    models: [ 'Main' ],
-    stores: [ 'Main' ],
+    models: [
+        'Rule',
+        'CategoryPath',
+        'DbTable',
+        'DbField'
+    ],
+
+    stores: [
+        'Rule',
+        'CategoryPath',
+        'DirectionOptions',
+        'DbTable',
+        'DbField'
+    ],
 
     launch: function() {
         return this.getController('Main').mainWindow;
     }
 });
+//{/block}

@@ -1,25 +1,20 @@
 <?php
 
 /**
- * The Bootstrap class is the main entry point of any shopware plugin.
- *
- * Short function reference
- * - install: Called a single time during (re)installation. Here you can trigger install-time actions like
- *   - creating the menu
- *   - creating attributes
- *   - creating database tables
- *   You need to return "true" or array('success' => true, 'invalidateCache' => array()) in order to let the installation
- *   be successfull
- *
- * - update: Triggered when the user updates the plugin. You will get passes the former version of the plugin as param
- *   In order to let the update be successful, return "true"
- *
- * - uninstall: Triggered when the plugin is reinstalled or uninstalled. Clean up your tables here.
+ * {@inheritdoc}
  */
 class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Components_Plugin_Bootstrap
 {
-    public function getVersion() {
-        $info = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR .'plugin.json'), true);
+    const MENU_ITEM_IDENTIFIER = 'SwagDefaultSort';
+
+    /**
+     * @return mixed
+     *
+     * @throws Exception
+     */
+    public function getVersion()
+    {
+        $info = json_decode(file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'plugin.json'), true);
         if ($info) {
             return $info['currentVersion'];
         } else {
@@ -27,11 +22,17 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         }
     }
 
+    /**
+     * @return string
+     */
     public function getLabel()
     {
-        return 'SwagDefaultSort';
+        return 'Kategorie Sortierung';
     }
 
+    /**
+     * @return bool
+     */
     public function uninstall()
     {
         $this->registerCustomModels();
@@ -40,11 +41,49 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 
         $classes = array(
-            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule')
+            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule'),
         );
         $tool->dropSchema($classes);
 
         return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function secureUninstall()
+    {
+        try {
+            $this->storeMenuState(false);
+        } catch (BadMethodCallException $e) {
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns capabilities.
+     */
+    public function getCapabilities()
+    {
+        return [
+            'install' => true,
+            'update' => true,
+            'enable' => true,
+            'secureUninstall' => true,
+        ];
+    }
+
+    public function getInfo()
+    {
+        return [
+            'version' => $this->getVersion(),
+            'label' => $this->getLabel(),
+            'description' => 'Change article listing sorting for certain categories',
+            'supplier' => 'shopware AG',
+            'support' => 'Shopware Forum',
+            'link' => 'http://www.shopware.com',
+        ];
     }
 
     public function update($oldVersion)
@@ -54,28 +93,69 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
 
     public function install()
     {
-        if (!$this->assertVersionGreaterThen('4.3.0')) {
-            throw new \RuntimeException('At least Shopware 4.3.0 is required');
+        if (!$this->assertVersionGreaterThen('5.0.0')) {
+            throw new \RuntimeException('At least Shopware 5.0.0 is required');
         }
 
-
-        $this->createMenuItem(array(
-            'label' => 'SwagDefaultSort',
+        $this->createMenuItem([
+            'label' => self::MENU_ITEM_IDENTIFIER,
             'controller' => 'SwagDefaultSort',
-            'class' => 'sprite-application-block',
+            'class' => 'sprite-sort',
             'action' => 'Index',
-            'active' => 1,
-            'parent' => $this->Menu()->findOneBy('label', 'Marketing')
-        ));
+            'active' => 0,
+            'position' => -3,
+            'parent' => $this->Menu()->findOneBy('label', 'Einstellungen'),
+        ]);
 
         $this->subscribeEvent(
             'Enlight_Controller_Front_DispatchLoopStartup',
             'onStartDispatch'
         );
 
+        $this->Config()->isDirty();
 
         $this->updateSchema();
-        return array('success' => true, 'invalidateCache' => array('frontend', 'backend'));
+
+        return [
+            'success' => true,
+            'invalidateCache' => ['frontend', 'backend'],
+        ];
+    }
+
+    public function enable()
+    {
+        try {
+            $this->storeMenuState(true);
+        } catch (BadMethodCallException $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function disable()
+    {
+        try {
+            $this->storeMenuState(false);
+        } catch (BadMethodCallException $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function storeMenuState($isActive)
+    {
+        $menuItem = $this->Menu()->findOneBy('label', self::MENU_ITEM_IDENTIFIER);
+
+        if (!$menuItem) {
+            throw new BadMethodCallException('Unable to set Menu state - no item found');
+        }
+
+        $menuItem->setActive((bool) $isActive);
+
+        $this->getEntityManager()->persist($menuItem);
+        $this->getEntityManager()->flush();
     }
 
     /**
@@ -91,7 +171,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 
         $classes = array(
-            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule')
+            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule'),
         );
 
         try {
@@ -105,18 +185,19 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     /**
      * This callback function is triggered at the very beginning of the dispatch process and allows
      * us to register additional events on the fly. This way you won't ever need to reinstall you
-     * plugin for new events - any event and hook can simply be registerend in the event subscribers
+     * plugin for new events - any event and hook can simply be registerend in the event subscribers.
      */
     public function onStartDispatch(Enlight_Event_EventArgs $args)
     {
-        $this->registerMyComponents();
-                $this->registerCustomModels();        $this->registerApiComponent();
+        $this->registerCustomModels();
+        $this->registerPluginNamespace();
 
-        $subscribers = array(
-            new \Shopware\SwagDefaultSort\Subscriber\ControllerPath($this),
-            new \Shopware\SwagDefaultSort\Subscriber\Frontend($this)
-
-        );
+        $registrationService = new \Shopware\SwagDefaultSort\Components\RegistrationService();
+        $subscribers = [
+            new \Shopware\SwagDefaultSort\Subscriber\ServiceContainer(Shopware()->Container()),
+            new \Shopware\SwagDefaultSort\Subscriber\Frontend(Shopware()->Container(), $registrationService),
+            new \Shopware\SwagDefaultSort\Subscriber\Backend($registrationService),
+        ];
 
         foreach ($subscribers as $subscriber) {
             $this->Application()->Events()->addSubscriber($subscriber);
@@ -124,36 +205,21 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     }
 
     /**
-     * Registers the template directory, needed for templates in frontend an backend
+     * Register namespaces.
      */
-    public function registerMyTemplateDir()
+    private function registerPluginNamespace()
     {
-        Shopware()->Template()->addTemplateDir($this->Path() . 'Views');
-    }
-
-    /**
-     * Registers the snippet directory, needed for backend snippets
-     */
-    public function registerMySnippets()
-    {
-        $this->Application()->Snippets()->addConfigDir(
-            $this->Path() . 'Snippets/'
-        );
-    }
-
-    public function registerApiComponent()
-    {
-        $this->Application()->Loader()->registerNamespace(
-            'Shopware\Components',
-            $this->Path() . 'Components/'
-        );
-    }
-
-    public function registerMyComponents()
-    {
-        $this->Application()->Loader()->registerNamespace(
+        Shopware()->Loader()->registerNamespace(
             'Shopware\SwagDefaultSort',
             $this->Path()
         );
+    }
+
+    /**
+     * @return \Shopware\Components\Model\ModelManager
+     */
+    private function getEntityManager()
+    {
+        return Shopware()->Models();
     }
 }

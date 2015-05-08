@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./../../../../../../../tests/TestHelper.php">
-<testsuite name="SwagDefaultSort Test Suite">
-    <directory>tests</directory>
-</testsuite>
+<phpunit colors="always" verbose="true" bootstrap="./tests/SwagDefaultSortSearchTestHelper.php">
+    <testsuites>
+        <testsuite name="SwagDefaultSort ORM Inflector">
+            <directory>tests/Components/ORMInflector</directory>
+        </testsuite>
+        <testsuite name="SwagDefaultSort SortDefinition">
+            <directory>tests/Components/SortDefinition</directory>
+        </testsuite>
+        <testsuite name="SwagDefaultSort DataAccess">
+            <directory>tests/Components/DataAccess</directory>
+        </testsuite>
+        <testsuite name="SwagDefaultSort QueryExtender">
+            <directory>tests/Components/QueryExtender</directory>
+        </testsuite>
+        <testsuite name="SwagDefaultSort Bundle">
+            <directory>tests/Bundle</directory>
+        </testsuite>
+        <testsuite name="SwagDefaultSort Integration">
+            <directory>tests/Components/Integration</directory>
+            <directory>tests/Integration</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
