@@ -32,7 +32,8 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Categories', {
                         editable: false,
                         multiSelect: false,
                         forceSelection : true,
-                        allowBlank: false
+                        allowBlank: false,
+                        pageSize: 25
                     },
                     renderer: function(value) {
                         if(!value) {

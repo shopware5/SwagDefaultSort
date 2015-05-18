@@ -5,6 +5,8 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPathSelect', {
 
     storeId: 'SwagDefaultSortCategoryPathSelect',
 
+    pageSize: 25,
+
     configure: function() {
         return {
             controller: 'SwagDefaultSortCategory',
@@ -19,8 +21,8 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPathSelect', {
                 },
                 reader: {
                     type: 'json',
-                    root: 'data',
-                    totalProperty: 'total'
+                    root: 'data'
+                    //totalProperty: 'total'
                 }
             }
         };
