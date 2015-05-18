@@ -22,7 +22,6 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPathSelect', {
                 reader: {
                     type: 'json',
                     root: 'data'
-                    //totalProperty: 'total'
                 }
             }
         };
