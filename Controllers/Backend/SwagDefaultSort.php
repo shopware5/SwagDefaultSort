@@ -8,10 +8,6 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
     protected $model = 'Shopware\CustomModels\SwagDefaultSort\Rule';
     protected $alias = 'rule';
 
-    public function listInflectionTablesAction()
-    {
-    }
-
     /**
      * Extend so the foreign key is correctly flagged.
      *
