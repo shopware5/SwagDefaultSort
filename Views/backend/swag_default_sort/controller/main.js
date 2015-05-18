@@ -109,7 +109,6 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
 
         this.onCategorySelectChangeRuleFilter([displayedRecord]);
 
-        //rewrite rules
         this.getRuleGrid().store.data.each(function() {
             this.set('categoryId', newCatId);
         });
@@ -158,7 +157,24 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
     },
 
     syncRuleStore: function() {
-        this.getRuleGrid().store.sync();
+        var ruleGrid = this.getRuleGrid();
+        var categoryGrid = this.getCategoryGrid();
+        var ruleGridStore = ruleGrid.store;
+
+        //IMPORTANT: The sync method will never call callbacks with empty changesets
+        if(!ruleGridStore.getModifiedRecords().length) {
+            return;
+        }
+
+        ruleGrid.setLoading(true);
+        categoryGrid.setLoading(true);
+
+        ruleGridStore.sync({
+            callback: function() {
+                ruleGrid.setLoading(false);
+                categoryGrid.setLoading(false);
+            }
+        });
     },
 
     onCategoryGridInitSelectFirstRow: function(categoryGrid){
