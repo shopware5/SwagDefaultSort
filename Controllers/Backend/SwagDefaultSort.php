@@ -32,12 +32,11 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
     {
         $ret = parent::getList($offset, $limit, $sort, $filter, $wholeParams);
 
-        foreach($ret['data'] as &$rule) {
+        foreach ($ret['data'] as &$rule) {
             $this->appendTableNameToRule($rule);
         }
 
         return $ret;
-
     }
 
     /**
@@ -47,7 +46,7 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
     {
         $ret = parent::getDetail($id);
 
-        if($ret['success']) {
+        if ($ret['success']) {
             $this->appendTableNameToRule($ret['data']);
         }
 
