@@ -54,7 +54,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
             },
             'swag-default-sort-listing-grid-rules': {
                 'rule-add-item': me.onAddRuleStartEditing,
-                'edit': me.syncRuleStore
+                'edit': me.onRuleEditFinished
             },
             'swag-default-sort-listing-grid-categories': {
                 'viewready': me.onCategoryGridInitSelectFirstRow,
@@ -86,6 +86,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
      * @param event
      */
     onCategoryEditSyncRecordData: function(source, event) {
+        var me = this;
         var originalCatId = event.originalValues.catId;
         var newCatId = event.newValues.catId;
 
@@ -107,12 +108,13 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         displayedRecord.set('parentPathString', selectedRecord.get('catId'));
         displayedRecord.commit();
 
-        this.onCategorySelectChangeRuleFilter([displayedRecord]);
-
         this.getRuleGrid().store.data.each(function() {
             this.set('categoryId', newCatId);
         });
-        this.syncRuleStore();
+
+        this.syncRuleStore(function() {
+            me.onCategorySelectChangeRuleFilter([displayedRecord]);
+        });
     },
 
     /**
@@ -156,13 +158,25 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         this.syncRuleStore();
     },
 
-    syncRuleStore: function() {
+    onRuleEditFinished: function() {
+        this.syncRuleStore();
+    },
+
+    syncRuleStore: function(doneCallback) {
         var ruleGrid = this.getRuleGrid();
         var categoryGrid = this.getCategoryGrid();
         var ruleGridStore = ruleGrid.store;
+        var callDone = function() {
+            if(!doneCallback) {
+                return;
+            }
+
+            doneCallback();
+        }
 
         //IMPORTANT: The sync method will never call callbacks with empty changesets
         if(!ruleGridStore.getModifiedRecords().length) {
+            callDone();
             return;
         }
 
@@ -173,6 +187,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
             callback: function() {
                 ruleGrid.setLoading(false);
                 categoryGrid.setLoading(false);
+                callDone();
             }
         });
     },
