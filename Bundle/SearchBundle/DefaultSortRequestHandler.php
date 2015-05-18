@@ -31,6 +31,10 @@ class DefaultSortRequestHandler implements CriteriaRequestHandlerInterface
      */
     private $ruleHydrator;
 
+    /**
+     * @param DatabaseAdapter $databaseAdapater
+     * @param RuleHydrator $ruleHydrator
+     */
     public function __construct(
         DatabaseAdapter $databaseAdapater,
         RuleHydrator $ruleHydrator
@@ -49,7 +53,9 @@ class DefaultSortRequestHandler implements CriteriaRequestHandlerInterface
         Criteria $criteria,
         ShopContextInterface $context
     ) {
-        $requestedCategoryId = $request->sCategory;
+        $requestedCategoryId = $request->getParam('sCategory',
+            $request->getParam('categoryId', false)
+        );
 
         if (!$requestedCategoryId) {
             return;
