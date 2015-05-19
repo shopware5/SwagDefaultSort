@@ -29,9 +29,8 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.Rule', {
             defaultValue: 's_articles::name'
         },
         {
-            name : 'direction',
-            type: 'int',
-            useNull: false
+            name : 'descending',
+            type: 'bool'
         },
         {
             name: 'sortOrder',

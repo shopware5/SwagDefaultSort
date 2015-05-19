@@ -120,8 +120,8 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
 
         $this->View()->assign(
             $this->getList(
-                0,
-                null,
+                $this->Request()->getParam('start', 0),
+                $this->Request()->getParam('limit', 20),
                 $this->Request()->getParam('sort', array()),
                 $this->Request()->getParam('filter', array()),
                 $this->Request()->getParams()

@@ -10,10 +10,10 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.DirectionOptions', {
     fields: ['key', 'value'],
 
     data: [{
-        key: 0,
+        key: false,
         value: "{s name=ascending}{/s}"
     }, {
-        key: 1,
+        key: true,
         value: "{s name=descending}{/s}"
     }],
 

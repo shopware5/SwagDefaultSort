@@ -142,13 +142,11 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                         }
                     }
                 },
-                direction: {
+                descending: {
                     header: '{s name=direction}{/s}',
                     groupable: false,
                     renderer: function(value) {
-                        value = parseInt(value);
-
-                        if(isNaN(value)) {
+                        if(!Ext.isBoolean(value)) {
                             return '';
                         }
 

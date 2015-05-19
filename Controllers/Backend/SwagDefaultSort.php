@@ -8,10 +8,6 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
     protected $model = 'Shopware\CustomModels\SwagDefaultSort\Rule';
     protected $alias = 'rule';
 
-    public function listInflectionTablesAction()
-    {
-    }
-
     /**
      * Extend so the foreign key is correctly flagged.
      *
@@ -28,6 +24,46 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
 
         return $fields;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getList($offset, $limit, $sort = array(), $filter = array(), array $wholeParams = array())
+    {
+        $ret = parent::getList($offset, $limit, $sort, $filter, $wholeParams);
+
+        foreach ($ret['data'] as &$rule) {
+            $this->appendTableNameToRule($rule);
+        }
+
+        return $ret;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDetail($id)
+    {
+        $ret = parent::getDetail($id);
+
+        if ($ret['success']) {
+            $this->appendTableNameToRule($ret['data']);
+        }
+
+        return $ret;
+    }
+
+    /**
+     * @param $rule
+     * @throws Exception
+     */
+    private function appendTableNameToRule(&$rule)
+    {
+        /** @var \Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection $definitionCollection */
+        $definitionCollection = Shopware()->Container()->get('swag_default_sort.definition_collection');
+        $rule['tableName'] = $definitionCollection->getDefinition($rule['definitionUid'])->getTableName();
+    }
+
 
     /**
      * Adds a pseudo format, tp prevent 'LIKE' search for a foreign key.
