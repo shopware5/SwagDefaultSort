@@ -23,8 +23,6 @@ class ArticleTableLoader extends AbstractGenericTableLoader implements Translate
         return [
             'name',
             'pseudosales',
-            'available_from',
-            'available_to',
             'changetime',
             'datum',
             'topseller',
