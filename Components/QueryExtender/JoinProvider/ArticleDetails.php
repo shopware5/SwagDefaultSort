@@ -40,7 +40,7 @@ class ArticleDetails extends AbstractJoinProvider
             'product',
             $this->getTableName(),
             $alias,
-            $alias.'.articleID = product.id'
+            $alias.'.articleID = product.main_detail_id'
         );
 
         $queryBuilder->addState($alias);
