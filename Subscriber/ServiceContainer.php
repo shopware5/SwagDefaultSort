@@ -168,12 +168,12 @@ class ServiceContainer implements SubscriberInterface
     public function createFieldVoTranslate()
     {
         return new TranslateFilterChain([
+            new FromDefinitionUidFilter(
+                Shopware()->Snippets()->getNamespace('backend/swagdefaultsort/fields')
+            ),
             new FromTableDefinitionFilter(
                 Shopware()->Snippets(),
                 $this->container->get('swag_default_sort.orm_inflector')
-            ),
-            new FromDefinitionUidFilter(
-                Shopware()->Snippets()->getNamespace('backend/swagdefaultsort/fields')
             ),
             new FallbackDefinitionTranslateFilter(),
         ]);
