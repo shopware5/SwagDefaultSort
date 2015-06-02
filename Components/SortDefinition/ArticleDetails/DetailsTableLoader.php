@@ -26,7 +26,6 @@ class DetailsTableLoader extends AbstractGenericTableLoader implements Translate
             'maxpurchase',
             'minpurchase',
             'ordernumber',
-            'position',
             'releasedate',
             'shippingfree',
             'suppliernumber',

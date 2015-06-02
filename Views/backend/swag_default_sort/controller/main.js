@@ -78,6 +78,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
      */
     onAddCategoryStartEditing: function(categoryGrid, record) {
         categoryGrid.store.add(record);
+        categoryGrid.getSelectionModel().select([record], false, true);
         categoryGrid.getRowEditingPlugin().startEdit(record, 0);
     },
 
@@ -90,16 +91,22 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         var originalCatId = event.originalValues.catId;
         var newCatId = event.newValues.catId;
 
-        if(originalCatId === newCatId) {
-            return;
-        }
-
         var pathSelectStore = Ext.getStore('SwagDefaultSortCategoryPathSelect');
         var catStore = this.getCategoryGrid().store;
 
         //rewrite cat record
         var selectedRecord = pathSelectStore.findRecord('catId', newCatId);
         var displayedRecord = catStore.findRecord('catId', newCatId);
+
+        if(!newCatId) {
+            catStore.remove(catStore.findRecord('catId', null));
+            return;
+        }
+
+        if(originalCatId === newCatId) {
+            return;
+        }
+
         displayedRecord.set('parentPath', selectedRecord.get('parentPath'));
         displayedRecord.set('name', selectedRecord.get('name'));
         displayedRecord.set('id', selectedRecord.get('catId'));
@@ -109,6 +116,11 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         displayedRecord.commit();
 
         this.getRuleGrid().store.data.each(function() {
+            //important if store is new
+            if(this.get('categoryId') !== originalCatId) {
+                return;
+            }
+
             this.set('categoryId', newCatId);
         });
 
@@ -137,8 +149,11 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         record.set('categoryId', selection[0].get('id'));
         record.set('sortOrder', ruleGrid.store.getCount());
         ruleGrid.store.add(record);
-        this.syncRuleStore();
-        ruleGrid.getRowEditingPlugin().startEdit(record, 0);
+
+
+        this.syncRuleStore(function() {
+            ruleGrid.getRowEditingPlugin().startEdit(record, 0);
+        });
     },
 
     /**
@@ -172,7 +187,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
             }
 
             doneCallback();
-        }
+        };
 
         //IMPORTANT: The sync method will never call callbacks with empty changesets
         if(!ruleGridStore.getModifiedRecords().length) {
@@ -182,11 +197,13 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
 
         ruleGrid.setLoading(true);
         categoryGrid.setLoading(true);
+        ruleGrid.addButton.disable();
 
         ruleGridStore.sync({
             callback: function() {
                 ruleGrid.setLoading(false);
                 categoryGrid.setLoading(false);
+                ruleGrid.addButton.enable();
                 callDone();
             }
         });
@@ -214,13 +231,22 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         var ruleGrid = this.getRuleGrid();
         var ruleAddButton = ruleGrid.addButton;
 
-        ruleAddButton.disable(true);
         if(selection.length === 1 && selection[0].get('catId')) {
             filterCatId = selection[0].get('catId');
-            ruleAddButton.enable();
         }
 
+        ruleAddButton.disable(true);
+
+        var loadListener = function() {
+            ruleGrid.store.removeListener('load', loadListener);
+
+            if(filterCatId > 0) {
+                ruleAddButton.enable();
+            }
+        };
+
         ruleGrid.store.clearFilter(true);
+        ruleGrid.store.on('load', loadListener);
         ruleGrid.store.filter([{
             property: 'categoryId',
             value: filterCatId,

@@ -3,6 +3,8 @@
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Statement;
+use PDO;
 
 /**
  * Class DatabaseAdapter.
@@ -35,16 +37,19 @@ class DatabaseAdapter
      */
     public function fetchClosestCategoryIdWithRule($categoryId)
     {
+        /** @var Statement $stmt */
+        $stmt = $this->connection
+            ->createQueryBuilder()
+            ->addSelect('category.parent')
+            ->addSelect('(SELECT COUNT(*) FROM '.self::PLUGIN_TABLE_NAME.' WHERE category_id = category.id) AS hasRules')
+            ->from('s_categories', 'category')
+            ->where('category.id = :categoryId')
+            ->setParameter(':categoryId', $categoryId)
+            ->execute();
+
         do {
-            $result = $this->connection
-                ->createQueryBuilder()
-                ->addSelect('category.parent')
-                ->addSelect('(SELECT COUNT(*) FROM '.self::PLUGIN_TABLE_NAME.' WHERE category_id = category.id) AS hasRules')
-                ->from('s_categories', 'category')
-                ->where('category.id = :categoryId')
-                ->setParameter(':categoryId', $categoryId)
-                ->execute()
-                ->fetchColumn();
+            $stmt->bindValue(':categoryId', $categoryId);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($result['hasRules']) {
                 return $categoryId;
@@ -52,8 +57,6 @@ class DatabaseAdapter
 
             $categoryId = $result['parent'];
         } while ($categoryId);
-
-        return;
     }
 
     /**
@@ -84,6 +87,6 @@ class DatabaseAdapter
 
         $stmt = $query->execute();
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
