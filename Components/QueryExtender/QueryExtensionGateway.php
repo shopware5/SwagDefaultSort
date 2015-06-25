@@ -59,6 +59,7 @@ class QueryExtensionGateway
         }
 
         $this->orderByFilterChain->extendQuery($alias, $definition, $rule, $queryBuilder);
+        $queryBuilder->addOrderBy('product.id');
     }
 
     /**

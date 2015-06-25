@@ -21,7 +21,7 @@ class ArticleDetails extends AbstractJoinProvider
     }
 
     /**
-     * Extends the query and returns the alias to bind the definitition to.
+     * Extends the query and returns the alias to bind the definition to.
      *
      * @param QueryBuilder           $queryBuilder
      * @param AbstractSortDefinition $definition
@@ -36,15 +36,8 @@ class ArticleDetails extends AbstractJoinProvider
             return $alias;
         }
 
-        $queryBuilder->leftJoin(
-            'product',
-            $this->getTableName(),
-            $alias,
-            $alias.'.articleID = product.main_detail_id'
-        );
-
         $queryBuilder->addState($alias);
 
-        return $alias;
+        return 'variant';
     }
 }
