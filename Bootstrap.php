@@ -14,7 +14,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
      */
     public function getVersion()
     {
-        $info = json_decode(file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'plugin.json'), true);
+        $info = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'plugin.json'), true);
         if ($info) {
             return $info['currentVersion'];
         } else {
@@ -27,7 +27,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
      */
     public function getLabel()
     {
-        return 'Kategorie Sortierung';
+        return 'Standard Kategorie Sortierung';
     }
 
     /**
@@ -37,7 +37,8 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     {
         $this->registerCustomModels();
 
-        $em = $this->Application()->Models();
+        /** @var \Shopware\Components\Model\ModelManager $em */
+        $em = $this->get('models');
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 
         $classes = array(
@@ -97,15 +98,17 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
             throw new \RuntimeException('At least Shopware 5.0.0 is required');
         }
 
-        $this->createMenuItem([
-            'label' => self::MENU_ITEM_IDENTIFIER,
-            'controller' => 'SwagDefaultSort',
-            'class' => 'sprite-sort',
-            'action' => 'Index',
-            'active' => 0,
-            'position' => -3,
-            'parent' => $this->Menu()->findOneBy('label', 'Einstellungen'),
-        ]);
+        $this->createMenuItem(
+            [
+                'label' => self::MENU_ITEM_IDENTIFIER,
+                'controller' => 'SwagDefaultSort',
+                'class' => 'sprite-sort',
+                'action' => 'Index',
+                'active' => 0,
+                'position' => -3,
+                'parent' => $this->Menu()->findOneBy('label', 'Einstellungen'),
+            ]
+        );
 
         $this->subscribeEvent(
             'Enlight_Controller_Front_DispatchLoopStartup',
@@ -167,7 +170,8 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     {
         $this->registerCustomModels();
 
-        $em = $this->Application()->Models();
+        /** @var \Shopware\Components\Model\ModelManager $em */
+        $em = $this->get('models');
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 
         $classes = array(
@@ -187,7 +191,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
      * us to register additional events on the fly. This way you won't ever need to reinstall you
      * plugin for new events - any event and hook can simply be registerend in the event subscribers.
      */
-    public function onStartDispatch(Enlight_Event_EventArgs $args)
+    public function onStartDispatch()
     {
         $this->registerCustomModels();
         $this->registerPluginNamespace();
