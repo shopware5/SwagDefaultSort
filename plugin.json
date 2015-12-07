@@ -10,15 +10,6 @@
 
     "currentVersion": "1.0.0",
 
-    "changelog": {
-        "de": {
-            "1.0.0": "PT-2953 - Erstveröffentlichung"
-        },
-        "en": {
-            "1.0.0": "PT-2953 - First release"
-        }
-    },
-
     "compatibility": {
         "minimumVersion": "5.0.0",
         "maximumVersion": null,

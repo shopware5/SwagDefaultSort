@@ -1,5 +1,8 @@
 # SwagDefaultSort
 
+## Supported versions
+Shopware version 5.0.0 or higher
+
 ## Description 
 Tired of your products being listed in an arbitrary, nonsensical order? No problem, we have you covered with our "Sort categories individually" plugin!
 
