@@ -70,14 +70,6 @@ class DefaultSortRequestHandlerTest extends \Shopware\Components\Test\Plugin\Tes
         return new \Enlight_Controller_Request_RequestHttp();
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    private function getQueryBuilder()
-    {
-        return $this->queryBuilderFactory->createQuery($this->createCriteria(), $this->context);
-    }
-
     private function createCriteria()
     {
         return new Criteria();

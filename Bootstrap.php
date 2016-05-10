@@ -101,7 +101,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
 
     public function install()
     {
-        if (!$this->assertVersionGreaterThen('5.0.0')) {
+        if (!$this->assertMinimumVersion('5.0.0')) {
             throw new \RuntimeException('At least Shopware 5.0.0 is required');
         }
 
@@ -113,7 +113,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
                 'action' => 'Index',
                 'active' => 0,
                 'position' => -3,
-                'parent' => $this->Menu()->findOneBy('label', 'Einstellungen'),
+                'parent' => $this->Menu()->findOneBy(['label' => 'Einstellungen']),
             ]
         );
 
@@ -156,7 +156,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
 
     private function storeMenuState($isActive)
     {
-        $menuItem = $this->Menu()->findOneBy('label', self::MENU_ITEM_IDENTIFIER);
+        $menuItem = $this->Menu()->findOneBy(['label' => self::MENU_ITEM_IDENTIFIER]);
 
         if (!$menuItem) {
             throw new BadMethodCallException('Unable to set Menu state - no item found');
