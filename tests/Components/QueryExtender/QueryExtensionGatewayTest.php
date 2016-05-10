@@ -38,7 +38,7 @@ class QueryExtensionGatewayTest extends AbstractSearchBundleDependantTest
         $rule->setDefinitionUid($config->getUniqueIdentifier());
         $rule->setOrder(0);
 
-        $beforeSql = $queryBuilder->getSql();
+        $beforeSql = $queryBuilder->getSQL();
 
         $extensionGateway->addRule(
             $rule,

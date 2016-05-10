@@ -10,7 +10,7 @@
 namespace Shopware\SwagDefaultSort\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
-use Shopware\SwagdefaultSort\Components\RegistrationService;
+use Shopware\SwagDefaultSort\Components\RegistrationService;
 
 class Backend implements SubscriberInterface
 {

@@ -83,7 +83,7 @@ class MergeDefinitionsWithQueryExtenderTest extends AbstractSearchBundleDependan
             $this->queryExtensionGateway->addRule($rule, $qb);
 
             $this->assertContains($definition->getFieldName(), $qb->getSQL());
-            $this->assertContains($definition->getTableName(), $qb->getSql());
+            $this->assertContains($definition->getTableName(), $qb->getSQL());
         }
     }
 }

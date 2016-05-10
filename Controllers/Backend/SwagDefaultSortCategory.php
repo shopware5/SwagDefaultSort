@@ -74,7 +74,7 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
                     $cleanParentIds,
                     \Doctrine\DBAL\Connection::PARAM_INT_ARRAY
                 )->execute()
-                ->fetchAll(\Pdo::FETCH_ASSOC);
+                ->fetchAll(\PDO::FETCH_ASSOC);
 
             $path = [];
 
