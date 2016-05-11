@@ -13,7 +13,7 @@ use Enlight\Event\SubscriberInterface;
 use Shopware\Components\DependencyInjection\Container;
 use Shopware\SwagDefaultSort\Bundle\SearchBundle\DefaultSortRequestHandler;
 use Shopware\SwagDefaultSort\Bundle\SearchBundleDBAL\SortingHandler\DefaultSortingHandler;
-use Shopware\SwagdefaultSort\Components\RegistrationService;
+use Shopware\SwagDefaultSort\Components\RegistrationService;
 
 class Frontend implements SubscriberInterface
 {
