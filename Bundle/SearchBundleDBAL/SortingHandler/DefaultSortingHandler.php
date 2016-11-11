@@ -62,5 +62,6 @@ class DefaultSortingHandler implements SortingHandlerInterface
                 $query
             );
         }
+        $query->addOrderBy('product.id');
     }
 }
