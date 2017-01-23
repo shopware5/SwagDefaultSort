@@ -29,6 +29,7 @@ class DetailsTableLoader extends AbstractGenericTableLoader implements Translate
     {
         return [
             'kind',
+            'instock',
             'length',
             'maxpurchase',
             'minpurchase',
