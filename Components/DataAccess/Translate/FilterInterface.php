@@ -15,5 +15,10 @@ namespace Shopware\SwagDefaultSort\Components\DataAccess\Translate;
  */
 interface FilterInterface
 {
+    /**
+     * @param $value
+     *
+     * @return string
+     */
     public function filter($value);
 }

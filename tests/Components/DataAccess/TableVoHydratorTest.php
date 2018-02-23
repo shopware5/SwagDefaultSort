@@ -8,6 +8,7 @@
 
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 
+use Shopware\SwagDefaultSort\Components\DataAccess\TableVo;
 use Shopware\SwagDefaultSort\Components\DataAccess\TableVoHydrator;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 
@@ -33,7 +34,7 @@ class TableVoHydratorTest extends \PHPUnit_Framework_TestCase
     {
         $tableVos = $this->tableVoHydrator->createTableVos($this->definitionCollection->getTableNames());
 
-        $this->assertContainsOnlyInstancesOf('Shopware\SwagDefaultSort\Components\DataAccess\TableVo', $tableVos);
+        $this->assertContainsOnlyInstancesOf(TableVo::class, $tableVos);
         $this->assertGreaterThan(0, count($tableVos));
 
         foreach ($tableVos as $tableVo) {

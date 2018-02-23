@@ -1,5 +1,5 @@
 
-//{block name="backend/swag_default_sort/model/db_table"}
+// {block name="backend/swag_default_sort/model/db_table"}
 Ext.define('Shopware.apps.SwagDefaultSort.model.DbTable', {
     extend: 'Shopware.data.Model',
 
@@ -10,7 +10,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.DbTable', {
     },
 
     fields: [
-        //{block name="backend/swag_default_sort/model/db_table/fields"}{/block}
+        // {block name="backend/swag_default_sort/model/db_table/fields"}{/block}
         {
             name: 'tableName',
             type: 'string',
@@ -23,4 +23,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.DbTable', {
         }
     ]
 });
-//{/block}
+// {/block}

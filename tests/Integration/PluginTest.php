@@ -8,16 +8,17 @@
 
 namespace Shopware\SwagDefaultSort\Test\Integration;
 
-class PluginTest extends \Shopware\Components\Test\Plugin\TestCase
+use Shopware\Components\Test\Plugin\TestCase;
+
+class PluginTest extends TestCase
 {
     protected static $ensureLoadedPlugins = [
-        'SwagDefaultSort' => [
-        ],
+        'SwagDefaultSort' => [],
     ];
 
     public function testCanCreateInstance()
     {
-        /** @var Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap $plugin */
+        /** @var \Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap $plugin */
         $plugin = Shopware()->Plugins()->Frontend()->SwagDefaultSort();
 
         $this->assertInstanceOf('Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap', $plugin);

@@ -8,6 +8,7 @@
 
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 
+use Shopware\SwagDefaultSort\Components\DataAccess\FieldVo;
 use Shopware\SwagDefaultSort\Components\DataAccess\FieldVoHydrator;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 
@@ -33,7 +34,7 @@ class FieldVoHydratorTest extends \PHPUnit_Framework_TestCase
     {
         $fieldVos = $this->fieldVoHydrator->createFieldVos($this->definitionCollection);
 
-        $this->assertContainsOnlyInstancesOf('Shopware\SwagDefaultSort\Components\DataAccess\FieldVo', $fieldVos);
+        $this->assertContainsOnlyInstancesOf(FieldVo::class, $fieldVos);
         $this->assertGreaterThan(0, count($fieldVos));
 
         foreach ($fieldVos as $fieldVo) {

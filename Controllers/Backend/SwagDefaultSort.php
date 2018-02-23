@@ -6,12 +6,21 @@
  * file that was distributed with this source code.
  */
 
+use Shopware\CustomModels\SwagDefaultSort\Rule;
+
+/**
+ * (c) shopware AG <info@shopware.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 /**
  * Backend controllers extending from Shopware_Controllers_Backend_Application do support the new backend components.
  */
 class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_Backend_Application
 {
-    protected $model = 'Shopware\CustomModels\SwagDefaultSort\Rule';
+    protected $model = Rule::class;
     protected $alias = 'rule';
 
     /**
@@ -138,7 +147,7 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
      */
     protected function formatSearchValue($value, array $field)
     {
-        if ($field['type'] == 'foreignKey') {
+        if ($field['type'] === 'foreignKey') {
             return (int) $value;
         }
 

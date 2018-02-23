@@ -19,9 +19,12 @@ use Shopware\SwagDefaultSort\Components\SortDefinition\ExpressionConditionInterf
  */
 class VotesExpressionJoinProvider extends AbstractExpressionJoinProvider
 {
+    /**
+     * {@inheritdoc}
+     */
     public function isSupportedInterface(AbstractSortDefinition $sortDefinition)
     {
-        return $sortDefinition instanceof ExpressionConditionInterface && $sortDefinition->getTableName() == $this->getTableName();
+        return $sortDefinition instanceof ExpressionConditionInterface && $sortDefinition->getTableName() === $this->getTableName();
     }
 
     /**

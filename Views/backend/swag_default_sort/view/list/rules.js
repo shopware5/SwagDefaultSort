@@ -1,6 +1,6 @@
-//{namespace name="backend/swagdefaultsort/main"}
+// {namespace name="backend/swagdefaultsort/main"}
 
-//{block name="backend/swag_default_sort/view/list/rules"}
+// {block name="backend/swag_default_sort/view/list/rules"}
 Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
 
     extend: 'Shopware.grid.Panel',
@@ -22,7 +22,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
         ]
     },
 
-    configure: function () {
+    configure: function() {
         var me = this;
         var id = Ext.id();
 
@@ -43,16 +43,15 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                     header: '{s name=component_name}{/s}',
                     groupable: false,
                     renderer: function(value) {
-                        if(!value) {
+                        if (!value) {
                             return '';
                         }
 
                         var record = Ext.getStore('SwagDefaultSortDbTable').findRecord('tableName', value);
 
-                        if(!record) {
+                        if (!record) {
                             return value;
                         }
-
 
                         return record.get('translation');
                     },
@@ -63,14 +62,14 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                         anchor: '100%',
                         store: 'SwagDefaultSortDbTable',
                         queryMode: 'local',
-                        valueField:'tableName',
+                        valueField: 'tableName',
                         displayField: 'translation',
                         editable: false,
                         multiSelect: false,
-                        forceSelection : true,
+                        forceSelection: true,
                         allowBlank: false,
                         listeners: {
-                            select: function(comboBox, selection) {
+                            select: function(comboBox) {
                                 var fieldElement = comboBox.ownerCt.getForm().findField('definitionUid');
 
                                 fieldElement.suspendCheckChange++;
@@ -83,8 +82,8 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                 definitionUid: {
                     header: '{s name=field_name}{/s}',
                     groupable: false,
-                    renderer: function(value, metaData, record) {
-                        if(!value) {
+                    renderer: function(value) {
+                        if (!value) {
                             return '';
                         }
 
@@ -93,7 +92,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
 
                         var fieldRecord = dbFieldStore.findRecord('definitionUid', value);
 
-                        if(!fieldRecord) {
+                        if (!fieldRecord) {
                             return value;
                         }
 
@@ -105,12 +104,12 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                         width: '100%',
                         anchor: '100%',
                         store: 'SwagDefaultSortDbField',
-                        valueField:'definitionUid',
+                        valueField: 'definitionUid',
                         displayField: 'translation',
                         queryMode: 'local',
                         editable: false,
                         multiSelect: false,
-                        forceSelection : true,
+                        forceSelection: true,
                         allowBlank: false,
                         listeners: {
                             beforerender: function() {
@@ -120,11 +119,11 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                                 var tableElement = me.ownerCt.getForm().findField('tableName');
                                 var value = tableElement.getValue();
 
-                                //no error message on auto change
+                                // no error message on auto change
                                 me.suspendCheckChange++;
 
                                 me.store.clearFilter(true);
-                                if(!value) {
+                                if (!value) {
                                     me.store.filterBy(function() {
                                         return false;
                                     });
@@ -134,7 +133,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                                 }
 
                                 me.store.filterBy(function(field) {
-                                    return value == field.get('tableName');
+                                    return value === field.get('tableName');
                                 });
 
                                 me.suspendCheckChange--;
@@ -146,7 +145,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                     header: '{s name=direction}{/s}',
                     groupable: false,
                     renderer: function(value) {
-                        if(!Ext.isBoolean(value)) {
+                        if (!Ext.isBoolean(value)) {
                             return '';
                         }
 
@@ -159,11 +158,11 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
                         anchor: '100%',
                         store: 'SwagDefaultSortDirectionOptions',
                         queryMode: 'local',
-                        valueField:'key',
-                        displayField:'value',
+                        valueField: 'key',
+                        displayField: 'value',
                         editable: false,
                         multiSelect: false,
-                        forceSelection : true
+                        forceSelection: true
                     }
 
                 }
@@ -176,6 +175,5 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Rules', {
     getDragAndDropPlugin: function() {
         return this.dndSorter;
     }
-
 });
-//{/block}
+// {/block}

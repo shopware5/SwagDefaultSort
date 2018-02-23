@@ -40,6 +40,9 @@ class QueryExtensionGatewayTest extends AbstractSearchBundleDependantTest
         $this->assertNotEquals($beforeSql, $afterSql);
     }
 
+    /**
+     * @return QueryExtensionGateway
+     */
     private function createQueryExtensionGateway()
     {
         return new QueryExtensionGateway(

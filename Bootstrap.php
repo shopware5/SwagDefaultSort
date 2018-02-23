@@ -6,6 +6,15 @@
  * file that was distributed with this source code.
  */
 
+use Shopware\CustomModels\SwagDefaultSort\Rule;
+
+/**
+ * (c) shopware AG <info@shopware.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 /**
  * {@inheritdoc}
  */
@@ -14,9 +23,9 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     const MENU_ITEM_IDENTIFIER = 'SwagDefaultSort';
 
     /**
-     * @throws Exception
+     * @throws RuntimeException
      *
-     * @return mixed
+     * @return string
      */
     public function getVersion()
     {
@@ -24,7 +33,8 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         if ($info) {
             return $info['currentVersion'];
         }
-        throw new Exception('The plugin has an invalid version file.');
+
+        throw new RuntimeException('The plugin has an invalid version file.');
     }
 
     /**
@@ -47,7 +57,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 
         $classes = [
-            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule'),
+            $em->getClassMetadata(Rule::class),
         ];
         $tool->dropSchema($classes);
 
@@ -80,6 +90,9 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getInfo()
     {
         return [
@@ -92,11 +105,17 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function update($oldVersion)
     {
         return true;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function install()
     {
         if (!$this->assertMinimumVersion('5.0.0')) {
@@ -130,6 +149,9 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function enable()
     {
         try {
@@ -141,6 +163,9 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         return true;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function disable()
     {
         try {
@@ -188,7 +213,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 
         $classes = [
-            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule'),
+            $em->getClassMetadata(Rule::class),
         ];
 
         try {
@@ -199,6 +224,11 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         $tool->createSchema($classes);
     }
 
+    /**
+     * @param bool $isActive
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     private function storeMenuState($isActive)
     {
         $menuItem = $this->Menu()->findOneBy(['label' => self::MENU_ITEM_IDENTIFIER]);
@@ -207,7 +237,7 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
             throw new BadMethodCallException('Unable to set Menu state - no item found');
         }
 
-        $menuItem->setActive((bool) $isActive);
+        $menuItem->setActive($isActive);
 
         $this->getEntityManager()->persist($menuItem);
         $this->getEntityManager()->flush();

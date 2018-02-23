@@ -8,11 +8,12 @@
 
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\SortDefinition;
 
+use Shopware\Components\Test\Plugin\TestCase;
 use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 
-class InflectDefinitionsTest extends \Shopware\Components\Test\Plugin\TestCase
+class InflectDefinitionsTest extends TestCase
 {
     /**
      * @var ORMReflector

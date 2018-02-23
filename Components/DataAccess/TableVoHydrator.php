@@ -25,7 +25,7 @@ class TableVoHydrator
     private $translateFilter;
 
     /**
-     * @param \TranslateFilterChain $translateFilter
+     * @param TranslateFilterChain $translateFilter
      */
     public function __construct(TranslateFilterChain $translateFilter)
     {

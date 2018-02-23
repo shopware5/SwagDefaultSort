@@ -1,7 +1,7 @@
 
-//{block name="backend/swag_default_sort/store/db_table"}
+// {block name="backend/swag_default_sort/store/db_table"}
 Ext.define('Shopware.apps.SwagDefaultSort.store.DbTable', {
-    extend:'Shopware.store.Listing',
+    extend: 'Shopware.store.Listing',
 
     storeId: 'SwagDefaultSortDbTable',
 
@@ -44,4 +44,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.DbTable', {
 
     model: 'Shopware.apps.SwagDefaultSort.model.DbTable'
 });
-//{/block}
+// {/block}

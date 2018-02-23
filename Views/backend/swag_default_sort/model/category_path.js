@@ -1,5 +1,5 @@
 
-//{block name="backend/swag_default_sort/model/category_path"}
+// {block name="backend/swag_default_sort/model/category_path"}
 Ext.define('Shopware.apps.SwagDefaultSort.model.CategoryPath', {
     extend: 'Shopware.data.Model',
 
@@ -10,19 +10,19 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.CategoryPath', {
     },
 
     fields: [
-        //{block name="backend/swag_default_sort/model/category_path/fields"}{/block}
+        // {block name="backend/swag_default_sort/model/category_path/fields"}{/block}
         {
-            name : 'id',
+            name: 'id',
             type: 'int',
             useNull: true
         },
         {
-            name : 'catId',
+            name: 'catId',
             type: 'int',
             useNull: true
         },
         {
-            name : 'name',
+            name: 'name',
             type: 'string',
             useNull: false
         },
@@ -39,7 +39,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.CategoryPath', {
 
                 value = name + ' (ID: ' + catId + ')';
 
-                if(!Ext.isArray(parentPath) || !parentPath.length) {
+                if (!Ext.isArray(parentPath) || !parentPath.length) {
                     return value;
                 }
 
@@ -48,4 +48,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.CategoryPath', {
         }
     ]
 });
-//{/block}
+// {/block}

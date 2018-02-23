@@ -9,6 +9,7 @@
 namespace Shopware\SwagDefaultSort\Test\Components\ValueObject;
 
 use Shopware\SwagDefaultSort\Components\DataAccess\RuleHydrator;
+use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 
 /**
  * Class DatabaseAdapter.
@@ -27,6 +28,9 @@ class RuleHydratorTest extends \PHPUnit_Framework_TestCase
         $this->ruleHydrator = new RuleHydrator();
     }
 
+    /**
+     * @return array
+     */
     public function getFixtures()
     {
         return [
@@ -48,7 +52,7 @@ class RuleHydratorTest extends \PHPUnit_Framework_TestCase
     public function testVoGenerate()
     {
         $vos = $this->ruleHydrator->createRuleVos($this->getFixtures());
-        $this->assertContainsOnlyInstancesOf('Shopware\SwagDefaultSort\Components\DataAccess\RuleVo', $vos);
+        $this->assertContainsOnlyInstancesOf(RuleVo::class, $vos);
     }
 
     public function testVoDataComplete()

@@ -1,5 +1,5 @@
 
-//{block name="backend/swag_default_sort/controller/main"}
+// {block name="backend/swag_default_sort/controller/main"}
 /**
  * Main Controller: ALL Handlers are here
  */
@@ -15,7 +15,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
     getRuleGrid: function() {
         var ruleGridQueryResult = Ext.ComponentQuery.query('swag-default-sort-listing-grid-rules');
 
-        if(!ruleGridQueryResult) {
+        if (!ruleGridQueryResult) {
             return false;
         }
 
@@ -25,7 +25,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
     getCategoryGrid: function() {
         var categoryGridQueryResult = Ext.ComponentQuery.query('swag-default-sort-listing-grid-categories');
 
-        if(!categoryGridQueryResult) {
+        if (!categoryGridQueryResult) {
             return false;
         }
 
@@ -35,7 +35,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
     getWindow: function() {
         var windowQueryResult = Ext.ComponentQuery.query('swag-default-sort-list-window');
 
-        if(!windowQueryResult) {
+        if (!windowQueryResult) {
             return false;
         }
 
@@ -68,7 +68,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         this.getWindow().stores.table.addListener('load', me.onLoadRepaintRuleGrid, me);
     },
 
-    onLoadRepaintRuleGrid: function(store, records) {
+    onLoadRepaintRuleGrid: function() {
         this.getRuleGrid().getView().refresh();
     },
 
@@ -94,16 +94,16 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         var pathSelectStore = Ext.getStore('SwagDefaultSortCategoryPathSelect');
         var catStore = this.getCategoryGrid().store;
 
-        //rewrite cat record
+        // rewrite cat record
         var selectedRecord = pathSelectStore.findRecord('catId', newCatId);
         var displayedRecord = catStore.findRecord('catId', newCatId);
 
-        if(!newCatId) {
+        if (!newCatId) {
             catStore.remove(catStore.findRecord('catId', null));
             return;
         }
 
-        if(originalCatId === newCatId) {
+        if (originalCatId === newCatId) {
             return;
         }
 
@@ -111,13 +111,13 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         displayedRecord.set('name', selectedRecord.get('name'));
         displayedRecord.set('id', selectedRecord.get('catId'));
 
-        //trigger refresh of column, remove dirty flag
+        // trigger refresh of column, remove dirty flag
         displayedRecord.set('parentPathString', selectedRecord.get('catId'));
         displayedRecord.commit();
 
         this.getRuleGrid().store.data.each(function() {
-            //important if store is new
-            if(this.get('categoryId') !== originalCatId) {
+            // important if store is new
+            if (this.get('categoryId') !== originalCatId) {
                 return;
             }
 
@@ -136,13 +136,13 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
     onAddRuleStartEditing: function (ruleGrid, record) {
         var categoryGrid = this.getCategoryGrid();
 
-        if(!categoryGrid) {
+        if (!categoryGrid) {
             return;
         }
 
         var selection = categoryGrid.getSelectionModel().getSelection();
 
-        if(selection.length !== 1) {
+        if (selection.length !== 1) {
             return;
         }
 
@@ -150,23 +150,16 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         record.set('sortOrder', ruleGrid.store.getCount());
         ruleGrid.store.add(record);
 
-
         this.syncRuleStore(function() {
             ruleGrid.getRowEditingPlugin().startEdit(record, 0);
         });
     },
 
-    /**
-     * @param node
-     * @param data
-     * @param overModel
-     * @param dropPosition
-     */
-    onDropSteRuleOrder: function(node, data, overModel, dropPosition) {
+    onDropSteRuleOrder: function() {
         var ruleGridView = this.getRuleGrid().getView();
         var records = ruleGridView.getRecords(ruleGridView.getNodes());
 
-        for(var i = 0; i < records.length; i++) {
+        for (var i = 0; i < records.length; i++) {
             records[i].set('sortOrder', i);
         }
 
@@ -182,15 +175,15 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         var categoryGrid = this.getCategoryGrid();
         var ruleGridStore = ruleGrid.store;
         var callDone = function() {
-            if(!doneCallback) {
+            if (!doneCallback) {
                 return;
             }
 
             doneCallback();
         };
 
-        //IMPORTANT: The sync method will never call callbacks with empty changesets
-        if(!ruleGridStore.getModifiedRecords().length) {
+        // IMPORTANT: The sync method will never call callbacks with empty changesets
+        if (!ruleGridStore.getModifiedRecords().length) {
             callDone();
             return;
         }
@@ -209,11 +202,11 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         });
     },
 
-    onCategoryGridInitSelectFirstRow: function(categoryGrid){
+    onCategoryGridInitSelectFirstRow: function(categoryGrid) {
         var ruleAddButton = this.getRuleGrid().addButton;
 
         ruleAddButton.enable();
-        if(!categoryGrid.store.data.items.length) {
+        if (!categoryGrid.store.data.items.length) {
             ruleAddButton.disable(true);
             return;
         }
@@ -231,7 +224,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         var ruleGrid = this.getRuleGrid();
         var ruleAddButton = ruleGrid.addButton;
 
-        if(selection.length === 1 && selection[0].get('catId')) {
+        if (selection.length === 1 && selection[0].get('catId')) {
             filterCatId = selection[0].get('catId');
         }
 
@@ -240,7 +233,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         var loadListener = function() {
             ruleGrid.store.removeListener('load', loadListener);
 
-            if(filterCatId > 0) {
+            if (filterCatId > 0) {
                 ruleAddButton.enable();
             }
         };
@@ -255,4 +248,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.controller.Main', {
         }]);
     }
 });
-//{/block}
+// {/block}

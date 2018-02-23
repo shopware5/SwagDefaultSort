@@ -34,11 +34,19 @@ class RegistrationService
         );
     }
 
+    /**
+     * @return string
+     */
     public function getPluginPath()
     {
         return __DIR__ . '/..';
     }
 
+    /**
+     * @param string $controllerName
+     *
+     * @return string
+     */
     public function getBackendControllerPath($controllerName)
     {
         return $this->getPluginPath() .

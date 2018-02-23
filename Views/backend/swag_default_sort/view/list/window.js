@@ -1,6 +1,6 @@
-//{namespace name="backend/swagdefaultsort/main"}
+// {namespace name="backend/swagdefaultsort/main"}
 
-//{block name="backend/swag_default_sort/view/list/window"}
+// {block name="backend/swag_default_sort/view/list/window"}
 Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
     extend: 'Enlight.app.Window',
 
@@ -24,8 +24,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
 
     alias: 'widget.swag-default-sort-list-window',
 
-    title : '{s name=window_title}SwagDefaultSort listing{/s}',
-
+    title: '{s name=window_title}SwagDefaultSort listing{/s}',
 
     initComponent: function () {
         this.gridPanels = {};
@@ -67,7 +66,6 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
             subApp: me.subApp
         });
 
-
         return me.gridPanels.listing;
     },
 
@@ -88,4 +86,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.view.list.Window', {
         return me.gridPanels.categories;
     }
 });
-//{/block}
+// {/block}

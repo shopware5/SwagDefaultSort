@@ -19,7 +19,7 @@ use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 class ArticleDetails extends AbstractJoinProvider
 {
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getTableName()
     {
@@ -27,12 +27,7 @@ class ArticleDetails extends AbstractJoinProvider
     }
 
     /**
-     * Extends the query and returns the alias to bind the definition to.
-     *
-     * @param QueryBuilder           $queryBuilder
-     * @param AbstractSortDefinition $definition
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function extendQuery(QueryBuilder $queryBuilder, AbstractSortDefinition $definition)
     {

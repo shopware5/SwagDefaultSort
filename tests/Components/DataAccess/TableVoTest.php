@@ -8,6 +8,7 @@
 
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 
+use Shopware\Models\Shop\Shop;
 use Shopware\SwagDefaultSort\Components\DataAccess\TableVo;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\SimpleFilter;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\TranslateFilterChain;
@@ -27,7 +28,7 @@ class TableVoTest extends \PHPUnit_Framework_TestCase
 
     public function testGetters()
     {
-        $shops = Shopware()->Models()->getRepository('Shopware\Models\Shop\Shop')->findAll();
+        $shops = Shopware()->Models()->getRepository(Shop::class)->findAll();
 
         foreach ($shops as $shop) {
             Shopware()->Snippets()->setShop($shop);

@@ -8,9 +8,10 @@
 
 namespace Shopware\SwagDefaultSort\Test\Components\SortDefinition;
 
+use Shopware\Components\Test\Plugin\TestCase;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 
-class DefinitionCollectionTest extends \Shopware\Components\Test\Plugin\TestCase
+class DefinitionCollectionTest extends TestCase
 {
     /**
      * @var DefinitionCollection

@@ -33,6 +33,11 @@ abstract class LoaderAbstract
      */
     abstract public function load($dbTableName);
 
+    /**
+     * @param ClassMetadata $metadata
+     *
+     * @return InflectorResult
+     */
     protected function createInflectorResult(ClassMetadata $metadata)
     {
         return new InflectorResult($metadata);

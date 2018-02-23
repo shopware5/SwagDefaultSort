@@ -19,13 +19,16 @@ use Shopware\SwagDefaultSort\Components\SortDefinition\ExpressionConditionInterf
  */
 class OrderDetailsExpressionJoinProvider extends AbstractExpressionJoinProvider
 {
+    /**
+     * {@inheritdoc}
+     */
     public function isSupportedInterface(AbstractSortDefinition $sortDefinition)
     {
-        return $sortDefinition instanceof ExpressionConditionInterface && $sortDefinition->getTableName() == $this->getTableName();
+        return $sortDefinition instanceof ExpressionConditionInterface && $sortDefinition->getTableName() === $this->getTableName();
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getTableName()
     {
@@ -33,12 +36,7 @@ class OrderDetailsExpressionJoinProvider extends AbstractExpressionJoinProvider
     }
 
     /**
-     * Extends the query and returns the alias to bind the definition to.
-     *
-     * @param QueryBuilder           $queryBuilder
-     * @param AbstractSortDefinition $definition
-     *
-     * @return string join alias
+     * {@inheritdoc}
      */
     public function extendQuery(QueryBuilder $queryBuilder, AbstractSortDefinition $definition)
     {

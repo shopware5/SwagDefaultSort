@@ -29,6 +29,12 @@ class OrderByFilterChain
      */
     private $orderByFilter;
 
+    /**
+     * @param string                 $alias
+     * @param AbstractSortDefinition $definition
+     * @param RuleVo                 $rule
+     * @param QueryBuilder           $queryBuilder
+     */
     public function extendQuery(
         $alias,
         AbstractSortDefinition $definition,

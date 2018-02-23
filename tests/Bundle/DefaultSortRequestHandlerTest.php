@@ -11,11 +11,12 @@ namespace Shopware\SwagDefaultSort\Test;
 use Shopware\Bundle\SearchBundle\Criteria;
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilderFactoryInterface;
 use Shopware\Bundle\StoreFrontBundle\Struct\ShopContextInterface;
+use Shopware\Components\Test\Plugin\TestCase;
 use Shopware\SwagDefaultSort\Bundle\SearchBundle\DefaultSortRequestHandler;
 use Shopware\SwagDefaultSort\Components\DataAccess\DatabaseAdapter;
 use Shopware\SwagDefaultSort\Components\DataAccess\RuleHydrator;
 
-class DefaultSortRequestHandlerTest extends \Shopware\Components\Test\Plugin\TestCase
+class DefaultSortRequestHandlerTest extends TestCase
 {
     /**
      * @var QueryBuilderFactoryInterface
@@ -36,7 +37,7 @@ class DefaultSortRequestHandlerTest extends \Shopware\Components\Test\Plugin\Tes
     public function testNoCategory()
     {
         $sortHandler = $this->createRequestHandler(
-            $this->createDatabaseAdpater(false)
+            $this->createDatabaseAdapter(false)
         );
         $request = $this->createRequest();
         $criteria = $this->createCriteria();
@@ -54,7 +55,7 @@ class DefaultSortRequestHandlerTest extends \Shopware\Components\Test\Plugin\Tes
     public function testWithCategory()
     {
         $sortHandler = $this->createRequestHandler(
-            $this->createDatabaseAdpater(false)
+            $this->createDatabaseAdapter(false)
         );
         $request = $this->createRequest();
         $criteria = $this->createCriteria();
@@ -74,7 +75,7 @@ class DefaultSortRequestHandlerTest extends \Shopware\Components\Test\Plugin\Tes
     public function testWithCategoryAndActiveDatabase()
     {
         $sortHandler = $this->createRequestHandler(
-            $this->createDatabaseAdpater(true)
+            $this->createDatabaseAdapter(true)
         );
         $request = $this->createRequest();
         $criteria = $this->createCriteria();
@@ -94,7 +95,7 @@ class DefaultSortRequestHandlerTest extends \Shopware\Components\Test\Plugin\Tes
     public function testWithCategoryAndActiveDatabaseAndActiveSort()
     {
         $sortHandler = $this->createRequestHandler(
-            $this->createDatabaseAdpater(true)
+            $this->createDatabaseAdapter(true)
         );
         $request = $this->createRequest();
         $criteria = $this->createCriteria();
@@ -115,7 +116,7 @@ class DefaultSortRequestHandlerTest extends \Shopware\Components\Test\Plugin\Tes
     public function testWithCategoryAndActiveDatabaseAndActiveSortFromThisPlugin()
     {
         $sortHandler = $this->createRequestHandler(
-            $this->createDatabaseAdpater(true)
+            $this->createDatabaseAdapter(true)
         );
         $request = $this->createRequest();
         $criteria = $this->createCriteria();
@@ -133,6 +134,11 @@ class DefaultSortRequestHandlerTest extends \Shopware\Components\Test\Plugin\Tes
         $this->assertNotEmpty($criteria->getSorting('swag-default-sort-default-sorting'));
     }
 
+    /**
+     * @param DatabaseAdapter $dbAdapter
+     *
+     * @return DefaultSortRequestHandler
+     */
     private function createRequestHandler(DatabaseAdapter $dbAdapter)
     {
         return new DefaultSortRequestHandler(
@@ -146,9 +152,9 @@ class DefaultSortRequestHandlerTest extends \Shopware\Components\Test\Plugin\Tes
      *
      * @return DatabaseAdapter
      */
-    private function createDatabaseAdpater($findsCategory = false)
+    private function createDatabaseAdapter($findsCategory = false)
     {
-        $stub = $this->getMockBuilder('Shopware\SwagDefaultSort\Components\DataAccess\DatabaseAdapter')
+        $stub = $this->getMockBuilder(DatabaseAdapter::class)
             ->getMock();
 
         $stub->method('fetchClosestCategoryIdWithRule')
@@ -168,6 +174,9 @@ class DefaultSortRequestHandlerTest extends \Shopware\Components\Test\Plugin\Tes
         return new \Enlight_Controller_Request_RequestHttp();
     }
 
+    /**
+     * @return Criteria
+     */
     private function createCriteria()
     {
         return new Criteria();

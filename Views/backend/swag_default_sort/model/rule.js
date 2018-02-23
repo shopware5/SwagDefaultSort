@@ -1,5 +1,5 @@
 
-//{block name="backend/swag_default_sort/model/rule"}
+// {block name="backend/swag_default_sort/model/rule"}
 Ext.define('Shopware.apps.SwagDefaultSort.model.Rule', {
     extend: 'Shopware.data.Model',
 
@@ -10,26 +10,26 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.Rule', {
     },
 
     fields: [
-        //{block name="backend/swag_default_sort/model/rule/fields"}{/block}
+        // {block name="backend/swag_default_sort/model/rule/fields"}{/block}
         {
-            name : 'id',
+            name: 'id',
             type: 'int',
             useNull: true
         },
         {
-            name : 'tableName',
+            name: 'tableName',
             type: 'string',
             useNull: false,
             defaultValue: 's_articles'
         },
         {
-            name : 'definitionUid',
+            name: 'definitionUid',
             type: 'string',
             useNull: false,
             defaultValue: 's_articles::name'
         },
         {
-            name : 'descending',
+            name: 'descending',
             type: 'bool'
         },
         {
@@ -39,7 +39,7 @@ Ext.define('Shopware.apps.SwagDefaultSort.model.Rule', {
         {
             name: 'categoryId',
             type: 'int'
-        },
+        }
     ]
 });
-//{/block}
+// {/block}

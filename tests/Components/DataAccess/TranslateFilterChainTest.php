@@ -8,6 +8,7 @@
 
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 
+use Shopware\Models\Shop\Shop;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FallbackDefinitionTranslateFilter;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FromDefinitionUidFilter;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FromTableDefinitionFilter;
@@ -31,7 +32,7 @@ class TranslateFilterChainTest extends \PHPUnit_Framework_TestCase
 
     public function testCombined()
     {
-        $shops = Shopware()->Models()->getRepository('Shopware\Models\Shop\Shop')->findAll();
+        $shops = Shopware()->Models()->getRepository(Shop::class)->findAll();
 
         foreach ($shops as $shop) {
             Shopware()->Snippets()->setShop($shop);
@@ -55,6 +56,9 @@ class TranslateFilterChainTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @return FromTableDefinitionFilter
+     */
     private function getFromTableTranslateFilter()
     {
         return new FromTableDefinitionFilter(
@@ -63,11 +67,17 @@ class TranslateFilterChainTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return FromDefinitionUidFilter
+     */
     private function getFromDefinitionUidTranslateFilter()
     {
         return new FromDefinitionUidFilter(Shopware()->Snippets()->getNamespace('backend/swagdefaultsort/fields'));
     }
 
+    /**
+     * @return FallbackDefinitionTranslateFilter
+     */
     private function getFromDefaultDefinitionFilter()
     {
         return new FallbackDefinitionTranslateFilter();

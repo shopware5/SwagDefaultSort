@@ -1,9 +1,9 @@
 
-//{block name="backend/swag_default_sort/app"}
+// {block name="backend/swag_default_sort/app"}
 Ext.define('Shopware.apps.SwagDefaultSort', {
     extend: 'Enlight.app.SubApplication',
 
-    name:'Shopware.apps.SwagDefaultSort',
+    name: 'Shopware.apps.SwagDefaultSort',
 
     loadPath: '{url action=load}',
     bulkLoad: true,
@@ -39,4 +39,4 @@ Ext.define('Shopware.apps.SwagDefaultSort', {
         return this.getController('Main').mainWindow;
     }
 });
-//{/block}
+// {/block}

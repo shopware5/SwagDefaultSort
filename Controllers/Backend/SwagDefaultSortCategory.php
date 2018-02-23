@@ -6,12 +6,21 @@
  * file that was distributed with this source code.
  */
 
+use Shopware\Models\Category\Category;
+
+/**
+ * (c) shopware AG <info@shopware.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 /**
  * Backend controllers extending from Shopware_Controllers_Backend_Application do support the new backend components.
  */
 class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Controllers_Backend_Application
 {
-    protected $model = 'Shopware\Models\Category\Category';
+    protected $model = Category::class;
     protected $alias = 'category';
 
     /**
@@ -21,11 +30,17 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
      */
     private $addRuleConstraint;
 
+    /**
+     * @throws Enlight_Controller_Exception
+     */
     public function createAction()
     {
         throw new Enlight_Controller_Exception('Method not supported', 404);
     }
 
+    /**
+     * @throws Enlight_Controller_Exception
+     */
     public function updateAction()
     {
         throw new Enlight_Controller_Exception('Method not supported', 404);
@@ -69,7 +84,7 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
         $builder = parent::getListQuery();
 
         if ($this->addRuleConstraint) {
-            $ids = Shopware()->Models()->getDBALQueryBuilder()
+            $ids = $this->container->get('dbal_connection')->createQueryBuilder()
                 ->select('DISTINCT rule.category_id')
                 ->from('s_plugin_swag_default_sort_rule', 'rule')
                 ->execute()
@@ -89,6 +104,9 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
         return $builder;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function getList($offset, $limit, $sort = [], $filter = [], array $wholeParams = [])
     {
         $result = parent::getList($offset, $limit, $sort, $filter, $wholeParams);
@@ -97,9 +115,12 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
         return $result;
     }
 
+    /**
+     * @param array $categories
+     */
     private function addParentPath(array &$categories)
     {
-        $parentPathQuery = Shopware()->Models()->getDBALQueryBuilder()
+        $parentPathQuery = $this->container->get('dbal_connection')->createQueryBuilder()
             ->select('id, category.description AS name')
             ->from('s_categories', 'category', 'id')
             ->where('id IN (:categoryIds)');
@@ -116,10 +137,11 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
             $cleanParentIds = array_reverse(array_filter($parentIds));
 
             $categoriesRawNames = $parentPathQuery->setParameter(
-                    ':categoryIds',
-                    $cleanParentIds,
-                    \Doctrine\DBAL\Connection::PARAM_INT_ARRAY
-                )->execute()
+                ':categoryIds',
+                $cleanParentIds,
+                \Doctrine\DBAL\Connection::PARAM_INT_ARRAY
+            )
+                ->execute()
                 ->fetchAll(\PDO::FETCH_ASSOC);
 
             $path = [];

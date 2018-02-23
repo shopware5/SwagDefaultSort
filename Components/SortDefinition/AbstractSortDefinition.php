@@ -17,6 +17,9 @@ abstract class AbstractSortDefinition
 {
     private $table;
 
+    /**
+     * @param TableLoaderInterface $table
+     */
     public function __construct(TableLoaderInterface $table)
     {
         $this->table = $table;
@@ -30,6 +33,9 @@ abstract class AbstractSortDefinition
         return $this->getTable()->getTableName();
     }
 
+    /**
+     * @return TableLoaderInterface
+     */
     public function getTable()
     {
         return $this->table;

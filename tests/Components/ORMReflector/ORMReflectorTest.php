@@ -8,9 +8,13 @@
 
 namespace Shopware\SwagDefaultSort\Test\Components\ORMInflector;
 
+use Shopware\Components\Test\Plugin\TestCase;
+use Shopware\Models\Article\Article;
+use Shopware\SwagDefaultSort\Components\ORMReflector\InflectorResult;
+use Shopware\SwagDefaultSort\Components\ORMReflector\Map;
 use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 
-class ORMReflectorTest extends \Shopware\Components\Test\Plugin\TestCase
+class ORMReflectorTest extends TestCase
 {
     /**
      * @var ORMReflector
@@ -25,7 +29,7 @@ class ORMReflectorTest extends \Shopware\Components\Test\Plugin\TestCase
     public function testReverseMapper()
     {
         $this->assertInstanceOf(
-            'Shopware\SwagDefaultSort\Components\ORMReflector\InflectorResult',
+            InflectorResult::class,
             $this->ormInflector->getTable('s_articles')
         );
     }
@@ -40,7 +44,7 @@ class ORMReflectorTest extends \Shopware\Components\Test\Plugin\TestCase
         );
 
         $this->assertEquals(
-            'Shopware\Models\Article\Article',
+            Article::class,
             $result->getClassName()
         );
 
@@ -59,7 +63,7 @@ class ORMReflectorTest extends \Shopware\Components\Test\Plugin\TestCase
     {
         $map = $this->ormInflector->getTable('s_articles')->getMap();
 
-        $this->assertInstanceOf('Shopware\SwagDefaultSort\Components\ORMReflector\Map', $map);
+        $this->assertInstanceOf(Map::class, $map);
 
         $this->assertEquals(
             'main_detail_id',

@@ -12,8 +12,6 @@ use JsonSerializable;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\TranslateFilterChain;
 
 /**
- * Class TableVo.
- *
  * ValueObject containing the different table names and translations
  */
 class TableVo implements JsonSerializable
@@ -24,10 +22,16 @@ class TableVo implements JsonSerializable
     private $tableName;
 
     /**
-     * @var TranslateFilter
+     * @var TranslateFilterChain
      */
     private $filter;
 
+    /**
+     * TableVo constructor.
+     *
+     * @param string               $tableName
+     * @param TranslateFilterChain $filter
+     */
     public function __construct($tableName, TranslateFilterChain $filter)
     {
         $this->tableName = $tableName;

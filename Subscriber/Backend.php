@@ -18,6 +18,9 @@ class Backend implements SubscriberInterface
      */
     protected $registrationService;
 
+    /**
+     * @param RegistrationService $registrationService
+     */
     public function __construct(RegistrationService $registrationService)
     {
         $this->registrationService = $registrationService;
@@ -42,7 +45,7 @@ class Backend implements SubscriberInterface
      * @return string
      * @Enlight\Event Enlight_Controller_Dispatcher_ControllerPath_Backend_SwagDefaultSort
      */
-    public function onGetControllerPathBackend(\Enlight_Event_EventArgs $args)
+    public function onGetControllerPathBackend()
     {
         $this->registrationService->registerTemplateDir();
         $this->registrationService->registerSnippets();
@@ -56,7 +59,7 @@ class Backend implements SubscriberInterface
      * @return string
      * @Enlight\Event Enlight_Controller_Dispatcher_ControllerPath_Backend_SwagDefaultSortCategory
      */
-    public function onGetControllerCategoryPathBackend(\Enlight_Event_EventArgs $args)
+    public function onGetControllerCategoryPathBackend()
     {
         $this->registrationService->registerTemplateDir();
         $this->registrationService->registerSnippets();

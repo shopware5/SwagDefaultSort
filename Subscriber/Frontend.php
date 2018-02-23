@@ -31,12 +31,19 @@ class Frontend implements SubscriberInterface
      */
     private $registrationService;
 
+    /**
+     * @param Container           $container
+     * @param RegistrationService $registrationService
+     */
     public function __construct(Container $container, RegistrationService $registrationService)
     {
         $this->container = $container;
         $this->registrationService = $registrationService;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -46,19 +53,25 @@ class Frontend implements SubscriberInterface
         ];
     }
 
-    public function onRequestHandlerCollect(\Enlight_Event_EventArgs $args)
+    /**
+     * @return DefaultSortRequestHandler
+     */
+    public function onRequestHandlerCollect()
     {
         return $this->getSortRequestHandler();
     }
 
-    public function onSortingHandlerCollect(\Enlight_Event_EventArgs $args)
+    /**
+     * @return DefaultSortingHandler
+     */
+    public function onSortingHandlerCollect()
     {
         return new DefaultSortingHandler(
             $this->container->get('swag_default_sort.query_extension_gateway')
         );
     }
 
-    public function registerView(\Enlight_Event_EventArgs $args)
+    public function registerView()
     {
         if (!$this->getSortRequestHandler()->isEnabled()) {
             return;

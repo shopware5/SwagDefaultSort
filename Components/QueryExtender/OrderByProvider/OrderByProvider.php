@@ -30,13 +30,9 @@ class OrderByProvider
      *
      * @return string
      */
-    public function getSort(
-        $alias,
-        AbstractSortDefinition $definition
-    ) {
-        $field = $alias . '.' . $definition->getFieldName();
-
-        return $field;
+    public function getSort($alias, AbstractSortDefinition $definition)
+    {
+        return $alias . '.' . $definition->getFieldName();
     }
 
     /**

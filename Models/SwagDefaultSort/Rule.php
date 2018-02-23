@@ -192,7 +192,7 @@ class Rule extends ModelEntity implements \JsonSerializable
                 'descending' => $this->isDescending(),
                 'categoryId' => $this->categoryId,
             ];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             trigger_error($e->getMessage() . "\n" . $e->getTraceAsString(), E_USER_ERROR);
 
             return [];

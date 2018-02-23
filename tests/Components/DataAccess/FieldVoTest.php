@@ -8,6 +8,7 @@
 
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 
+use Shopware\Models\Shop\Shop;
 use Shopware\SwagDefaultSort\Components\DataAccess\FieldVo;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FallbackDefinitionTranslateFilter;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\TranslateFilterChain;
@@ -28,7 +29,7 @@ class FieldVoTest extends \PHPUnit_Framework_TestCase
 
     public function testGetters()
     {
-        $shops = Shopware()->Models()->getRepository('Shopware\Models\Shop\Shop')->findAll();
+        $shops = Shopware()->Models()->getRepository(Shop::class)->findAll();
 
         foreach ($shops as $shop) {
             Shopware()->Snippets()->setShop($shop);

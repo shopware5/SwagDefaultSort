@@ -87,6 +87,9 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
         return new \ArrayIterator($this->tableMap[$tableName]);
     }
 
+    /**
+     * @return array
+     */
     public function getTableNames()
     {
         $ret = [];
@@ -114,6 +117,9 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
         return count($this->getDefinitions());
     }
 
+    /**
+     * @return TableLoaderInterface[]
+     */
     private function getTableLoaders()
     {
         if (!$this->tableLoaders) {

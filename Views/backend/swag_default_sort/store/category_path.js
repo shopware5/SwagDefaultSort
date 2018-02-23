@@ -1,11 +1,9 @@
 
-
-//{block name="backend/swag_default_sort/store/category_path"}
+// {block name="backend/swag_default_sort/store/category_path"}
 Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPath', {
-    extend:'Shopware.store.Listing',
+    extend: 'Shopware.store.Listing',
 
     storeId: 'SwagDefaultSortCategoryPath',
-
 
     configure: function() {
         return {
@@ -15,4 +13,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPath', {
 
     model: 'Shopware.apps.SwagDefaultSort.model.CategoryPath'
 });
-//{/block}
+// {/block}

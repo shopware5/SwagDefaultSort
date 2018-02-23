@@ -12,8 +12,9 @@ use Shopware\Bundle\SearchBundle\Criteria;
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilderFactoryInterface;
 use Shopware\Bundle\StoreFrontBundle\Struct\ShopContextInterface;
+use Shopware\Components\Test\Plugin\TestCase;
 
-abstract class AbstractSearchBundleDependantTest extends \Shopware\Components\Test\Plugin\TestCase
+abstract class AbstractSearchBundleDependantTest extends TestCase
 {
     /**
      * @var QueryBuilderFactoryInterface

@@ -26,6 +26,9 @@ class AttributeTableLoader implements TableLoaderInterface
      */
     private $inflector;
 
+    /**
+     * @param ORMReflector $inflector
+     */
     public function __construct(ORMReflector $inflector)
     {
         $this->inflector = $inflector;
@@ -48,7 +51,7 @@ class AttributeTableLoader implements TableLoaderInterface
         $ret = [];
 
         foreach ($inflectionResult->getFieldNames() as $fieldName) {
-            if (in_array($fieldName, $this->blacklist)) {
+            if (in_array($fieldName, $this->blacklist, true)) {
                 continue;
             }
 

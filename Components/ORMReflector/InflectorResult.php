@@ -28,6 +28,9 @@ class InflectorResult
         $this->metadata = $metadata;
     }
 
+    /**
+     * @return string
+     */
     public function getClassName()
     {
         return $this->metadata->getName();

@@ -6,53 +6,49 @@
  * file that was distributed with this source code.
  */
 
-require __DIR__ . '/../../../../../../../tests/Shopware/TestHelper.php';
+require __DIR__ . '/../../../../../../../tests/Functional/bootstrap.php';
 
-class SwagDefaultSortSearchTestHelper
+class SwagDefaultSortSearchTestHelper extends TestKernel
 {
-    /**
-     * @var Shopware
-     */
-    private $helper;
-
-    public function __construct()
+    public static function start()
     {
-        $this->helper = \TestHelper::Instance();
-        $this->initPluginNamespaces();
-        $this->initTestNamespace();
-        $this->initServiceContainerSubscriber();
+        parent::start();
+
+        self::initPluginNamespaces();
+        self::initTestNamespace();
+        self::initServiceContainerSubscriber();
     }
 
-    private function initPluginNamespaces()
+    private static function initPluginNamespaces()
     {
-        $this->helper->Loader()->registerNamespace(
+        Shopware()->Loader()->registerNamespace(
             'Shopware\\SwagDefaultSort\\Components',
-            $this->getPluginRoot() . '/Components/'
+            self::getPluginRoot() . '/Components/'
         );
-        $this->helper->Loader()->registerNamespace(
+        Shopware()->Loader()->registerNamespace(
             'Shopware\\SwagDefaultSort\\Subscriber',
-            $this->getPluginRoot() . '/Subscriber/'
+            self::getPluginRoot() . '/Subscriber/'
         );
-        $this->helper->Loader()->registerNamespace(
+        Shopware()->Loader()->registerNamespace(
             'Shopware\\SwagDefaultSort\\Bundle',
-            $this->getPluginRoot() . '/Bundle/'
+            self::getPluginRoot() . '/Bundle/'
         );
     }
 
-    private function initTestNamespace()
+    private static function initTestNamespace()
     {
-        $this->helper->Loader()->registerNamespace(
-            'Shopware\\SwagDefaultSort\\Test',
-            __DIR__ . '/'
-        );
+        Shopware()->Loader()->registerNamespace('Shopware\\SwagDefaultSort\\Test', __DIR__ . '/');
     }
 
-    private function getPluginRoot()
+    /**
+     * @return string
+     */
+    private static function getPluginRoot()
     {
-        return  $pluginDir = __DIR__ . '/..';
+        return __DIR__ . '/..';
     }
 
-    private function initServiceContainerSubscriber()
+    private static function initServiceContainerSubscriber()
     {
         Shopware()->Events()->addSubscriber(
             new \Shopware\SwagDefaultSort\Subscriber\ServiceContainer(Shopware()->Container())
@@ -60,4 +56,4 @@ class SwagDefaultSortSearchTestHelper
     }
 }
 
-new SwagDefaultSortSearchTestHelper();
+SwagDefaultSortSearchTestHelper::start();

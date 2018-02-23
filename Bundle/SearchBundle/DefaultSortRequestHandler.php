@@ -76,7 +76,8 @@ class DefaultSortRequestHandler implements CriteriaRequestHandlerInterface
 
         $this->enabled = true;
 
-        if ($request->sSort && $request->sSort != self::REQUEST_VALUE) {
+        $sSort = $request->getParam('sSort');
+        if ($sSort && $sSort !== self::REQUEST_VALUE) {
             return;
         }
 

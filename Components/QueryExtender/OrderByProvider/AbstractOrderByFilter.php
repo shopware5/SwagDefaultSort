@@ -33,6 +33,11 @@ abstract class AbstractOrderByFilter
      */
     private $rule;
 
+    /**
+     * @param string                 $alias
+     * @param AbstractSortDefinition $definition
+     * @param RuleVo                 $rule
+     */
     public function setUp(
         $alias,
         AbstractSortDefinition $definition,

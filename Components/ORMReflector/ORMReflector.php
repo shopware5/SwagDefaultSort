@@ -17,11 +17,6 @@ use InvalidArgumentException;
 class ORMReflector
 {
     /**
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
      * @var InflectorResult[]
      */
     private $instances = [];
@@ -29,14 +24,13 @@ class ORMReflector
     /**
      * @var LoaderAbstract[]
      */
-    private $loaders = [];
+    private $loaders;
 
     /**
      * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
-        $this->em = $em;
         $this->loaders = [
             new MapLoader($em),
             new MetadataFactoryLoader($em),
@@ -46,7 +40,9 @@ class ORMReflector
     /**
      * @param $dbTableName
      *
-     * @return null|InflectorResult
+     * @throws \InvalidArgumentException
+     *
+     * @return InflectorResult
      */
     public function getTable($dbTableName)
     {

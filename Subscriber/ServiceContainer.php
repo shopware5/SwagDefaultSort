@@ -171,6 +171,9 @@ class ServiceContainer implements SubscriberInterface
         );
     }
 
+    /**
+     * @return TranslateFilterChain
+     */
     public function createFieldVoTranslate()
     {
         return new TranslateFilterChain([
@@ -185,6 +188,9 @@ class ServiceContainer implements SubscriberInterface
         ]);
     }
 
+    /**
+     * @return TranslateFilterChain
+     */
     public function createTableVoTranslate()
     {
         return new TranslateFilterChain([

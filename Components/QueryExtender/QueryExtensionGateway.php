@@ -32,6 +32,11 @@ class QueryExtensionGateway
 
     private $orderByFilterChain;
 
+    /**
+     * @param DefinitionCollection   $definitionCollection
+     * @param OrderByFilterChain     $orderByFilterChain
+     * @param JoinProviderCollection $joinProviderCollection
+     */
     public function __construct(
         DefinitionCollection $definitionCollection,
         OrderByFilterChain $orderByFilterChain,

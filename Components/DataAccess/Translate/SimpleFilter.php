@@ -20,11 +20,17 @@ class SimpleFilter implements FilterInterface
      */
     private $namespace;
 
+    /**
+     * @param \Enlight_Components_Snippet_Namespace $namespace
+     */
     public function __construct(\Enlight_Components_Snippet_Namespace $namespace)
     {
         $this->namespace = $namespace;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function filter($value)
     {
         $ret = $this->namespace->get($value);

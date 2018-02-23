@@ -1,5 +1,5 @@
 # SwagDefaultSort
-> Working with Shopware version 5.0.0 to 5.1.1.
+> Working with Shopware version 5.0.0 to 5.2.27.
 > Higher versions may work either but were not tested.
 
 ## Description 
@@ -14,7 +14,7 @@ The new backend module that comes with this plugin makes it possible for you to 
 **Increase conversion with valuable search options**
 You now have the advantage of easily sorting your product display so that customers can search by the properties they value most. 
 To do so, you can rely on existing criteria or create completely new attributes. 
-Take for instance, a shop selling aplliances: what a cool service it would be to include an "Eco-friendly grande" sorting option"
+Take for instance, a shop selling appliances: what a cool service it would be to include an "Eco-friendly grande" sorting option"
 
 **Sort as you wish**
 You can define the default listing within a category an an individual basis.

@@ -66,11 +66,21 @@ class FromTableDefinitionFilter implements FilterInterface
         return $ret;
     }
 
+    /**
+     * @param string $namespace
+     *
+     * @return \Enlight_Components_Snippet_Namespace
+     */
     private function getSnippetNamespace($namespace)
     {
         return $this->snippedManager->getNamespace($namespace);
     }
 
+    /**
+     * @param AbstractSortDefinition $definition
+     *
+     * @return mixed
+     */
     private function getOrmFieldName(AbstractSortDefinition $definition)
     {
         return $this->ormReflector

@@ -30,6 +30,11 @@ class JoinProviderCollection implements \Countable, \IteratorAggregate
      */
     private $expressionJoinProviders = [];
 
+    /**
+     * @param AbstractSortDefinition $sortDefinition
+     *
+     * @return AbstractExpressionJoinProvider|AbstractJoinProvider
+     */
     public function find(AbstractSortDefinition $sortDefinition)
     {
         $this->testLoadProviders();

@@ -1,7 +1,7 @@
 
-//{block name="backend/swag_default_sort/store/category_path_select"}
+// {block name="backend/swag_default_sort/store/category_path_select"}
 Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPathSelect', {
-    extend:'Shopware.store.Listing',
+    extend: 'Shopware.store.Listing',
 
     storeId: 'SwagDefaultSortCategoryPathSelect',
 
@@ -29,4 +29,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.CategoryPathSelect', {
 
     model: 'Shopware.apps.SwagDefaultSort.model.CategoryPath'
 });
-//{/block}
+// {/block}

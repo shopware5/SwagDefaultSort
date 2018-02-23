@@ -12,6 +12,7 @@ use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractExpressionJoinProvider;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractJoinProvider;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProviderCollection;
+use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes\AttributeTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleDetails\DetailsTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleTableLoader;
@@ -36,7 +37,7 @@ class JoinProviderTest extends AbstractSearchBundleDependantTest
         $this->tableDefinitions['s_articles'] = new GenericDefinition('name', new ArticleTableLoader());
         $this->tableDefinitions['s_articles_attribute'] = new GenericDefinition('attr1', new AttributeTableLoader(new ORMReflector(Shopware()->Models())));
         $this->tableDefinitions['s_articles_details'] = new GenericDefinition('height', new DetailsTableLoader());
-        $this->tableDefinitions['s_order_details'] = $this->getMockBuilder('Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition');
+        $this->tableDefinitions['s_order_details'] = $this->getMockBuilder(AbstractSortDefinition::class);
         $this->tableDefinitions['s_articles_prices'] = new GenericDefinition('price', new PricesTableLoader());
 
         $this->interfaceDefinitions['s_order_details'] = new SumOrderAmount(new OrderTableLoader());
@@ -48,7 +49,7 @@ class JoinProviderTest extends AbstractSearchBundleDependantTest
         $joinCollection = $this->createJoinCollection();
 
         $this->assertGreaterThan(0, count($joinCollection));
-        $this->containsOnlyInstancesOf('Shopware\SwagDefaultSort\Components\QueryExtender\JoinQueryExtender\AbstractJoinProvider', $joinCollection);
+        $this->containsOnlyInstancesOf(AbstractJoinProvider::class);
     }
 
     public function testSingleJoinProviders()
@@ -67,7 +68,7 @@ class JoinProviderTest extends AbstractSearchBundleDependantTest
 
             $stmt = $qb->execute();
 
-            $this->assertTrue(is_array($stmt->fetchAll()));
+            $this->assertInternalType('array', $stmt->fetchAll());
         }
     }
 
@@ -82,13 +83,12 @@ class JoinProviderTest extends AbstractSearchBundleDependantTest
             $qb->select('*');
 
             $alias = $joinProvider->extendQuery($qb, $def);
-            $alias = $joinProvider->extendQuery($qb, $def);
 
             $this->assertContains($alias, $qb->getSQL(), 'test if alias is present');
 
             $stmt = $qb->execute();
 
-            $this->assertTrue(is_array($stmt->fetchAll()));
+            $this->assertInternalType('array', $stmt->fetchAll());
         }
     }
 
@@ -107,15 +107,23 @@ class JoinProviderTest extends AbstractSearchBundleDependantTest
 
             $stmt = $qb->execute();
 
-            $this->assertTrue(is_array($stmt->fetchAll()));
+            $this->assertInternalType('array', $stmt->fetchAll());
         }
     }
 
+    /**
+     * @return JoinProviderCollection
+     */
     private function createJoinCollection()
     {
         return new JoinProviderCollection();
     }
 
+    /**
+     * @param AbstractJoinProvider $joinProvider
+     *
+     * @return mixed
+     */
     private function getDefinition(AbstractJoinProvider $joinProvider)
     {
         if ($joinProvider instanceof AbstractExpressionJoinProvider) {

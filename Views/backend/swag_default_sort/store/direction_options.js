@@ -1,9 +1,9 @@
-//{namespace name="backend/swagdefaultsort/main"}
+// {namespace name="backend/swagdefaultsort/main"}
 
-//{block name="backend/swag_default_sort/store/direction_options"}
+// {block name="backend/swag_default_sort/store/direction_options"}
 Ext.define('Shopware.apps.SwagDefaultSort.store.DirectionOptions', {
 
-    extend:'Shopware.store.Listing',
+    extend: 'Shopware.store.Listing',
 
     storeId: 'SwagDefaultSortDirectionOptions',
 
@@ -11,10 +11,10 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.DirectionOptions', {
 
     data: [{
         key: false,
-        value: "{s name=ascending}{/s}"
+        value: '{s name=ascending}{/s}'
     }, {
         key: true,
-        value: "{s name=descending}{/s}"
+        value: '{s name=descending}{/s}'
     }],
 
     configure: function() {
@@ -23,4 +23,4 @@ Ext.define('Shopware.apps.SwagDefaultSort.store.DirectionOptions', {
         };
     }
 });
-//{/block}
+// {/block}

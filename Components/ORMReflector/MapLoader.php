@@ -15,7 +15,7 @@ namespace Shopware\SwagDefaultSort\Components\ORMReflector;
  */
 class MapLoader extends LoaderAbstract
 {
-    const MAIN_SW_MODEL_NAMEAPSCE_PREFIX = 'Shopware\Models';
+    const MAIN_SW_MODEL_NAMESPACE_PREFIX = 'Shopware\Models';
 
     /**
      * @var string[]
@@ -34,14 +34,13 @@ class MapLoader extends LoaderAbstract
     public function load($dbTableName)
     {
         if (!isset($this->map[$dbTableName])) {
-            return;
+            return null;
         }
 
-        return $this
-            ->createInflectorResult(
-                $this->entityManager->getMetadataFactory()->getMetadataFor(
-                    self::MAIN_SW_MODEL_NAMEAPSCE_PREFIX . '\\' . $this->map[$dbTableName]
-                )
-            );
+        return $this->createInflectorResult(
+            $this->entityManager->getMetadataFactory()->getMetadataFor(
+                self::MAIN_SW_MODEL_NAMESPACE_PREFIX . '\\' . $this->map[$dbTableName]
+            )
+        );
     }
 }

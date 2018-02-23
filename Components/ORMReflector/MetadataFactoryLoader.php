@@ -8,6 +8,8 @@
 
 namespace Shopware\SwagDefaultSort\Components\ORMReflector;
 
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
+
 /**
  * Class MetadataFactoryLoader.
  *
@@ -22,7 +24,7 @@ class MetadataFactoryLoader extends LoaderAbstract
     {
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
 
-        /** @var ClassMetadata $tableMetadata */
+        /** @var ClassMetadataInfo $tableMetadata */
         foreach ($metadata as $tableMetadata) {
             if ($dbTableName !== $tableMetadata->getTableName()) {
                 continue;
