@@ -4,11 +4,11 @@
         "en": "Default category sorting"
     },
     "copyright": "(c) by Shopware AG",
-    "license": "proprietary",
+    "license": "MIT",
     "link": "http://store.shopware.com",
     "author": "Shopware AG",
 
-    "currentVersion": "1.0.0",
+    "currentVersion": "1.1.0",
 
     "compatibility": {
         "minimumVersion": "5.0.0",
