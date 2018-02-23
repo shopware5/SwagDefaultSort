@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components\ORMReflector;
@@ -17,7 +16,7 @@ namespace Shopware\SwagDefaultSort\Components\ORMReflector;
 class MetadataFactoryLoader extends LoaderAbstract
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function load($dbTableName)
     {
@@ -31,7 +30,5 @@ class MetadataFactoryLoader extends LoaderAbstract
 
             return $this->createInflectorResult($tableMetadata);
         }
-
-        return;
     }
 }

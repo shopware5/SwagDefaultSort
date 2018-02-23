@@ -1,16 +1,15 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace   Shopware\CustomModels\SwagDefaultSort;
 
-use Shopware\Components\Model\ModelEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Shopware\Components\Model\ModelEntity;
 use Shopware\Models\Category\Category;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -177,10 +176,10 @@ class Rule extends ModelEntity implements \JsonSerializable
      * (PHP 5 &gt;= 5.4.0)<br/>
      * Specify data which should be serialized to JSON.
      *
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @see http://php.net/manual/en/jsonserializable.jsonserialize.php
      *
      * @return mixed data which can be serialized by <b>json_encode</b>,
-     *               which is a value of any type other than a resource.
+     *               which is a value of any type other than a resource
      */
     public function jsonSerialize()
     {
@@ -194,7 +193,7 @@ class Rule extends ModelEntity implements \JsonSerializable
                 'categoryId' => $this->categoryId,
             ];
         } catch (Exception $e) {
-            trigger_error($e->getMessage()."\n".$e->getTraceAsString(), E_USER_ERROR);
+            trigger_error($e->getMessage() . "\n" . $e->getTraceAsString(), E_USER_ERROR);
 
             return [];
         }

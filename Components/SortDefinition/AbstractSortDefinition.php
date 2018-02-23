@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components\SortDefinition;
@@ -49,9 +48,9 @@ abstract class AbstractSortDefinition
         $insertion = '';
 
         if ($this instanceof ExpressionConditionInterface) {
-            $insertion = $this->getGroupingFunction().'::';
+            $insertion = $this->getGroupingFunction() . '::';
         }
 
-        return $this->getTableName().'::'.$insertion.$this->getFieldName();
+        return $this->getTableName() . '::' . $insertion . $this->getFieldName();
     }
 }

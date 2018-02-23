@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider;
@@ -55,9 +54,9 @@ class VotesExpressionJoinProvider extends AbstractExpressionJoinProvider
 
         $subQueryBuilder->select($this->getSelectWithExpression($definition, $subQueryAlias))
             ->from($this->getTableName(), $subQueryAlias)
-            ->where('product.id = '.$subQueryAlias.'.articleID');
+            ->where('product.id = ' . $subQueryAlias . '.articleID');
 
-        $queryBuilder->addSelect('('.$subQueryBuilder->getSQL().') AS '.$alias.'_'.$definition->getFieldName());
+        $queryBuilder->addSelect('(' . $subQueryBuilder->getSQL() . ') AS ' . $alias . '_' . $definition->getFieldName());
 
         return $alias;
     }

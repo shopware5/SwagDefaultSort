@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Test\Components\ValueObject;
@@ -42,7 +41,6 @@ class RuleHydratorTest extends \PHPUnit_Framework_TestCase
                 'sortOrder' => 1,
                 'definitionUid' => 's_articles::datum',
                 'descending' => false,
-
             ],
         ];
     }
@@ -60,7 +58,6 @@ class RuleHydratorTest extends \PHPUnit_Framework_TestCase
                 'sortOrder' => 1,
                 'definitionUid' => 's_articles::datum',
                 'descending' => false,
-
         ]);
 
         $this->assertEquals(2, $vo->getId());

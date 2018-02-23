@@ -1,20 +1,19 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Components\Integration;
 
+use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProviderCollection;
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
 use Shopware\SwagDefaultSort\Components\QueryExtender\QueryExtensionGateway;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
-use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 use Shopware\SwagDefaultSort\Test\AbstractSearchBundleDependantTest;
 
 class MergeDefinitionsWithQueryExtenderTest extends AbstractSearchBundleDependantTest
@@ -43,7 +42,6 @@ class MergeDefinitionsWithQueryExtenderTest extends AbstractSearchBundleDependan
 
     public function testIntegrationSingle()
     {
-
         /** @var AbstractSortDefinition $definition */
         foreach ($this->definitionCollection as $definition) {
             $qb = $this->getQueryBuilder();

@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 /**
@@ -15,18 +14,17 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
     const MENU_ITEM_IDENTIFIER = 'SwagDefaultSort';
 
     /**
-     * @return mixed
-     *
      * @throws Exception
+     *
+     * @return mixed
      */
     public function getVersion()
     {
         $info = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'plugin.json'), true);
         if ($info) {
             return $info['currentVersion'];
-        } else {
-            throw new Exception('The plugin has an invalid version file.');
         }
+        throw new Exception('The plugin has an invalid version file.');
     }
 
     /**
@@ -48,9 +46,9 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         $em = $this->get('models');
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 
-        $classes = array(
+        $classes = [
             $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule'),
-        );
+        ];
         $tool->dropSchema($classes);
 
         return true;
@@ -154,45 +152,6 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         return true;
     }
 
-    private function storeMenuState($isActive)
-    {
-        $menuItem = $this->Menu()->findOneBy(['label' => self::MENU_ITEM_IDENTIFIER]);
-
-        if (!$menuItem) {
-            throw new BadMethodCallException('Unable to set Menu state - no item found');
-        }
-
-        $menuItem->setActive((bool) $isActive);
-
-        $this->getEntityManager()->persist($menuItem);
-        $this->getEntityManager()->flush();
-    }
-
-    /**
-     * Creates the database scheme from an existing doctrine model.
-     *
-     * Will remove the table first, so handle with care.
-     */
-    protected function updateSchema()
-    {
-        $this->registerCustomModels();
-
-        /** @var \Shopware\Components\Model\ModelManager $em */
-        $em = $this->get('models');
-        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-
-        $classes = array(
-            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule'),
-        );
-
-        try {
-            $tool->dropSchema($classes);
-        } catch (Exception $e) {
-            //ignore
-        }
-        $tool->createSchema($classes);
-    }
-
     /**
      * This callback function is triggered at the very beginning of the dispatch process and allows
      * us to register additional events on the fly. This way you won't ever need to reinstall you
@@ -213,6 +172,45 @@ class Shopware_Plugins_Frontend_SwagDefaultSort_Bootstrap extends Shopware_Compo
         foreach ($subscribers as $subscriber) {
             $this->Application()->Events()->addSubscriber($subscriber);
         }
+    }
+
+    /**
+     * Creates the database scheme from an existing doctrine model.
+     *
+     * Will remove the table first, so handle with care.
+     */
+    protected function updateSchema()
+    {
+        $this->registerCustomModels();
+
+        /** @var \Shopware\Components\Model\ModelManager $em */
+        $em = $this->get('models');
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+
+        $classes = [
+            $em->getClassMetadata('Shopware\CustomModels\SwagDefaultSort\Rule'),
+        ];
+
+        try {
+            $tool->dropSchema($classes);
+        } catch (Exception $e) {
+            //ignore
+        }
+        $tool->createSchema($classes);
+    }
+
+    private function storeMenuState($isActive)
+    {
+        $menuItem = $this->Menu()->findOneBy(['label' => self::MENU_ITEM_IDENTIFIER]);
+
+        if (!$menuItem) {
+            throw new BadMethodCallException('Unable to set Menu state - no item found');
+        }
+
+        $menuItem->setActive((bool) $isActive);
+
+        $this->getEntityManager()->persist($menuItem);
+        $this->getEntityManager()->flush();
     }
 
     /**

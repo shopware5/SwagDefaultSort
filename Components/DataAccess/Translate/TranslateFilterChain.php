@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components\DataAccess\Translate;
@@ -56,6 +55,6 @@ class TranslateFilterChain
             $value = $newValue;
         }
 
-        throw new \InvalidArgumentException('No translation found for "'.$value.'" in filterChain');
+        throw new \InvalidArgumentException('No translation found for "' . $value . '" in filterChain');
     }
 }

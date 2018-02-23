@@ -1,13 +1,12 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
-require __DIR__.'/../../../../../../../tests/Shopware/TestHelper.php';
+require __DIR__ . '/../../../../../../../tests/Shopware/TestHelper.php';
 
 class SwagDefaultSortSearchTestHelper
 {
@@ -28,15 +27,15 @@ class SwagDefaultSortSearchTestHelper
     {
         $this->helper->Loader()->registerNamespace(
             'Shopware\\SwagDefaultSort\\Components',
-            $this->getPluginRoot().'/Components/'
+            $this->getPluginRoot() . '/Components/'
         );
         $this->helper->Loader()->registerNamespace(
             'Shopware\\SwagDefaultSort\\Subscriber',
-            $this->getPluginRoot().'/Subscriber/'
+            $this->getPluginRoot() . '/Subscriber/'
         );
         $this->helper->Loader()->registerNamespace(
             'Shopware\\SwagDefaultSort\\Bundle',
-            $this->getPluginRoot().'/Bundle/'
+            $this->getPluginRoot() . '/Bundle/'
         );
     }
 
@@ -44,13 +43,13 @@ class SwagDefaultSortSearchTestHelper
     {
         $this->helper->Loader()->registerNamespace(
             'Shopware\\SwagDefaultSort\\Test',
-            __DIR__.'/'
+            __DIR__ . '/'
         );
     }
 
     private function getPluginRoot()
     {
-        return  $pluginDir = __DIR__.'/..';
+        return  $pluginDir = __DIR__ . '/..';
     }
 
     private function initServiceContainerSubscriber()

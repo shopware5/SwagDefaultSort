@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider;
@@ -49,12 +48,12 @@ class Prices extends AbstractJoinProvider
                 'product',
                 's_articles_details',
                 $variantAlias,
-                $variantAlias.'.articleID = product.id'
+                $variantAlias . '.articleID = product.id'
             )->leftJoin(
                 $variantAlias,
                 $this->getTableName(),
                 $alias,
-                $alias.'.articledetailsID = '.$variantAlias.'.id'
+                $alias . '.articledetailsID = ' . $variantAlias . '.id'
             );
 
         $queryBuilder->addState($alias);

@@ -1,19 +1,18 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Test\Components\QueryExtender;
 
+use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ExpressionConditionInterface;
-use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 use Shopware\SwagDefaultSort\Components\SortDefinition\GenericDefinition;
 use Shopware\SwagDefaultSort\Test\AbstractSearchBundleDependantTest;
 

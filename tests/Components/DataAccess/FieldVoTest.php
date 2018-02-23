@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
@@ -12,8 +11,8 @@ namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 use Shopware\SwagDefaultSort\Components\DataAccess\FieldVo;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FallbackDefinitionTranslateFilter;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\TranslateFilterChain;
-use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
+use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 
 class FieldVoTest extends \PHPUnit_Framework_TestCase
 {

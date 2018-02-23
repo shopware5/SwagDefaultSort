@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Bundle\SearchBundleDBAL\SortingHandler;
@@ -14,8 +13,8 @@ use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
 use Shopware\Bundle\SearchBundleDBAL\SortingHandlerInterface;
 use Shopware\Bundle\StoreFrontBundle\Struct\ShopContextInterface;
 use Shopware\SwagDefaultSort\Bundle\SearchBundle\Sorting\DefaultSorting;
-use Shopware\SwagDefaultSort\Components\QueryExtender\QueryExtensionGateway;
 use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
+use Shopware\SwagDefaultSort\Components\QueryExtender\QueryExtensionGateway;
 
 /**
  * Class DefaultSortingHandler.
@@ -42,7 +41,7 @@ class DefaultSortingHandler implements SortingHandlerInterface
      */
     public function supportsSorting(SortingInterface $sorting)
     {
-        return ($sorting instanceof DefaultSorting);
+        return $sorting instanceof DefaultSorting;
     }
 
     /**

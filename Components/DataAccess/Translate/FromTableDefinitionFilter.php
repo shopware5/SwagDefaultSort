@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components\DataAccess\Translate;
@@ -32,7 +31,7 @@ class FromTableDefinitionFilter implements FilterInterface
 
     /**
      * @param \Enlight_Components_Snippet_Manager $snippetManager
-     * @param ORMReflector $ormReflector
+     * @param ORMReflector                        $ormReflector
      */
     public function __construct(\Enlight_Components_Snippet_Manager $snippetManager, ORMReflector $ormReflector)
     {
@@ -56,7 +55,7 @@ class FromTableDefinitionFilter implements FilterInterface
         }
 
         $snippetNamespace = $this->getSnippetNamespace($table->getSnippetNamespace());
-        $snippetName = $table->getSnippetPrefix().$this->getOrmFieldName($value);
+        $snippetName = $table->getSnippetPrefix() . $this->getOrmFieldName($value);
 
         $ret = $snippetNamespace->get($snippetName);
 

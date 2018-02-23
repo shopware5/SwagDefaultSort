@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 /**
@@ -14,37 +13,6 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
 {
     protected $model = 'Shopware\CustomModels\SwagDefaultSort\Rule';
     protected $alias = 'rule';
-
-    /**
-     * Extend so the foreign key is correctly flagged.
-     *
-     * @param string $model
-     * @param null   $alias
-     *
-     * @return array
-     */
-    protected function getModelFields($model, $alias = null)
-    {
-        $fields = parent::getModelFields($model, $alias);
-
-        $fields['categoryId']['type'] = 'foreignKey';
-
-        return $fields;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getList($offset, $limit, $sort = array(), $filter = array(), array $wholeParams = array())
-    {
-        $ret = parent::getList($offset, $limit, $sort, $filter, $wholeParams);
-
-        foreach ($ret['data'] as &$rule) {
-            $this->appendTableNameToRule($rule);
-        }
-
-        return $ret;
-    }
 
     /**
      * {@inheritdoc}
@@ -58,35 +26,6 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
         }
 
         return $ret;
-    }
-
-    /**
-     * @param $rule
-     * @throws Exception
-     */
-    private function appendTableNameToRule(&$rule)
-    {
-        /** @var \Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection $definitionCollection */
-        $definitionCollection = Shopware()->Container()->get('swag_default_sort.definition_collection');
-        $rule['tableName'] = $definitionCollection->getDefinition($rule['definitionUid'])->getTableName();
-    }
-
-
-    /**
-     * Adds a pseudo format, tp prevent 'LIKE' search for a foreign key.
-     *
-     * @param string $value
-     * @param array  $field
-     *
-     * @return int|string
-     */
-    protected function formatSearchValue($value, array $field)
-    {
-        if ($field['type'] == 'foreignKey') {
-            return (int) $value;
-        }
-
-        return parent::formatSearchValue($value, $field);
     }
 
     /**
@@ -159,9 +98,69 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
     }
 
     /**
-     * @return \Shopware\SwagDefaultSort\Components\DataAccess\TableVo[]
+     * Extend so the foreign key is correctly flagged.
+     *
+     * @param string $model
+     * @param null   $alias
+     *
+     * @return array
+     */
+    protected function getModelFields($model, $alias = null)
+    {
+        $fields = parent::getModelFields($model, $alias);
+
+        $fields['categoryId']['type'] = 'foreignKey';
+
+        return $fields;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getList($offset, $limit, $sort = [], $filter = [], array $wholeParams = [])
+    {
+        $ret = parent::getList($offset, $limit, $sort, $filter, $wholeParams);
+
+        foreach ($ret['data'] as &$rule) {
+            $this->appendTableNameToRule($rule);
+        }
+
+        return $ret;
+    }
+
+    /**
+     * Adds a pseudo format, tp prevent 'LIKE' search for a foreign key.
+     *
+     * @param string $value
+     * @param array  $field
+     *
+     * @return int|string
+     */
+    protected function formatSearchValue($value, array $field)
+    {
+        if ($field['type'] == 'foreignKey') {
+            return (int) $value;
+        }
+
+        return parent::formatSearchValue($value, $field);
+    }
+
+    /**
+     * @param $rule
      *
      * @throws Exception
+     */
+    private function appendTableNameToRule(&$rule)
+    {
+        /** @var \Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection $definitionCollection */
+        $definitionCollection = Shopware()->Container()->get('swag_default_sort.definition_collection');
+        $rule['tableName'] = $definitionCollection->getDefinition($rule['definitionUid'])->getTableName();
+    }
+
+    /**
+     * @throws Exception
+     *
+     * @return \Shopware\SwagDefaultSort\Components\DataAccess\TableVo[]
      */
     private function getTableVos()
     {
@@ -170,9 +169,9 @@ class Shopware_Controllers_Backend_SwagDefaultSort extends Shopware_Controllers_
     }
 
     /**
-     * @return \Shopware\SwagDefaultSort\Components\DataAccess\FieldVo[]
-     *
      * @throws Exception
+     *
+     * @return \Shopware\SwagDefaultSort\Components\DataAccess\FieldVo[]
      */
     private function getFieldVos()
     {

@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
@@ -12,7 +11,6 @@ namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
 use Shopware\SwagDefaultSort\Components\DataAccess\TableVo;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\SimpleFilter;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\TranslateFilterChain;
-use Shopware\SwagDefaultSort\Components\DataAccess\TranslateFilter;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 
 class TableVoTest extends \PHPUnit_Framework_TestCase
@@ -37,7 +35,7 @@ class TableVoTest extends \PHPUnit_Framework_TestCase
             $filter = new TranslateFilterChain([
                 new SimpleFilter(
                     Shopware()->Snippets()->getNamespace('backend/swagdefaultsort/tables')
-                )
+                ),
             ]);
 
             foreach ($this->definitionCollection->getTableNames() as $tableName) {

@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 /**
@@ -21,6 +20,46 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
      * @var bool
      */
     private $addRuleConstraint;
+
+    public function createAction()
+    {
+        throw new Enlight_Controller_Exception('Method not supported', 404);
+    }
+
+    public function updateAction()
+    {
+        throw new Enlight_Controller_Exception('Method not supported', 404);
+    }
+
+    public function listAction()
+    {
+        $this->addRuleConstraint = true;
+
+        $this->View()->assign(
+            $this->getList(
+                $this->Request()->getParam('start', 0),
+                $this->Request()->getParam('limit', 20),
+                $this->Request()->getParam('sort', []),
+                $this->Request()->getParam('filter', []),
+                $this->Request()->getParams()
+            )
+        );
+    }
+
+    public function listAllAction()
+    {
+        $this->addRuleConstraint = false;
+
+        $this->View()->assign(
+            $this->getList(
+                $this->Request()->getParam('start', 0),
+                $this->Request()->getParam('limit', 20),
+                $this->Request()->getParam('sort', []),
+                $this->Request()->getParam('filter', []),
+                $this->Request()->getParams()
+            )
+        );
+    }
 
     /**
      * {@inheritdoc}
@@ -41,7 +80,6 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
                     ':ruleCategoryIds',
                     $ids,
                     \Doctrine\DBAL\Connection::PARAM_INT_ARRAY
-
                 );
         }
 
@@ -49,6 +87,14 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
             ->addOrderBy('category.position');
 
         return $builder;
+    }
+
+    protected function getList($offset, $limit, $sort = [], $filter = [], array $wholeParams = [])
+    {
+        $result = parent::getList($offset, $limit, $sort, $filter, $wholeParams);
+        $this->addParentPath($result['data']);
+
+        return $result;
     }
 
     private function addParentPath(array &$categories)
@@ -86,53 +132,5 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
                 $category['parentPath'][] = $path[$id];
             }
         }
-    }
-
-    protected function getList($offset, $limit, $sort = array(), $filter = array(), array $wholeParams = array())
-    {
-        $result = parent::getList($offset, $limit, $sort, $filter, $wholeParams);
-        $this->addParentPath($result['data']);
-
-        return $result;
-    }
-
-    public function createAction()
-    {
-        throw new Enlight_Controller_Exception('Method not supported', 404);
-    }
-
-    public function updateAction()
-    {
-        throw new Enlight_Controller_Exception('Method not supported', 404);
-    }
-
-    public function listAction()
-    {
-        $this->addRuleConstraint = true;
-
-        $this->View()->assign(
-            $this->getList(
-                $this->Request()->getParam('start', 0),
-                $this->Request()->getParam('limit', 20),
-                $this->Request()->getParam('sort', array()),
-                $this->Request()->getParam('filter', array()),
-                $this->Request()->getParams()
-            )
-        );
-    }
-
-    public function listAllAction()
-    {
-        $this->addRuleConstraint = false;
-
-        $this->View()->assign(
-            $this->getList(
-                $this->Request()->getParam('start', 0),
-                $this->Request()->getParam('limit', 20),
-                $this->Request()->getParam('sort', array()),
-                $this->Request()->getParam('filter', array()),
-                $this->Request()->getParams()
-            )
-        );
     }
 }

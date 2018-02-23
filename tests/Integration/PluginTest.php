@@ -1,20 +1,19 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Test\Integration;
 
 class PluginTest extends \Shopware\Components\Test\Plugin\TestCase
 {
-    protected static $ensureLoadedPlugins = array(
-        'SwagDefaultSort' => array(
-        ),
-    );
+    protected static $ensureLoadedPlugins = [
+        'SwagDefaultSort' => [
+        ],
+    ];
 
     public function testCanCreateInstance()
     {

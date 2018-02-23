@@ -1,31 +1,30 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
-use Shopware\SwagDefaultSort\Components\DataAccess\Translate\SimpleFilter;
+use Shopware\SwagDefaultSort\Components\DataAccess\DatabaseAdapter;
 use Shopware\SwagDefaultSort\Components\DataAccess\FieldVo;
+use Shopware\SwagDefaultSort\Components\DataAccess\FieldVoHydrator;
+use Shopware\SwagDefaultSort\Components\DataAccess\RuleHydrator;
 use Shopware\SwagDefaultSort\Components\DataAccess\TableVo;
+use Shopware\SwagDefaultSort\Components\DataAccess\TableVoHydrator;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FallbackDefinitionTranslateFilter;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FromDefinitionUidFilter;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FromTableDefinitionFilter;
+use Shopware\SwagDefaultSort\Components\DataAccess\Translate\SimpleFilter;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\TranslateFilterChain;
 use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProviderCollection;
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
 use Shopware\SwagDefaultSort\Components\QueryExtender\QueryExtensionGateway;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
-use Shopware\SwagDefaultSort\Components\DataAccess\DatabaseAdapter;
-use Shopware\SwagDefaultSort\Components\DataAccess\FieldVoHydrator;
-use Shopware\SwagDefaultSort\Components\DataAccess\RuleHydrator;
-use Shopware\SwagDefaultSort\Components\DataAccess\TableVoHydrator;
 use Symfony\Component\DependencyInjection\Container;
 
 /**

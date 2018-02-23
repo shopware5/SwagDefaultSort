@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace   Shopware\CustomModels\SwagDefaultSort;
@@ -45,7 +44,7 @@ class Repository extends ModelRepository
     {
         $builder = $this->getEntityManager()->createQueryBuilder();
 
-        $builder->select(array('rule'))
+        $builder->select(['rule'])
             ->from($this->getEntityName(), 'rule');
 
         $this->addFilter($builder, $filter);

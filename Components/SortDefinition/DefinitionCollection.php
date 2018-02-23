@@ -1,18 +1,17 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components\SortDefinition;
 
 use Behat\Behat\Definition\DefinitionInterface;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes\AttributeTableLoader;
-use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleDetails\DetailsTableLoader;
+use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails\OrderTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Prices\PricesTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Votes\VotesTableLoader;
@@ -63,7 +62,7 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
         $definitions = $this->getDefinitions();
 
         if (!isset($definitions[$definitionUid])) {
-            throw new \InvalidArgumentException('Unable to fetch definition, definitionUid "'.$definitionUid.'" not found"');
+            throw new \InvalidArgumentException('Unable to fetch definition, definitionUid "' . $definitionUid . '" not found"');
         }
 
         return $definitions[$definitionUid];
@@ -82,7 +81,7 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
         $this->getDefinitions();
 
         if (!isset($this->tableMap[$tableName])) {
-            throw new \InvalidArgumentException('Missing or invalid $tableName ("'.$tableName.'")');
+            throw new \InvalidArgumentException('Missing or invalid $tableName ("' . $tableName . '")');
         }
 
         return new \ArrayIterator($this->tableMap[$tableName]);
@@ -99,6 +98,22 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
         return $ret;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->getDefinitions());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        return count($this->getDefinitions());
+    }
+
     private function getTableLoaders()
     {
         if (!$this->tableLoaders) {
@@ -108,9 +123,6 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
         return $this->tableLoaders;
     }
 
-    /**
-     *
-     */
     private function loadTableLoaders()
     {
         $this->tableLoaders = [
@@ -136,28 +148,12 @@ class DefinitionCollection implements \IteratorAggregate, \Countable
                 $definitionUid = $definition->getUniqueIdentifier();
 
                 if (array_key_exists($definitionUid, $this->definitions)) {
-                    throw new \LogicException('Unable to continue - a unique identifier is not unique - found "'.$definitionUid.'" twice');
+                    throw new \LogicException('Unable to continue - a unique identifier is not unique - found "' . $definitionUid . '" twice');
                 }
 
                 $this->tableMap[$currentTable][] = $definition;
                 $this->definitions[$definitionUid] = $definition;
             }
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->getDefinitions());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
-    {
-        return count($this->getDefinitions());
     }
 }

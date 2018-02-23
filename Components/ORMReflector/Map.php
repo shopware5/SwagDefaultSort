@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components\ORMReflector;
@@ -100,7 +99,7 @@ class Map
     public function getOrmValue($dbValue)
     {
         if (!isset($this->ormMap[$dbValue])) {
-            throw new InvalidArgumentException('"'.$dbValue.'" not mapped');
+            throw new InvalidArgumentException('"' . $dbValue . '" not mapped');
         }
 
         return $this->ormValues[$this->ormMap[$dbValue]];
@@ -114,7 +113,7 @@ class Map
     public function getDbValue($ormValue)
     {
         if (!isset($this->dbMap[$ormValue])) {
-            throw new InvalidArgumentException('"'.$ormValue.'" not mapped');
+            throw new InvalidArgumentException('"' . $ormValue . '" not mapped');
         }
 
         return $this->dbValues[$this->dbMap[$ormValue]];

@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Test\Components\QueryExtender;
@@ -14,9 +13,9 @@ use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractExpre
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractJoinProvider;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProviderCollection;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes\AttributeTableLoader;
-use Shopware\SwagDefaultSort\Components\SortDefinition\GenericDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleDetails\DetailsTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Articles\ArticleTableLoader;
+use Shopware\SwagDefaultSort\Components\SortDefinition\GenericDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails\OrderTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\OrderDetails\SumOrderAmount;
 use Shopware\SwagDefaultSort\Components\SortDefinition\Prices\PricesTableLoader;
@@ -42,11 +41,6 @@ class JoinProviderTest extends AbstractSearchBundleDependantTest
 
         $this->interfaceDefinitions['s_order_details'] = new SumOrderAmount(new OrderTableLoader());
         $this->interfaceDefinitions['s_articles_vote'] = new SumPoints(new VotesTableLoader());
-    }
-
-    private function createJoinCollection()
-    {
-        return new JoinProviderCollection();
     }
 
     public function testJoinCollection()
@@ -115,6 +109,11 @@ class JoinProviderTest extends AbstractSearchBundleDependantTest
 
             $this->assertTrue(is_array($stmt->fetchAll()));
         }
+    }
+
+    private function createJoinCollection()
+    {
+        return new JoinProviderCollection();
     }
 
     private function getDefinition(AbstractJoinProvider $joinProvider)

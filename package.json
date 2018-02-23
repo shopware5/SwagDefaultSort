@@ -1,18 +1,18 @@
 {
-  "name": "SwagDefaultSort",
-  "description": "",
-  "version": "v1.0.0",
-  "author": {
-    "name": "Jan Philipp Pietrzyk",
-    "email": "jp@shopware.com",
-    "url": "http://www.shopware.com"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-jshint": "^0.11.2",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-jslint": "^1.1.14",
-    "grunt-phpunit": "^0.3.6"
-  }
+    "name": "SwagDefaultSort",
+    "description": "",
+    "version": "v1.0.0",
+    "author": {
+        "name": "Jan Philipp Pietrzyk",
+        "email": "jp@shopware.com",
+        "url": "http://www.shopware.com"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "grunt": "~0.4.5",
+        "grunt-contrib-jshint": "^0.11.2",
+        "grunt-contrib-watch": "~0.6.1",
+        "grunt-jslint": "^1.1.14",
+        "grunt-phpunit": "^0.3.6"
+    }
 }

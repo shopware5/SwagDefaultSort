@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components\DataAccess;
@@ -48,7 +47,7 @@ class DatabaseAdapter
         $stmt = $this->connection
             ->createQueryBuilder()
             ->addSelect('category.parent')
-            ->addSelect('(SELECT COUNT(*) FROM '.self::PLUGIN_TABLE_NAME.' WHERE category_id = category.id) AS hasRules')
+            ->addSelect('(SELECT COUNT(*) FROM ' . self::PLUGIN_TABLE_NAME . ' WHERE category_id = category.id) AS hasRules')
             ->from('s_categories', 'category')
             ->where('category.id = :categoryId')
             ->setParameter(':categoryId', $categoryId)

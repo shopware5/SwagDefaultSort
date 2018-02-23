@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components;
@@ -22,7 +21,7 @@ class RegistrationService
     public function registerTemplateDir()
     {
         Shopware()->Template()
-            ->addTemplateDir($this->getPluginPath().'/Views');
+            ->addTemplateDir($this->getPluginPath() . '/Views');
     }
 
     /**
@@ -31,20 +30,20 @@ class RegistrationService
     public function registerSnippets()
     {
         Shopware()->Snippets()->addConfigDir(
-            $this->getPluginPath().'/Snippets/'
+            $this->getPluginPath() . '/Snippets/'
         );
     }
 
     public function getPluginPath()
     {
-        return __DIR__.'/..';
+        return __DIR__ . '/..';
     }
 
     public function getBackendControllerPath($controllerName)
     {
-        return $this->getPluginPath().
-            '/Controllers/Backend/'.
-            $controllerName.
+        return $this->getPluginPath() .
+            '/Controllers/Backend/' .
+            $controllerName .
             '.php';
     }
 }

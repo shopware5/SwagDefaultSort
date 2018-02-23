@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\ValueObject;
@@ -13,9 +12,9 @@ use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FallbackDefinitionT
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FromDefinitionUidFilter;
 use Shopware\SwagDefaultSort\Components\DataAccess\Translate\FromTableDefinitionFilter;
 use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
+use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ArticleAttributes\AttributeTableLoader;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
-use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\TranslateTableInterface;
 
 class TranslateFilterChainTest extends \PHPUnit_Framework_TestCase
@@ -28,24 +27,6 @@ class TranslateFilterChainTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->definitionCollection = new DefinitionCollection();
-    }
-
-    private function getFromTableTranslateFilter()
-    {
-        return new FromTableDefinitionFilter(
-            Shopware()->Snippets(),
-            new ORMReflector(Shopware()->Models())
-        );
-    }
-
-    private function getFromDefinitionUidTranslateFilter()
-    {
-        return new FromDefinitionUidFilter(Shopware()->Snippets()->getNamespace('backend/swagdefaultsort/fields'));
-    }
-
-    private function getFromDefaultDefinitionFilter()
-    {
-        return new FallbackDefinitionTranslateFilter();
     }
 
     public function testCombined()
@@ -72,5 +53,23 @@ class TranslateFilterChainTest extends \PHPUnit_Framework_TestCase
                 $this->assertNotEquals($definition, $this->getFromDefinitionUidTranslateFilter()->filter($definition));
             }
         }
+    }
+
+    private function getFromTableTranslateFilter()
+    {
+        return new FromTableDefinitionFilter(
+            Shopware()->Snippets(),
+            new ORMReflector(Shopware()->Models())
+        );
+    }
+
+    private function getFromDefinitionUidTranslateFilter()
+    {
+        return new FromDefinitionUidFilter(Shopware()->Snippets()->getNamespace('backend/swagdefaultsort/fields'));
+    }
+
+    private function getFromDefaultDefinitionFilter()
+    {
+        return new FallbackDefinitionTranslateFilter();
     }
 }

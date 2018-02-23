@@ -1,21 +1,20 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components\QueryExtender;
 
 use Shopware\Bundle\SearchBundleDBAL\QueryBuilder;
+use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 use Shopware\SwagDefaultSort\Components\QueryExtender\JoinProvider\AbstractJoinProvider;
 use Shopware\SwagDefaultSort\Components\QueryExtender\OrderByProvider\OrderByFilterChain;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
 use Shopware\SwagDefaultSort\Components\SortDefinition\ExpressionConditionInterface;
-use Shopware\SwagDefaultSort\Components\DataAccess\RuleVo;
 
 /**
  * Class QueryExtensionGateway.
@@ -62,7 +61,7 @@ class QueryExtensionGateway
         $alias = $joinQueryExtender->extendQuery($queryBuilder, $definition);
 
         if (!$alias) {
-            throw new \UnexpectedValueException('Missing required return value $alias on "'.get_class($joinQueryExtender).'"');
+            throw new \UnexpectedValueException('Missing required return value $alias on "' . get_class($joinQueryExtender) . '"');
         }
 
         $this->orderByFilterChain->extendQuery($alias, $definition, $rule, $queryBuilder);
@@ -88,7 +87,7 @@ class QueryExtensionGateway
         $provider = $this->joinProviderCollection->find($definition);
 
         if (!$provider) {
-            throw new \InvalidArgumentException('Invalid $definition('.$definition->getUniqueIdentifier().') provided, no join provider found');
+            throw new \InvalidArgumentException('Invalid $definition(' . $definition->getUniqueIdentifier() . ') provided, no join provider found');
         }
 
         return $provider;

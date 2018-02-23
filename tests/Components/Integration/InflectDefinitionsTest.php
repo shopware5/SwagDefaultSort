@@ -1,17 +1,16 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Test\Components\Integration\SortDefinition;
 
+use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 use Shopware\SwagDefaultSort\Components\SortDefinition\AbstractSortDefinition;
 use Shopware\SwagDefaultSort\Components\SortDefinition\DefinitionCollection;
-use Shopware\SwagDefaultSort\Components\ORMReflector\ORMReflector;
 
 class InflectDefinitionsTest extends \Shopware\Components\Test\Plugin\TestCase
 {
@@ -40,7 +39,7 @@ class InflectDefinitionsTest extends \Shopware\Components\Test\Plugin\TestCase
                 ->getTable($definition->getTableName())
                 ->getMap();
 
-            $this->assertNotEmpty($map->getOrmValue($definition->getFieldName()), $definition->getUniqueIdentifier().' - not mapped');
+            $this->assertNotEmpty($map->getOrmValue($definition->getFieldName()), $definition->getUniqueIdentifier() . ' - not mapped');
         }
     }
 }

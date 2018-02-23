@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * (c) shopware AG <info@shopware.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
  */
 
 namespace Shopware\SwagDefaultSort\Components\QueryExtender;
@@ -49,6 +48,29 @@ class JoinProviderCollection implements \Countable, \IteratorAggregate
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getIterator()
+    {
+        $this->testLoadProviders();
+
+        return new \ArrayIterator(array_merge(
+            array_values($this->tableJoinProviders),
+            array_values($this->expressionJoinProviders)
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        $this->testLoadProviders();
+
+        return count($this->tableJoinProviders) + count($this->expressionJoinProviders);
+    }
+
+    /**
      * helper function: call in each public function body!
      */
     private function testLoadProviders()
@@ -84,28 +106,5 @@ class JoinProviderCollection implements \Countable, \IteratorAggregate
             new JoinProvider\OrderDetailsExpressionJoinProvider(),
             new JoinProvider\VotesExpressionJoinProvider(),
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
-    {
-        $this->testLoadProviders();
-
-        return new \ArrayIterator(array_merge(
-            array_values($this->tableJoinProviders),
-            array_values($this->expressionJoinProviders)
-        ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
-    {
-        $this->testLoadProviders();
-
-        return count($this->tableJoinProviders) + count($this->expressionJoinProviders);
     }
 }
