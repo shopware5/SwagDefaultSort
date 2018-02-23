@@ -1,4 +1,11 @@
 <?php
+/*
+ * (c) shopware AG <info@shopware.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ */
 
 /**
  * Backend controllers extending from Shopware_Controllers_Backend_Application do support the new backend components.
@@ -67,7 +74,7 @@ class Shopware_Controllers_Backend_SwagDefaultSortCategory extends Shopware_Cont
                     $cleanParentIds,
                     \Doctrine\DBAL\Connection::PARAM_INT_ARRAY
                 )->execute()
-                ->fetchAll(\Pdo::FETCH_ASSOC);
+                ->fetchAll(\PDO::FETCH_ASSOC);
 
             $path = [];
 

@@ -1,4 +1,11 @@
 <?php
+/*
+ * (c) shopware AG <info@shopware.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ */
 
 namespace Shopware\SwagDefaultSort\Test;
 
@@ -61,14 +68,6 @@ class DefaultSortRequestHandlerTest extends \Shopware\Components\Test\Plugin\Tes
     private function createRequest()
     {
         return new \Enlight_Controller_Request_RequestHttp();
-    }
-
-    /**
-     * @return QueryBuilder
-     */
-    private function getQueryBuilder()
-    {
-        return $this->queryBuilderFactory->createQuery($this->createCriteria(), $this->context);
     }
 
     private function createCriteria()

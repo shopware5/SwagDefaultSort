@@ -1,4 +1,11 @@
 <?php
+/*
+ * (c) shopware AG <info@shopware.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ */
 
 namespace Components\Integration;
 
@@ -76,7 +83,7 @@ class MergeDefinitionsWithQueryExtenderTest extends AbstractSearchBundleDependan
             $this->queryExtensionGateway->addRule($rule, $qb);
 
             $this->assertContains($definition->getFieldName(), $qb->getSQL());
-            $this->assertContains($definition->getTableName(), $qb->getSql());
+            $this->assertContains($definition->getTableName(), $qb->getSQL());
         }
     }
 }
