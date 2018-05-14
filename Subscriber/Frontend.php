@@ -47,10 +47,19 @@ class Frontend implements SubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
+            'Enlight_Controller_Action_PreDispatch' => 'onPreDispatchSecure',
             'Shopware_SearchBundle_Collect_Criteria_Request_Handlers' => 'onRequestHandlerCollect',
             'Shopware_SearchBundleDBAL_Collect_Sorting_Handlers' => 'onSortingHandlerCollect',
             'Enlight_Controller_Action_PostDispatchSecure_Frontend_Listing' => 'registerView',
         ];
+    }
+    
+    /**
+     * Registers the template directory on each Secure dispatch to prevent SmartySecurity errors
+     */
+    public function onPreDispatchSecure()
+    {
+        Shopware()->Template()->addTemplateDir(__DIR__ . '/Views/');
     }
 
     /**
@@ -78,7 +87,6 @@ class Frontend implements SubscriberInterface
         }
 
         $this->registrationService->registerSnippets();
-        $this->registrationService->registerTemplateDir();
     }
 
     /**
