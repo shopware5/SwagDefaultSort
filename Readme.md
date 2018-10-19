@@ -17,7 +17,7 @@ To do so, you can rely on existing criteria or create completely new attributes.
 Take for instance, a shop selling appliances: what a cool service it would be to include an "Eco-friendly grande" sorting option"
 
 **Sort as you wish**
-You can define the default listing within a category an an individual basis.
+You can define the default listing within a category on an individual basis.
 For instance, this makes it possible to sort one category by product name in ascending order, another by price in descending order. 
 
 **Other example sorting options:**
